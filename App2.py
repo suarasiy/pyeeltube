@@ -78,13 +78,13 @@ class Core:
                 print("Initializing, please wait...")
                 self.video = YouTube(url, on_progress_callback=self.on_progress)
                 self.result = self.video.streams
-                audio_size = self.get_audio().filesize
+                audio_size = self.get_audio_default().filesize
                 print("Initializing done.")
                 for data in self.quality():
                     if data != False:
                         print(data)
-                        eel.object_resolution(row_idx, data.resolution, data.fps, data.itag, round(((data.filesize + audio_size) / math.pow(1*10, 6)), 2))
-                eel.object_resolution(row_idx, "ogg", self.get_audio().abr.replace("kbps", ""), self.get_audio().itag, round(audio_size / math.pow(1*10, 6), 2))
+                        eel.object_resolution(data.itag, data.type, row_idx, data.resolution, data.fps, data.itag, round(((data.filesize + audio_size) / math.pow(1*10, 6)), 2))
+                eel.object_resolution(self.get_audio_default().itag, self.get_audio_default().type, row_idx, self.get_audio_default().subtype, self.get_audio_default().abr.replace("kbps", ""), self.get_audio_default().itag, round(audio_size / math.pow(1*10, 6), 2))
             except pytube.exceptions.RegexMatchError as ex:
                 print("Regex error. Try to re-initializing...")
                 core()
@@ -101,6 +101,19 @@ class Core:
         global result
         ([(print(i, sep="\n")) for i in self.result])
     # ------------------------------ #
+
+    # --- get audio only (default: 128kbps) standard quality and best choice for merging --- #
+    def get_audio_default(self):
+        global file_size
+        global result
+        
+        audio = self.result.get_audio_only(subtype="mp4")
+        if audio != None:
+            self.file_size = audio.filesize
+            return audio
+        else:
+            self.get_audio(self.result)
+    # -------------------------------------------------------------------------------------- #
 
     # --- get the best audio quality object (160kbps) audio/webm opus --- #
     def get_audio(self):
@@ -224,28 +237,53 @@ class Core:
     # ------------------------------------------------------------- #
 
     # --- merging file after completed the download file(s) --- #
-    def merge(self, pathfile_video, pathfile_audio):
+    def merge(self, pathfile_video, pathfile_audio, model):
         # --- (output) path save directory --- #
         # path_save = "D:\yanagihara\python\downloader"
         path = self.path
         # ------------------------------------ #
+        
+        def merge_video(path_video, path_audio):
+            # --- (output) filename --- #
+            output_name = f"{cleansing(self.video.title)}.mp4"
+            # ------------------------- #
 
-        # --- (output) filename --- #
-        output_name = f"{cleansing(self.video.title)}.mp4"
-        # ------------------------- #
+            # --- [FIX IT] -> Just used double quote instead double backslash --- #
+            # --- replacing backslash into single reverse one --- #
+            pathfile_video = path_video.replace("\\", "/")
+            pathfile_audio = path_audio.replace("\\", "/")
+            # --------------------------------------------------- #
 
-        # --- [FIX IT] -> Just used double quote instead double backslash --- #
-        # --- replacing backslash into single reverse one --- #
-        pathfile_video = pathfile_video.replace("\\", "/")
-        pathfile_audio = pathfile_audio.replace("\\", "/")
-        # --------------------------------------------------- #
+            # --- Merge command ffmpeg pre-processing video audio --- #
+            # command_merge = f'ffmpeg.exe -i "{pathfile_video}" -i "{pathfile_audio}" -c copy -c:a aac "{os.path.join(path, output_name)}"'
+            command_merge = f'ffmpeg.exe -i "{pathfile_video}" -i "{pathfile_audio}" -c copy -c:a mp3 "{os.path.join(path, output_name)}"'
+            # ------------------------------------------------------- #
 
-        # --- Merge command ffmpeg pre-processing video audio --- #
-        command_merge = f'ffmpeg.exe -i "{pathfile_video}" -i "{pathfile_audio}" -c copy -c:a aac "{os.path.join(path, output_name)}"'
-        # ------------------------------------------------------- #
+            # --- Execute command merge based ffmpeg.exe --- #
+            self.run_command(command_merge)
+        
+        def convert_audio(path_audio):
+            # --- (output) filename --- #
+            output_name = f"{cleansing(self.video.title)}.mp3"
+            # ------------------------- #
 
-        # --- Execute command merge based ffmpeg.exe --- #
-        self.run_command(command_merge)
+            # --- [FIX IT] -> Just used double quote instead double backslash --- #
+            # --- replacing backslash into single reverse one --- #
+            pathfile_audio = path_audio.replace("\\", "/")
+            # --------------------------------------------------- #
+
+            # --- Merge command ffmpeg pre-processing video audio --- #
+            # command_merge = f'ffmpeg.exe -i "{pathfile_video}" -i "{pathfile_audio}" -c copy -c:a aac "{os.path.join(path, output_name)}"'
+            command_merge = f'ffmpeg.exe -i "{pathfile_audio}" -vn -b:a 128K "{os.path.join(path, output_name)}"'
+            # ------------------------------------------------------- #
+
+            # --- Execute command merge based ffmpeg.exe --- #
+            self.run_command(command_merge)
+        
+        if model == "video":
+            merge_video(pathfile_video, pathfile_audio)
+        elif model == "audio":
+            convert_audio(pathfile_audio)
         # ---------------------------------------------- #
         return "Merging file(s) completed"
     # --------------------------------------------------------- #
@@ -282,28 +320,56 @@ class Core:
     # ---------------------------------------------------- #
 
     # --- add filename, pathvideo, pathaudio to dictionary --- #
-    def add_to_history(self, path):
+    def add_to_history(self, path, model):
         global video
         global history
 
-        # --- joining path and title with static extension --- #
-        video_path = os.path.join(path, cleansing(self.video.title) + ".mp4")
-        audio_path = os.path.join(path, cleansing(self.video.title) + ".webm")
-        # ---------------------------------------------------- #
+        def history_video():
+            # --- joining path and title with static extension --- #
+            video_path = os.path.join(path, cleansing(self.video.title) + ".mp4")
+            audio_path = os.path.join(path, "audio.mp4")
+            # audio_path = os.path.join(path, cleansing(self.video.title) + ".mp4")
+            # ---------------------------------------------------- #
 
-        # --- merging video audio and fixing video codec by ffmpeg --- #
-        eel.modal_update_status("Merging...")
-        eel.modal_animation_merging()
-        self.merge(video_path, audio_path)
-        # ------------------------------------------------------------ #
+            # --- merging video audio and fixing video codec by ffmpeg --- #
+            eel.modal_update_status("Merging...")
+            eel.modal_animation_merging()
+            self.merge(video_path, audio_path, "video")
+            # ------------------------------------------------------------ #
 
-        # --- declare dummy History object --- #
-        _history = History(self.video.title, video_path, audio_path)
-        # ------------------------------------ #
+            # --- declare dummy History object --- #
+            _history = History(self.video.title, video_path, audio_path)
+            # ------------------------------------ #
 
-        # --- assignment history to global history based dictionary datatype --- #
-        self.history[_history.getKey] = _history.getValue
-        # ---------------------------------------------------------------------- #
+            # --- assignment history to global history based dictionary datatype --- #
+            self.history[_history.getKey] = _history.getValue
+            # ---------------------------------------------------------------------- #
+        
+        def history_audio():
+            # --- joining path and title with static extension --- #
+            video_path = os.path.join(path, cleansing(self.video.title) + ".mp4")
+            audio_path = os.path.join(path, cleansing(self.video.title) + ".mp4")
+            # ---------------------------------------------------- #
+
+            # --- merging video audio and fixing video codec by ffmpeg --- #
+            eel.modal_update_status("Converting...")
+            eel.modal_animation_merging()
+            self.merge(video_path, audio_path, "audio")
+            # ------------------------------------------------------------ #
+
+            # --- declare dummy History object --- #
+            _history = History(self.video.title, video_path, audio_path)
+            # ------------------------------------ #
+
+            # --- assignment history to global history based dictionary datatype --- #
+            self.history[_history.getKey] = _history.getValue
+            # ---------------------------------------------------------------------- #
+
+        if model == "video":
+            history_video()
+        elif model == "audio":
+            history_audio()
+
     # -------------------------------------------------------- #
 
     # --- cleaning temprorary video audio --- #
@@ -348,10 +414,11 @@ class Core:
 
     def each_quality_size(self):
         filesizes = {}
-        audio_size = self.get_audio().filesize
+        audio_size = self.get_audio_default().filesize
         for data in self.quality():
             if data != False:
                 filesizes[data.resolution.replace("p", "")] = round((data.filesize + audio_size) / math.pow(1*10,6), 2)
+        filesizes[self.get_audio_default().abr] = round((audio_size) / math.pow(1*10, 6), 2)
         
         return filesizes
 
@@ -384,7 +451,8 @@ class Core:
                 # --- webm opus (160)kbps is priority --- #
                 # --- get best audio to download --- #
                 eel.modal_update_status("Downloading... (audio)")
-                self.get_audio().download(path)
+                eel.modal_animation_download()
+                self.get_audio_default().download(path, "audio")
                 # ---------------------------------- #
 
                 # --- determine file size --- #
@@ -399,7 +467,7 @@ class Core:
                 
                 # --- core backend process --- #
                 # --- adding datainfo to history dictionary --- #
-                self.add_to_history(path)
+                self.add_to_history(path, "video")
                 # --------------------------------------------- #
                 # --- immediately delete the temprorary file(s) after all downloaded --- #
                 self.delete_after_download()
@@ -428,15 +496,20 @@ class Core:
             path = Temp.system_gettemp()
             # ------------------------------------------------------------ #
             print("Starting download audio...")
-            self.get_audio().download(path)
+            eel.modal_update_status("Downloading audio only...")
+            eel.modal_animation_download()
+            self.get_audio_default().download(path)
 
             # --- add fileinfo to download history --- #
-            self.add_to_history(path)
+            self.add_to_history(path, "audio")
             # ---------------------------------------- #
 
             # --- add to history download --- #
             self.delete_after_download()
             # ------------------------------- #
+
+            eel.modal_update_status("Ready")
+            eel.modal_animation_ready()
 
             print("Download success.")
         except ValueError as ex:
@@ -532,7 +605,7 @@ def search_videos(title):
 # --------------------- #
 
 
-def init_check_get_info(row_idx, source, result, filesize, id):
+def init_check_get_info(itag, row_idx, source, result, filesize, id):
     global datasource
     global path
     temp = Temp
@@ -542,20 +615,21 @@ def init_check_get_info(row_idx, source, result, filesize, id):
     data_fps = source.fps
     data_filesize = filesize
     data_extension = source.type
+    print("0 :", itag)
     print("1 :", data_resolution)
     print("2 :", data_fps)
     print("3 :", data_filesize)
     print("4 :", data_extension)
     print(datasource[id]["duration"].replace(".", ":"))
     if source.type == "audio":
-        eel.get_download_info(row_idx, datasource[id]["thumbnails"], data_title, "null", datasource[id]["duration"].replace(".", ":"), data_abr, data_filesize, data_extension, temp.system_gettemp(), path.replace("/", "\\"))
+        eel.get_download_info(itag, row_idx, datasource[id]["thumbnails"], data_title, "null", datasource[id]["duration"].replace(".", ":"), data_abr, data_filesize, data_extension, temp.system_gettemp(), path.replace("/", "\\"))
     elif source.type == "video":
-        eel.get_download_info(row_idx, datasource[id]["thumbnails"], data_title, data_resolution, datasource[id]["duration"].replace(".", ":"), f"{data_fps}fps", data_filesize, data_extension, temp.system_gettemp(), path.replace("/", "\\"))
+        eel.get_download_info(itag, row_idx, datasource[id]["thumbnails"], data_title, data_resolution, datasource[id]["duration"].replace(".", ":"), f"{data_fps}fps", data_filesize, data_extension, temp.system_gettemp(), path.replace("/", "\\"))
 
 
 # --- check master dictionary --- #
 @eel.expose
-def init_check(row_idx, res, id):
+def init_check(data_itag, row_idx, res, id):
     print(master[row_idx])
     core = master[row_idx]["self"]
     core_filesize = master[row_idx]["filesize"]
@@ -563,29 +637,45 @@ def init_check(row_idx, res, id):
     audio_size = round(core.get_audio().filesize / math.pow(1*10, 6), 2);
     
     # --- re-constructing --- #
+
+    # --- getting object audio via itag --- #
+    def init_by_itag(itag):
+        obj = core.result.get_by_itag(itag)
+        if obj != None:
+            if obj.type == "video":
+                init_check_get_info(itag, row_idx, core.result.get_by_itag(itag), core_result, core_filesize[(core.result.get_by_itag(itag).resolution.replace("p", ""))], id)
+            elif obj.type == "audio":
+                init_check_get_info(itag, row_idx, core.result.get_by_itag(itag), core_result, core_filesize[(core.result.get_by_itag(itag).abr)], id)
+        return core.result.get_by_itag(itag)
+    # ------------------------------------- #
     
     # --- getting resolution --- #
-    if res.lower() == "2160":
-        print(core.quality().res2160)
-        init_check_get_info(row_idx, core.quality().res2160, core_result, core_filesize["2160"], id)
-    elif res.lower() == "1440":
-        print(core.quality().res1440)
-        init_check_get_info(row_idx, core.quality().res1440, core_result, core_filesize["1440"], id)
-    elif res.lower() == "1080":
-        print(core.quality().res1080)
-        init_check_get_info(row_idx, core.quality().res1080, core_result, core_filesize["1080"], id)
-    elif res.lower() == "720":
-        print(core.quality().res720)
-        init_check_get_info(row_idx, core.quality().res720, core_result, core_filesize["720"], id)
-    elif res.lower() == "480":
-        print(core.quality().res480)
-        init_check_get_info(row_idx, core.quality().res480, core_result, core_filesize["480"], id)
-    
-    if res.lower() == "ogg":
-        print(core.get_audio())
-        init_check_get_info(row_idx, core.get_audio(), core_result, audio_size, id)
+    def get_by_resolution(res):
+        if res.lower() == "2160":
+            print(core.quality().res2160)
+            init_check_get_info(row_idx, core.quality().res2160, core_result, core_filesize["2160"], id)
+        elif res.lower() == "1440":
+            print(core.quality().res1440)
+            init_check_get_info(row_idx, core.quality().res1440, core_result, core_filesize["1440"], id)
+        elif res.lower() == "1080":
+            print(core.quality().res1080)
+            init_check_get_info(row_idx, core.quality().res1080, core_result, core_filesize["1080"], id)
+        elif res.lower() == "720":
+            print(core.quality().res720)
+            init_check_get_info(row_idx, core.quality().res720, core_result, core_filesize["720"], id)
+        elif res.lower() == "480":
+            print(core.quality().res480)
+            init_check_get_info(row_idx, core.quality().res480, core_result, core_filesize["480"], id)
+        
+        if res.lower() == "ogg":
+            print(core.get_audio())
+            init_check_get_info(row_idx, core.get_audio(), core_result, audio_size, id)
     # -------------------------- #
     
+    # --- init by itag --- #
+    init_by_itag(data_itag)
+    # -------------------- #
+
     # ----------------------- #
 
     return print(master[row_idx]["self"])
@@ -614,29 +704,41 @@ def init_video(url, row_idx):
 # ---------------- #
 
 @eel.expose
-def modal_core_download(row_idx, res):
+def modal_core_download(itag, row_idx, res):
     global path
     core = master[row_idx]["self"]
     core.path = path
     
-    if res.lower() == "2160":
-        print("detected 2160")
-        core.core_download(core.quality().res2160)
-    elif res.lower() == "1440":
-        print("detected 1440")
-        core.core_download(core.quality().res1440)
-    elif res.lower() == "1080":
-        print("detected 1080")
-        core.core_download(core.quality().res1080)
-    elif res.lower() == "720":
-        print("detected 720")
-        core.core_download(core.quality().res720)
-    elif res.lower() == "480":
-        print("detected 480")
-        core.core_download(core.quality().res480)
-    
-    if res.lower() == "ogg":
-        print("currently under developing...")
+    def core_by_itag(itag):
+        obj = core.result.get_by_itag(itag)
+        print("by core itag :", obj)
+        if obj != None:
+            if obj.type == "video":
+                core.core_download(obj)
+            elif obj.type == "audio":
+                core.core_download_audio()
+
+    def core_by_res(res):
+        if res.lower() == "2160":
+            print("detected 2160")
+            core.core_download(core.quality().res2160)
+        elif res.lower() == "1440":
+            print("detected 1440")
+            core.core_download(core.quality().res1440)
+        elif res.lower() == "1080":
+            print("detected 1080")
+            core.core_download(core.quality().res1080)
+        elif res.lower() == "720":
+            print("detected 720")
+            core.core_download(core.quality().res720)
+        elif res.lower() == "480":
+            print("detected 480")
+            core.core_download(core.quality().res480)
+        
+        if res.lower() == "ogg":
+            print("currently under developing...")
+
+    core_by_itag(itag)
 
 # --- eel response refresher --- #
 @eel.expose
