@@ -14,6 +14,7 @@ import subprocess
 import time
 import json
 import requests
+from requests.exceptions import HTTPError
 import tkinter as tk
 from tkinter import filedialog
 import math
@@ -80,14 +81,20 @@ class Core:
                 self.result = self.video.streams
                 audio_size = self.get_audio_default().filesize
                 print("Initializing done.")
+                print("Fetching result...")
                 for data in self.quality():
                     if data != False:
                         print(data)
                         eel.object_resolution(data.itag, data.type, row_idx, data.resolution, data.fps, data.itag, round(((data.filesize + audio_size) / math.pow(1*10, 6)), 2))
+                        eel.disable_res_button()
                 eel.object_resolution(self.get_audio_default().itag, self.get_audio_default().type, row_idx, self.get_audio_default().subtype, self.get_audio_default().abr.replace("kbps", ""), self.get_audio_default().itag, round(audio_size / math.pow(1*10, 6), 2))
+                eel.navbar_control(True)
+                eel.progress_search_fill_animation("none");
             except pytube.exceptions.RegexMatchError as ex:
                 print("Regex error. Try to re-initializing...")
                 core()
+            except HTTPError as ex:
+                print("HTTP Error 404: Not found.")
         core()
     # ---------------------------- #
 
@@ -581,12 +588,17 @@ def get_result(source):
         eel.makeObj(_id, _title, _channel, _viewer, _imgurl, _link, _duration)
     print(datasource);
     eel.search_get_first_item()
+    eel.enable_res_button()
+    eel.navbar_control(True)
+    eel.progress_search_fill_animation("none")
 # ------------------- #
 
 # --- get datasource videos --- #
 def init_search(title):
     global ds
     print("Searching videos. Please wait...")
+    eel.navbar_control(False)
+    eel.progress_search_fill_animation("search")
     ds = fetch_search(
         search(
             title,
@@ -605,6 +617,10 @@ def search_videos(title):
 # --------------------- #
 
 
+def is_path_available():
+    global path
+    return os.path.isdir(path)
+
 def init_check_get_info(itag, row_idx, source, result, filesize, id):
     global datasource
     global path
@@ -622,9 +638,9 @@ def init_check_get_info(itag, row_idx, source, result, filesize, id):
     print("4 :", data_extension)
     print(datasource[id]["duration"].replace(".", ":"))
     if source.type == "audio":
-        eel.get_download_info(itag, row_idx, datasource[id]["thumbnails"], data_title, "null", datasource[id]["duration"].replace(".", ":"), data_abr, data_filesize, data_extension, temp.system_gettemp(), path.replace("/", "\\"))
+        eel.get_download_info(itag, row_idx, datasource[id]["thumbnails"], data_title, "null", datasource[id]["duration"].replace(".", ":"), data_abr, data_filesize, data_extension, temp.system_gettemp(), path.replace("/", "\\"), is_path_available())
     elif source.type == "video":
-        eel.get_download_info(itag, row_idx, datasource[id]["thumbnails"], data_title, data_resolution, datasource[id]["duration"].replace(".", ":"), f"{data_fps}fps", data_filesize, data_extension, temp.system_gettemp(), path.replace("/", "\\"))
+        eel.get_download_info(itag, row_idx, datasource[id]["thumbnails"], data_title, data_resolution, datasource[id]["duration"].replace(".", ":"), f"{data_fps}fps", data_filesize, data_extension, temp.system_gettemp(), path.replace("/", "\\"), is_path_available())
 
 
 # --- check master dictionary --- #
@@ -713,6 +729,8 @@ def modal_core_download(itag, row_idx, res):
         obj = core.result.get_by_itag(itag)
         print("by core itag :", obj)
         if obj != None:
+            eel.modal_button_close(False)
+            eel.modal_button_download(False)
             if obj.type == "video":
                 core.core_download(obj)
             elif obj.type == "audio":
@@ -739,6 +757,8 @@ def modal_core_download(itag, row_idx, res):
             print("currently under developing...")
 
     core_by_itag(itag)
+    eel.modal_button_close(True)
+    eel.modal_button_download(True)
 
 # --- eel response refresher --- #
 @eel.expose
@@ -771,6 +791,7 @@ def setDirectory():
     root.attributes("-topmost", True)
     root.withdraw()
     eel.dialogSwap(True, "")
+    eel.navbar_control(False)
     path = filedialog.askdirectory()
     while True:
         if len(path) > 0:
@@ -780,6 +801,7 @@ def setDirectory():
             eel.dialogSwap(True, "")
             path = filedialog.askdirectory()
     is_pathed()
+    eel.navbar_control(True)
     print("Path set to :", path)
     del root
 

@@ -51,9 +51,27 @@ function listening() {
 
 listening();
 
+eel.expose(progress_search_fill_animation)
+function progress_search_fill_animation(model) {
+    var progress_search = document.querySelector(".progress-search-fill");
+    if (progress_search != undefined) {
+        if (model.toLowerCase() == "search") {
+            progress_search.classList.remove("progress-search-fill-fetch");
+            progress_search.classList.add("progress-search-fill-search");
+        } else if (model.toLowerCase() == "fetch") {
+            progress_search.classList.remove("progress-search-fill-search");
+            progress_search.classList.add("progress-search-fill-fetch");
+        } else if (model.toLowerCase() == "none") {
+            progress_search.classList.remove("progress-search-fill-fetch");
+            progress_search.classList.remove("progress-search-fill-search");
+        }
+    }
+}
+
 function searchVideos() {
     var textbox = document.querySelector("#search");
     var title = textbox.value;
+    disable_res_button();
     eel.search_videos(title);
 }
 
@@ -176,7 +194,9 @@ function makeObj(_id, _title, _channel, _viewer, _imgurl, _video_url, _duration)
     btn_fetch.setAttribute("class", "res fetch");
     btn_fetch.addEventListener("click", function(e) {
         // eel.Video(_video_url, row_wrap.getAttribute("data-row-idx"));
-        btn_please_wait(row_wrap.getAttribute("data-row-idx"))
+        btn_please_wait(row_wrap.getAttribute("data-row-idx"));
+        navbar_control(false);
+        progress_search_fill_animation("fetch");
         disable_res_button();
         eel.init_video(_video_url, row_wrap.getAttribute("data-row-idx"));
     })
@@ -194,11 +214,13 @@ function object_resolution(data_itag, data_type, parent_idx, resolution, frame, 
     var parent = document.querySelectorAll('[data-row-idx]')[parent_idx-1]
     var res = document.createElement("button");
     res.setAttribute("data-res-itag", data_itag);
+    res.setAttribute("disabled", true);
     if (data_type == "audio") {
         res.setAttribute("class", "res music");
     } else {
         res.setAttribute("class", "res");
     }
+    res.classList.add("res-disable");
     res.setAttribute("data-resolution", resolution.replace("p", ""))
     res.style.transform = "scale(0)";
     parent.appendChild(res); // <- check here!
@@ -236,7 +258,7 @@ function object_resolution(data_itag, data_type, parent_idx, resolution, frame, 
 }
 
 eel.expose(get_download_info);
-function get_download_info(data_itag, data_rowidx, data_imgurl, data_title, data_resolution, data_duration, data_fps, data_filesize, data_extension, data_pathtemp, data_pathsave) {
+function get_download_info(data_itag, data_rowidx, data_imgurl, data_title, data_resolution, data_duration, data_fps, data_filesize, data_extension, data_pathtemp, data_pathsave, is_ready) {
     var info_resolution = document.querySelectorAll(".info.resolution")[0];
     var info_fps = document.querySelectorAll(".info.fps")[0];
     var info_filesize = document.querySelectorAll(".info.filesize")[0];
@@ -250,7 +272,7 @@ function get_download_info(data_itag, data_rowidx, data_imgurl, data_title, data
     modal.setAttribute("modal-row-itag", data_itag);
     var download_domain = document.querySelector(".download-domain");
 
-    if (info_resolution != undefined & info_fps != undefined & info_filesize != undefined & info_extension != undefined & path_temp != undefined & path_save != undefined) {
+    if (modal != undefined & info_resolution != undefined & info_fps != undefined & info_filesize != undefined & info_extension != undefined & path_temp != undefined & path_save != undefined) {
         info_resolution.innerText = data_resolution;
         info_resolution.setAttribute("data-info-resolution", data_resolution);
         info_fps.innerText = data_fps;
@@ -278,10 +300,11 @@ function get_download_info(data_itag, data_rowidx, data_imgurl, data_title, data
 
         path_temp.innerText = data_pathtemp;
         path_save.innerText = data_pathsave;
-    }
-
-    if (modal != undefined & download_domain != undefined) {
+        
+        modal_button_download(is_ready);
+        
         download_domain.style.display = "block";
+
         modal.style.display = "block";
         setTimeout(function() {
             download_domain.style.opacity = 1;
@@ -291,6 +314,7 @@ function get_download_info(data_itag, data_rowidx, data_imgurl, data_title, data
     }
 }
 
+eel.expose(disable_res_button)
 function disable_res_button() {
     var res = document.querySelectorAll("[data-resolution]");
     if (res != undefined) {
@@ -457,6 +481,58 @@ function modal_animation_ready() {
     }
 }
 // -------------------------------------------------------------- //
+eel.expose(modal_button_download)
+function modal_button_download(status) {
+    var download_domain = document.querySelector(".download-domain");
+    var modal = download_domain.querySelector(".modal");
+    var btn_download = modal.querySelector("#download_domain");
+    if (status === true) {
+        btn_download.classList.remove("btn-disabled");
+        btn_download.removeAttribute("disabled");
+    } else if (status === false) {
+        btn_download.classList.add("btn-disabled");
+        btn_download.setAttribute("disabled", true);
+    }
+}
+
+eel.expose(modal_button_close)
+function modal_button_close(status) {
+    var download_domain = document.querySelector(".download-domain");
+    var modal = download_domain.querySelector(".modal");
+    var btn_close = modal.querySelector("#close_domain");
+    if (download_domain != undefined & modal != undefined & btn_close != undefined) {
+        if (status === true) {
+            btn_close.classList.remove("btn-disabled");
+            btn_close.removeAttribute("disabled");
+        } else if (status === false) {
+            btn_close.classList.add("btn-disabled");
+            btn_close.setAttribute("disabled", true);
+        }
+    }
+}
+
+eel.expose(navbar_control)
+function navbar_control(status) {
+    var form = document.querySelector(".form");
+    var btn_url_download = form.querySelector("#btn_urldownload");
+    var search = form.querySelector("#search");
+    var btn_search = form.querySelector("#btn_search");
+    var btn_directory = form.querySelector("#btn_directory");
+
+    if (form != undefined & btn_url_download != undefined & btn_search != undefined & btn_directory != undefined & search != undefined) {
+        if (status === true) {
+            btn_url_download.removeAttribute("disabled");
+            search.removeAttribute("disabled");
+            btn_search.removeAttribute("disabled");
+            btn_directory.removeAttribute("disabled");
+        } else if (status === false) {
+            btn_url_download.setAttribute("disabled", true);
+            search.setAttribute("disabled", true);
+            btn_search.setAttribute("disabled", true);
+            btn_directory.setAttribute("disabled", true);
+        }
+    }
+}
 
 // -- core main download after python --- //
 function modal_core_download() {
