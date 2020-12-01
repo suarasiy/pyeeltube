@@ -8,6 +8,30 @@
 </head>
 <body>
     <div class="main" id="_">
+        <button id="menu-apps" onclick="toggle(this);">
+            <img src="icon/127_apps.png" alt="" draggable="false">
+            <span>Apps</span>
+        </button>
+        <div id="menu">
+            <header>
+                <img src="image/suara.jpg" alt="" draggable="false">
+            </header>
+            <div class="menu-list">
+                <a href="App2.html" class="menu-btn active">
+                    <img src="icon/127_nofill_youtube.png" alt="" draggable="false">
+                    <span>Videos</span>
+                </a>
+                <a href="App1.html" class="menu-btn">
+                    <img src="icon/127_nofill_image.png" alt="" draggable="false">
+                    <span>Thumbnails</span>
+                </a>
+                <a href="#" class="menu-btn">
+                    <img src="icon/127_nofill_python.png" alt="" draggable="false">
+                    <span>About</span>
+                </a>
+            </div>
+        </div>
+        <div id="menu-cover" class="hidden"></div>
         <header></header>
         <div class="form">
             <h1>YouTube Thumbnails Downloader</h1>
@@ -23,59 +47,52 @@
                 </div>
             </div>
         </div>
-        <div class="panel" id="panel">
-            <!-- <img src="" alt="" class="content">
-            <img src="" alt="" class="content">
-            <img src="" alt="" class="content">
-            <img src="" alt="" class="content">
-            <img src="" alt="" class="content">
-            <img src="" alt="" class="content">
-            <img src="" alt="" class="content">
-            <img src="" alt="" class="content">
-            <img src="" alt="" class="content">
-            <img src="" alt="" class="content">
-            <img src="" alt="" class="content">
-            <img src="" alt="" class="content">
-            <img src="" alt="" class="content">
-            <img src="" alt="" class="content"> -->
-            <div id="mgcheck">
-                <input type="checkbox" name="img" id="cb1" data-idx="0">
-                <label for="cb1">
-                    <img src="https://s1.zerochan.net/Sylvia.Lyyneheym.600.2877190.jpg" alt="" class="content">
-                </label>
-                <input type="checkbox" name="img" id="cb2" data-idx="1">
-                <label for="cb2">
-                    <img src="https://swall.teahub.io/photos/small/303-3033122_gakusen-toshi-asterisk-sylvia-lyyneheym.jpg" alt="" class="content">
-                </label>
-                <input type="checkbox" name="img" id="cb3" data-idx="2">
-                <label for="cb3">
-                    <img src="https://cdn.anisearch.com/images/character/cover/full/53/53444.jpg" alt="" class="content">
-                </label>
-                <input type="checkbox" name="img" id="cb4" data-idx="3">
-                <label for="cb4">
-                    <img src="https://i.pinimg.com/originals/d2/68/7f/d2687f09f2257d499dfa6eca4dc4907f.jpg" alt="" class="content">
-                </label>
-            </div>
-            <div class="pan-menu">
-                <div class="pan">
-                    <img src="icon/127_trash.png" alt="" srcset="">
-                    <button class="btn-img" id="btn_clear" onclick="clearChecked();"></button>
+        <div class="eagle">
+            <div class="panel" id="panel">
+                <!-- <img src="" alt="" class="content">
+                <img src="" alt="" class="content">
+                <img src="" alt="" class="content">
+                <img src="" alt="" class="content">
+                <img src="" alt="" class="content">
+                <img src="" alt="" class="content"> -->
+                <div id="mgcheck">
+                    <input type="checkbox" name="img" id="cb1" data-idx="0">
+                    <label for="cb1">
+                        <img src="https://s1.zerochan.net/Sylvia.Lyyneheym.600.2877190.jpg" alt="" class="content">
+                    </label>
+                    <input type="checkbox" name="img" id="cb2" data-idx="1">
+                    <label for="cb2">
+                        <img src="https://swall.teahub.io/photos/small/303-3033122_gakusen-toshi-asterisk-sylvia-lyyneheym.jpg" alt="" class="content">
+                    </label>
+                    <input type="checkbox" name="img" id="cb3" data-idx="2">
+                    <label for="cb3">
+                        <img src="https://cdn.anisearch.com/images/character/cover/full/53/53444.jpg" alt="" class="content">
+                    </label>
+                    <input type="checkbox" name="img" id="cb4" data-idx="3">
+                    <label for="cb4">
+                        <img src="https://i.pinimg.com/originals/d2/68/7f/d2687f09f2257d499dfa6eca4dc4907f.jpg" alt="" class="content">
+                    </label>
                 </div>
-                <div class="pan">
-                    <span class="progress-download"></span>
-                    <button class="number" id="btn_download" onclick="sendList();">
-                        (0) Download
-                    </button>
+                <div class="pan-menu">
+                    <div class="pan">
+                        <img src="icon/127_trash.png" alt="" srcset="">
+                        <button class="btn-img" id="btn_clear" onclick="clearChecked();"></button>
+                    </div>
+                    <div class="pan">
+                        <span class="progress-download"></span>
+                        <button class="number" id="btn_download" onclick="sendList();">
+                            (0) Download
+                        </button>
+                    </div>
                 </div>
+                <!-- <a href="https://img.youtube.com/vi/lvZFaf9p-fo/maxresdefault.jpg" id="frame" download="https://img.youtube.com/vi/lvZFaf9p-fo/maxresdefault.jpg">asd</a> -->
             </div>
-            <!-- <a href="https://img.youtube.com/vi/lvZFaf9p-fo/maxresdefault.jpg" id="frame" download="https://img.youtube.com/vi/lvZFaf9p-fo/maxresdefault.jpg">asd</a> -->
         </div>
         <span class="pathbar" id="pathbar" onclick="openDir();">📁 Save path: </span>
     </div>
     <div class="behind disabled" id="__">
         <span>Select your directory...</span>
     </div>
-
 
 
     <!-- SCRIPT -->

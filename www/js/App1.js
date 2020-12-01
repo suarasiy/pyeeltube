@@ -16,6 +16,22 @@ function listening() {
 
 listening();
 
+function toggle(btn) {
+    panel = document.querySelector("#menu");
+    cover = document.querySelector("#menu-cover");
+    panel.classList.toggle("active");
+    cover.classList.toggle("hidden");
+}
+
+function panel_init() {
+    panel = document.querySelector("#menu");
+    panel_style = getComputedStyle(panel);
+    left = panel_style.getPropertyValue("width").replace("px", "");
+    panel.style.left = -Math.abs(left) + "px";
+}
+
+panel_init();
+
 function searchVideos() {
     var textbox = document.querySelector("#search");
     var title = textbox.value;
