@@ -6,10 +6,10 @@ import pytube
 from pytube.extract import mime_type_codec
 from youtubesearchpython import SearchVideos
 from colorama import *
-import Temprorary as Temp
-from History import History
+import package.Temporary as Temp
+from package.History import History
 from pytube import YouTube
-from Filename import *
+from package.Filename import *
 import subprocess
 import time
 import json
