@@ -24,8 +24,22 @@ import package.Style as box
 from datetime import datetime as dt
 
 os.system("")
-
+app_thread = ["APP_VIDEO", "APP_THUMBNAIL"]
+app = ""
 path = ""
+
+@eel.expose
+def get_app():
+    global app
+    eel.get_app(app)
+
+@eel.expose
+def app_thread(data):
+    global app
+    app = data
+    get_app()
+
+
 # --- core class --- #
 class Core:
     # operation system color initialized
@@ -33,6 +47,7 @@ class Core:
 
     # --- declare global static  variable --- #
     ds = ""
+    ds_1 = ""
     video = ""  # YouTube(url, on_progress_callback=True)
     result = "" # video.streams
     history = {}
@@ -771,9 +786,11 @@ def modal_core_download(itag, row_idx, res):
 def refresh():
     global path
     global ds
+    global ds_1
     global master
     master = {}
     ds = ""
+    ds_1 = ""
     path = ""
     print(f"{Fore.GREEN}(Listening){Fore.RESET} to {Fore.BLUE}Python{Fore.RESET}")
     print(master)
@@ -830,11 +847,11 @@ def app1_getThumbnails(ctx):
 
 def app1_getUrlThumbnails(source):
     data = source["search_result"]
-    eel.clearObj()
+    eel.app1_clearObj()
 
     for idx in data:
         url = idx["thumbnails"][4]
-        eel.makeObj(url)
+        eel.app1_makeObj(url)
 
 def app1_is_downloadable(url):
     head = requests.head(url, allow_redirects=True)
@@ -847,8 +864,8 @@ def app1_is_downloadable(url):
     return True
 
 def app1_initTitle(title):
-    global ds
-    ds = app1_getThumbnails(
+    global ds_1
+    ds_1 = app1_getThumbnails(
         search(
             title, 
             1,
@@ -945,4 +962,4 @@ def app1_core_downloadThumbnails(_list):
 
 
 eel.init("www")
-eel.start("App2.html")
+eel.start("index.html")

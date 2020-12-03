@@ -18,11 +18,11 @@
                 <img src="image/suara.jpg" alt="" draggable="false">
             </header>
             <div class="menu-list">
-                <button onclick="page_videos()" class="menu-btn active">
+                <button onclick="page_videos()" class="menu-btn active" id="btn_menu_video">
                     <img src="icon/127_nofill_youtube.png" alt="" draggable="false">
                     <span>Videos</span>
                 </button>
-                <button onclick="page_thumbnails()" class="menu-btn">
+                <button onclick="page_thumbnails()" class="menu-btn" id="btn_menu_thumbnail">
                     <img src="icon/127_nofill_image.png" alt="" draggable="false">
                     <span>Thumbnails</span>
                 </button>
@@ -44,7 +44,7 @@
                 <input type="text" name="search" id="search" placeholder="Search ..." autocomplete="off" spellcheck="false" autofocus>
                 <div class="btn">
                     <img src="icon/127_search.png" alt="" srcset="">
-                    <input type="button" id="btn_search" value="" onclick="searchVideos()">
+                    <input type="button" id="btn_search" value="">
                 </div>
                 <div class="btn">
                     <img src="icon/127_folder.png" alt="" srcset="">

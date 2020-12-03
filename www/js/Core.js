@@ -1,30 +1,104 @@
+let app = "APP_VIDEO"
+
+
+function listening() {
+    var search = document.querySelector("#search");
+    search.onkeyup = function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.querySelector("#btn_search").click();
+        }
+    }
+}
+
+function app_video_searchVideos() {
+    var textbox = document.querySelector("#search");
+    var title = textbox.value;
+    disable_res_button();
+    eel.search_videos(title);
+}
+
+function app_thumbnail_searchThumbnail() {
+    var textbox = document.querySelector("#search");
+    var title = textbox.value;
+    eel.app1_makeObj(title)
+}
+
+
+// function search //
+function set_search(app_name) {
+    if (app_name == "APP_VIDEO") {
+        // console.log("app video search")
+        app_video_searchVideos();
+    } else if (app_name == "APP_THUMBNAIL") {
+        // console.log("app thumbnail search")
+        app_thumbnail_searchThumbnail();
+    }
+}
+
+eel.expose(get_app)
+function get_app(data) {
+    // app = eel.get_app()
+    app = data;
+    console.log(app)
+}
+
+function app_thread(app) {
+    eel.app_thread(app)
+}
+
+function init_search_box() {
+    var btn_search = document.querySelector("#btn_search");
+    if (btn_search != undefined) {
+        btn_search.onclick = function() {
+            set_search(app);
+        };
+        listening();
+    }
+}
+
+// init_search_box();
 
 function page_videos() {
     var panel_videos = document.querySelector("#panel_videos");
     var panel_thumbnails = document.querySelector("#panel_thumbnails");
-    if (panel_thumbnails != undefined) {
+    var btn_video = document.querySelector("#btn_menu_video");
+    var btn_thumbnail = document.querySelector("#btn_menu_thumbnail");
+    if (panel_thumbnails != undefined & btn_video != undefined & btn_thumbnail != undefined) {
+        btn_video.classList.add("active");
+        btn_thumbnail.classList.remove("active");
+
         panel_videos.classList.remove("disabled");
         panel_videos.removeAttribute("disabled");
         panel_thumbnails.setAttribute("disabled", true);
         panel_thumbnails.classList.add("disabled");
     }
     toggle(this)
+    app_thread("APP_VIDEO");
+    init_search_box(app);
 }
 
 function page_thumbnails() {
     var panel_thumbnails = document.querySelector("#panel_thumbnails")
     var panel_videos = document.querySelector("#panel_videos");
-    if (panel_videos != undefined) {
+    var btn_video = document.querySelector("#btn_menu_video");
+    var btn_thumbnail = document.querySelector("#btn_menu_thumbnail")
+    if (panel_videos != undefined & btn_video != undefined & btn_thumbnail != undefined) {
+        btn_video.classList.remove("active");
+        btn_thumbnail.classList.add("active");
+
         panel_thumbnails.classList.remove("disabled");
         panel_thumbnails.removeAttribute("disabled");
         panel_videos.setAttribute("disabled", true);
         panel_videos.classList.add("disabled");
     }
     toggle(this)
+    app_thread("APP_THUMBNAIL");
+    init_search_box(app);
 }
 
 
-
+init_search_box();
 
 function toggle(btn) {
     panel = document.querySelector("#menu");
@@ -67,17 +141,6 @@ let _pathed = false
 // preventing refresh caused pyeel
 eel.refresh();
 
-function listening() {
-    var search = document.querySelector("#search");
-    search.addEventListener("keyup", function(event) {
-        if (event.keyCode === 13) {
-            event.preventDefault();
-            document.querySelector("#btn_search").click();
-        }
-    })
-}
-
-listening();
 
 eel.expose(progress_search_fill_animation)
 function progress_search_fill_animation(model) {
@@ -96,12 +159,12 @@ function progress_search_fill_animation(model) {
     }
 }
 
-function searchVideos() {
-    var textbox = document.querySelector("#search");
-    var title = textbox.value;
-    disable_res_button();
-    eel.search_videos(title);
-}
+// function searchVideos() {
+//     var textbox = document.querySelector("#search");
+//     var title = textbox.value;
+//     disable_res_button();
+//     eel.search_videos(title);
+// }
 
 eel.expose(search_get_first_item)
 function search_get_first_item() {
@@ -131,7 +194,7 @@ eel.expose(makeObj);
 function makeObj(_id, _title, _channel, _viewer, _imgurl, _video_url, _duration) {
     index = index + 1
     
-    var panel = document.querySelector("#panel");
+    var panel = document.querySelector("#panel_videos");
     
     var content = document.createElement("DIV");
     content.setAttribute("class", "content");
@@ -370,7 +433,7 @@ function enable_res_button() {
 eel.expose(clearObj);
 function clearObj() {
     index = 0 // -1
-    var panel = document.querySelector("#panel");
+    var panel = document.querySelector("#panel_videos");
     panel.textContent = "";
 }
 
@@ -648,17 +711,17 @@ let app1_index = -1
 // preventing refresh caused pyeel
 eel.refresh();
 
-function listening() {
-    var search = document.querySelector("#search");
-    search.addEventListener("keyup", function(event) {
-        if (event.keyCode === 13) {
-            event.preventDefault();
-            document.querySelector("#btn_search").click();
-        }
-    })
-}
+// function listening() {
+//     var search = document.querySelector("#search");
+//     search.addEventListener("keyup", function(event) {
+//         if (event.keyCode === 13) {
+//             event.preventDefault();
+//             document.querySelector("#btn_search").click();
+//         }
+//     })
+// }
 
-listening();
+// listening();
 
 function panel_init() {
     panel = document.querySelector("#menu");
@@ -669,11 +732,11 @@ function panel_init() {
 
 panel_init();
 
-function searchVideos() {
-    var textbox = document.querySelector("#search");
-    var title = textbox.value;
-    eel.makeObj(title)
-}
+// function searchVideos() {
+//     var textbox = document.querySelector("#search");
+//     var title = textbox.value;
+//     eel.makeObj(title)
+// }
 
 // function set directory in python
 function setDirectory() {
@@ -706,8 +769,8 @@ function is_pathed(path) {
     _pathed = path
 }
 
-eel.expose(makeObj);
-function makeObj(imgurl) {
+eel.expose(app1_makeObj);
+function app1_makeObj(imgurl) {
     index = index + 1;
     var panel = document.querySelector("#mgcheck");
     var box = document.createElement("IMG");
@@ -735,8 +798,8 @@ function makeObj(imgurl) {
     
     _label.appendChild(box);
 }
-eel.expose(clearObj);
-function clearObj() {
+eel.expose(app1_clearObj);
+function app1_clearObj() {
     index = -1
     var panel = document.querySelector("#mgcheck");
     panel.textContent = "";

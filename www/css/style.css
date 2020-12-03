@@ -529,7 +529,6 @@ a {
   padding: 16px;
   position: relative;
   max-width: 875px;
-  min-height: 505px;
   width: 100%;
   height: 100%;
   background-color: rgba(253, 253, 253, 0.75);
@@ -1724,4 +1723,3 @@ a {
     width: 0%;
   }
 }
-/*# sourceMappingURL=style.css.map */
