@@ -20,7 +20,7 @@ def system_gettemp():
                 dir_found = True
                 break
         if dir_found != True:
-            os.mkdir(dir_temp, dir_name)
+            os.mkdir(os.path.join(dir_temp, dir_name))
             print(f"{dir_name} is created.")
     return os.path.join(dir_temp, dir_name)
 
