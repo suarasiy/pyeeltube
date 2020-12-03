@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <title>YouTube Videos Downloader</title>
+    <title>Pyeeltube</title>
 </head>
 <body>
     <div id="blur-domain"></div>
@@ -18,11 +18,11 @@
                 <img src="image/suara.jpg" alt="" draggable="false">
             </header>
             <div class="menu-list">
-                <button class="menu-btn active">
+                <button onclick="page_videos()" class="menu-btn active">
                     <img src="icon/127_nofill_youtube.png" alt="" draggable="false">
                     <span>Videos</span>
                 </button>
-                <button onclick="swap()" class="menu-btn">
+                <button onclick="page_thumbnails()" class="menu-btn">
                     <img src="icon/127_nofill_image.png" alt="" draggable="false">
                     <span>Thumbnails</span>
                 </button>
@@ -32,7 +32,7 @@
                 </button>
             </div>
         </div>
-        <div id="menu-cover" class="hidden"></div>
+        <div onclick="toggle(this)" id="menu-cover" class="hidden"></div>
         <header></header>
         <div class="form">
             <h1>YouTube Videos Downloader</h1>
@@ -56,7 +56,7 @@
             <div class="progress-search">
                 <div class="progress-search-fill"></div>
             </div>
-            <div class="panel column" id="panel">
+            <div class="panel column" id="panel_videos">
                 <div class="content">
                     <span class="index">1</span>
                     <div class="thumbnails">
@@ -163,48 +163,38 @@
                         </div>
                     </div>
                 </div>
-    
-                <!-- <div class="content">
-                    <span class="index">1</span>
-                    <img src="icon/thumb.jpg" alt="" draggable="false">
-                    <div class="information">
-                        <span class="title">【東方ボーカル】 「Desert years (Nhato remix)」 【ShibayanRecords】</span>
-                        <div class="row">
-                            <span class="block">
-                                <img src="icon/127_linking.png" alt="">
-                                eJB1SSXRxbQ</span>
-                            <span class="block">
-                                <img src="icon/127_eye.png" alt="">
-                                Views : 272,044
-                            </span>
-                        </div>
-                        <span class="channel">Alice Margatroid</span>
-                        <span class="label">Available resolution:</span>
-                        <div class="row wrap">
-                            <button class="res">
-                                <span class="top">2160p</span>
-                            </button>
-                            <button class="res">
-                                <span class="top">1440p</span>
-                            </button>
-                            <button class="res">
-                                <span class="top">1080p</span>
-                            </button>
-                            <button class="res">
-                                <span class="top">720p</span>
-                            </button>
-                            <button class="res">
-                                <span class="top">480p</span>
-                            </button>
-                            <button class="res audio">
-                                <span class="top">160kbps</span>
-                            </button>
-                        </div>
+            </div>
+            <div class="panel disabled" id="panel_thumbnails">
+                <div id="mgcheck">
+                    <input type="checkbox" name="img" id="cb1" data-idx="0">
+                    <label for="cb1">
+                        <img src="https://s1.zerochan.net/Sylvia.Lyyneheym.600.2877190.jpg" alt="" class="content">
+                    </label>
+                    <input type="checkbox" name="img" id="cb2" data-idx="1">
+                    <label for="cb2">
+                        <img src="https://swall.teahub.io/photos/small/303-3033122_gakusen-toshi-asterisk-sylvia-lyyneheym.jpg" alt="" class="content">
+                    </label>
+                    <input type="checkbox" name="img" id="cb3" data-idx="2">
+                    <label for="cb3">
+                        <img src="https://cdn.anisearch.com/images/character/cover/full/53/53444.jpg" alt="" class="content">
+                    </label>
+                    <input type="checkbox" name="img" id="cb4" data-idx="3">
+                    <label for="cb4">
+                        <img src="https://i.pinimg.com/originals/d2/68/7f/d2687f09f2257d499dfa6eca4dc4907f.jpg" alt="" class="content">
+                    </label>
+                </div>
+                <div class="pan-menu">
+                    <div class="pan">
+                        <img src="icon/127_trash.png" alt="" srcset="">
+                        <button class="btn-img" id="btn_clear" onclick="clearChecked();"></button>
                     </div>
-                </div> -->
-    
-                <!-- <a href="https://img.youtube.com/vi/lvZFaf9p-fo/maxresdefault.jpg" id="frame" download="https://img.youtube.com/vi/lvZFaf9p-fo/maxresdefault.jpg">asd</a> -->
-    
+                    <div class="pan">
+                        <span class="progress-download"></span>
+                        <button class="number" id="btn_download" onclick="sendList();">
+                            (0) Download
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
         <span class="pathbar" id="pathbar" onclick="openDir();">📁 Save path: </span>
@@ -293,7 +283,7 @@
 
     <!-- SCRIPT -->
     <script src="eel.js"></script>
-    <script src="js/App2.js"></script>
+    <script src="js/Core.js"></script>
     <!------------>
     
 </body>

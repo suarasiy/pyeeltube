@@ -1,6 +1,6 @@
 import os
 import logging as lg
-import Temprorary as temp
+import package.Temporary as temp
 
 class Log:
 

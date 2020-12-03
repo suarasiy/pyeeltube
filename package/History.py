@@ -1,4 +1,4 @@
-from Filename import *
+from package.Filename import *
 
 class History():
 

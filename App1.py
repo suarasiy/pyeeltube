@@ -1,4 +1,4 @@
-import Style as box
+import package.Style as box
 from colorama import *
 
 import os
@@ -18,22 +18,22 @@ os.system("")
 ds = ""
 path = ""
 
-@eel.expose
-def hello():
-    print("Hello world!")
+# @eel.expose
+# def hello():
+#     print("Hello world!")
 
-@eel.expose
-def refresh():
-    global path
-    global ds
-    ds = ""
-    path = ""
-    print(f"{Fore.GREEN}(Listening){Fore.RESET} to {Fore.BLUE}Python{Fore.RESET}")
+# @eel.expose
+# def refresh():
+#     global path
+#     global ds
+#     ds = ""
+#     path = ""
+#     print(f"{Fore.GREEN}(Listening){Fore.RESET} to {Fore.BLUE}Python{Fore.RESET}")
 
-@eel.expose
-def openDir():
-    global path
-    os.system(f"start {path}")
+# @eel.expose
+# def openDir():
+#     global path
+#     os.system(f"start {path}")
 
 def pattern_filename(filename):
     filename = filename.replace("/", " - ")
@@ -109,35 +109,35 @@ def getUrlFromIndex(idx):
         url = data[i]["thumbnails"][4]
         eel.download(url)
 
-@eel.expose
-def setDirectory():
-    global path
-    root = tk.Tk()
-    root.attributes("-topmost", True)
-    root.withdraw()
-    eel.dialogSwap(True, "")
-    path = filedialog.askdirectory()
-    while True:
-        if len(path) > 0:
-            eel.dialogSwap(False, path)
-            break
-        else:
-            eel.dialogSwap(True, "")
-            path = filedialog.askdirectory()
-    is_pathed()
-    eel.getSelectedIndex()
-    print("Path set to :", path)
-    del root
+# @eel.expose
+# def setDirectory():
+#     global path
+#     root = tk.Tk()
+#     root.attributes("-topmost", True)
+#     root.withdraw()
+#     eel.dialogSwap(True, "")
+#     path = filedialog.askdirectory()
+#     while True:
+#         if len(path) > 0:
+#             eel.dialogSwap(False, path)
+#             break
+#         else:
+#             eel.dialogSwap(True, "")
+#             path = filedialog.askdirectory()
+#     is_pathed()
+#     eel.getSelectedIndex()
+#     print("Path set to :", path)
+#     del root
 
-@eel.expose
-def is_pathed():
-    global path
-    print("catch : ", path)
-    if len(path) > 0:
-        print("set to true")
-        eel.is_pathed(True)
-    else:
-        eel.is_pathed(False)
+# @eel.expose
+# def is_pathed():
+#     global path
+#     print("catch : ", path)
+#     if len(path) > 0:
+#         print("set to true")
+#         eel.is_pathed(True)
+#     else:
+#         eel.is_pathed(False)
 
 def getFileSize(url):
     data = requests.head(url, allow_redirects=True)
@@ -180,7 +180,10 @@ def core_downloadThumbnails(_list):
         print(f"{box.style(0,37,41)}Error catched.{box.end()}")
 
     
+# @eel.expose
+# def search_videos(title):
+#     print("gotcha :", title)
 
-
-eel.init("www")
-eel.start("App1.html")
+def start():
+    eel.init("www")
+    eel.start("App1.html", mode=False, port=8081)
