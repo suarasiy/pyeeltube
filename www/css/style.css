@@ -460,6 +460,69 @@ a {
   overflow: hidden;
 }
 
+.main > .eagle > .popup {
+  position: fixed;
+  z-index: 5;
+  top: 170px;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  padding: 15px 19px;
+  -webkit-box-shadow: 0 3px 9px 0.21px rgba(0, 0, 0, 0.055);
+          box-shadow: 0 3px 9px 0.21px rgba(0, 0, 0, 0.055);
+  background-color: rgba(255, 255, 255, 0.876);
+  display: none;
+}
+
+.main > .eagle > .popup > span {
+  font-family: "Segoe UI";
+  font-size: 15px;
+  font-weight: 500;
+  color: black;
+}
+
+.main > .eagle > .popup.show {
+  display: block;
+}
+
+.main > .eagle > .content-result {
+  cursor: default;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.755);
+  height: 0px;
+  -webkit-transition: height 0.3s cubic-bezier(0.34, 0.99, 0.47, 1);
+  transition: height 0.3s cubic-bezier(0.34, 0.99, 0.47, 1);
+}
+
+.main > .eagle > .content-result .title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  cursor: default;
+  font-family: "Segoe UI";
+  font-size: 17px;
+  font-weight: 500;
+  color: #0f0a25;
+  text-align: center;
+  opacity: 0;
+  -webkit-transition: opacity .2s linear 0s;
+  transition: opacity .2s linear 0s;
+}
+
+.main > .eagle > .content-result.show {
+  height: 49px;
+}
+
+.main > .eagle > .content-result.show .title {
+  opacity: 1;
+}
+
 .main > .eagle .progress-search {
   position: -webkit-sticky;
   position: sticky;
@@ -529,7 +592,7 @@ a {
   padding: 16px;
   position: relative;
   max-width: 875px;
-  width: 100%;
+  width: 875px;
   height: 100%;
   background-color: rgba(253, 253, 253, 0.75);
   -webkit-box-shadow: 0 4px 9px 0.3px rgba(0, 0, 0, 0.22);

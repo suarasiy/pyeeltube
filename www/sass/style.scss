@@ -356,6 +356,67 @@ a {
         flex-direction: column;
         overflow: hidden;
 
+        > .popup {
+            position: fixed;
+            z-index: 5;
+            top: 170px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 15px 19px;
+            box-shadow: 0 3px 9px .21px rgba(0, 0, 0, 0.055);
+            background-color: rgba(255, 255, 255, 0.876);
+            display: none;
+            > span {
+                font-family: "Segoe UI";
+                font-size: 15px;
+                font-weight: 500;
+                color: black;
+            }
+            &.show {
+                display: block;
+            }
+        }
+
+        > .content-result {
+            cursor: default;
+            user-select: none;
+            // padding: 16px;
+            
+            position: relative;
+            
+            background-color: rgba(255, 255, 255, 0.755);
+            // display: none;
+            height: 0px;
+            transition: height .3s cubic-bezier(.34, .99, .47, 1);
+            .title {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                cursor: default;
+                
+                font-family: "Segoe UI";
+                font-size: 17px;
+                font-weight: 500;
+                color: rgb(15, 10, 37);
+                text-align: center;
+
+                opacity: 0;
+                transition: opacity .2s linear 0s;
+                // &:hover {
+                //     text-decoration: underline;
+                //     color: rgb(45, 29, 116);
+                // }
+            }
+            &.show {
+                // display: flex;
+                height: 49px;
+                .title {
+                    opacity: 1;
+                }
+            }
+        }
+
         .progress-search {
             position: sticky;
             top: 0;
@@ -403,7 +464,8 @@ a {
             position: relative;
             max-width: 875px;
             // min-height: 505px;
-            width: 100%;
+            // width: 100%;
+            width: 875px;
             height: 100%;
             background-color: rgba(253, 253, 253, .75); // rgb(253, 253, 253);
     
@@ -417,7 +479,7 @@ a {
                 padding: 0px;
                 flex-direction: column;
                 flex-wrap: nowrap;
-                
+
                 > .content {
                     cursor: default;
                     user-select: none;

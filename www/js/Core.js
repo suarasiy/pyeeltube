@@ -1,7 +1,30 @@
 let app = "APP_VIDEO"
 let text_search_video = ""
 let text_search_thumbnail = ""
+let VIDEO_RESULT = 1
+let THUMBNAIL_RESULT = 1
 
+eel.expose(length_video_result)
+function length_video_result(total) {
+    // VIDEO_RESULT = ""
+    VIDEO_RESULT = total;
+    // console.log("video total : " + VIDEO_RESULT)
+}
+
+eel.expose(length_thumbnail_result)
+function length_thumbnail_result(total) {
+    // THUMBNAIL_RESULT = 0;
+    THUMBNAIL_RESULT = total;
+    // console.log("thumbnail total : " + THUMBNAIL_RESULT);
+}
+
+eel.expose(text_search_focus)
+function text_search_focus() {
+    var search = document.querySelector("#search");
+    if (search != undefined) {
+        search.focus();
+    }
+}
 
 function listening() {
     var search = document.querySelector("#search");
@@ -85,6 +108,12 @@ function page_videos() {
 
         video_player.classList.remove("hide");
 
+        if (VIDEO_RESULT > 0) {
+            text_search_result("hide");
+        } else {
+            text_search_result("show");
+        }
+
         search.value = text_search_video;
         search.focus();
     }
@@ -110,6 +139,12 @@ function page_thumbnails() {
         panel_videos.classList.add("disabled");
 
         video_player.classList.add("hide");
+
+        if (THUMBNAIL_RESULT > 0) {
+            text_search_result("hide");
+        } else {
+            text_search_result("show");
+        }
 
         search.value = text_search_thumbnail;
         search.focus();
@@ -455,6 +490,30 @@ function enable_res_button() {
             // res[i].classList.toggle("res-disable");
             res[i].classList.remove("res-disable");
             res[i].removeAttribute("disabled");
+        }
+    }
+}
+
+eel.expose(popup_result)
+function popup_result(bool) {
+    var popup = document.querySelector("#popup-not-found");
+    if (popup != undefined) {
+        if (bool == "show") {
+            popup.classList.add("show");
+        } else if (bool == "hide") {
+            popup.classList.remove("show");
+        }
+    }
+}
+
+eel.expose(text_search_result)
+function text_search_result(bool) {
+    var result = document.querySelector("#top-not-found-1");
+    if (result != undefined) {
+        if (bool === "show") {
+            result.classList.add("show");
+        } else if (bool === "hide") {
+            result.classList.remove("show");
         }
     }
 }

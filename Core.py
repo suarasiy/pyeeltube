@@ -588,30 +588,40 @@ def get_result(source):
     global datasource
     data = source["search_result"]
     eel.clearObj()
-    for idx in data:
-        datasource[idx["id"]] = {
-            "id" : idx["id"],
-            "title" : idx["title"],
-            "channel" : idx["channel"],
-            "views" : idx["views"],
-            "thumbnails" : idx["thumbnails"][4],
-            "duration" : idx["duration"],
-            "link" : idx["link"]
-        }
-        _id = idx["id"]
-        _title = idx["title"]
-        _channel = idx["channel"]
-        _viewer = idx["views"]
-        _imgurl = idx["thumbnails"][4]
-        _duration = idx["duration"].replace(".", ":")
-        # _imgurl = image_code_status(_imgurl)
-        _link = idx["link"]
-        eel.makeObj(_id, _title, _channel, _viewer, _imgurl, _link, _duration)
-    print(datasource);
-    eel.search_get_first_item()
-    eel.enable_res_button()
+    eel.length_video_result(len(data))
+    if len(data) > 0:
+        # eel.popup_result("hide")
+        eel.text_search_result("hide")
+        for idx in data:
+            datasource[idx["id"]] = {
+                "id" : idx["id"],
+                "title" : idx["title"],
+                "channel" : idx["channel"],
+                "views" : idx["views"],
+                "thumbnails" : idx["thumbnails"][4],
+                "duration" : idx["duration"],
+                "link" : idx["link"]
+            }
+            _id = idx["id"]
+            _title = idx["title"]
+            _channel = idx["channel"]
+            _viewer = idx["views"]
+            _imgurl = idx["thumbnails"][4]
+            _duration = idx["duration"].replace(".", ":")
+            # _imgurl = image_code_status(_imgurl)
+            _link = idx["link"]
+            eel.makeObj(_id, _title, _channel, _viewer, _imgurl, _link, _duration)
+        print(datasource);
+        eel.search_get_first_item()
+        eel.enable_res_button()
+    else:
+        # eel.popup_result("show")
+        eel.text_search_result("show")
+        print(f"{Fore.RED}Result not found{Fore.RESET}")
+        
     eel.navbar_control(True)
     eel.progress_search_fill_animation("none")
+    eel.text_search_focus()
 # ------------------- #
 
 # --- get datasource videos --- #
@@ -845,6 +855,7 @@ def app1_getThumbnails(ctx):
         index = index + 1
         title = _data["title"]
         print(f"[{Fore.BLUE}{index}{Fore.RESET}] {title}")
+    eel.text_search_focus()
     print("==Done result==")
     print()
     return data
@@ -853,9 +864,14 @@ def app1_getUrlThumbnails(source):
     data = source["search_result"]
     eel.app1_clearObj()
 
-    for idx in data:
-        url = idx["thumbnails"][4]
-        eel.app1_makeObj(url)
+    eel.length_thumbnail_result(len(data))
+    if len(data) > 0:
+        eel.text_search_result("hide")
+        for idx in data:
+            url = idx["thumbnails"][4]
+            eel.app1_makeObj(url)
+    else:
+        eel.text_search_result("show")
 
 def app1_is_downloadable(url):
     head = requests.head(url, allow_redirects=True)
