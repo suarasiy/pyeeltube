@@ -1169,6 +1169,7 @@ a {
 }
 
 .main > .video-player {
+  pointer-events: none;
   z-index: 1;
   position: fixed;
   display: -webkit-box;
@@ -1183,8 +1184,17 @@ a {
   width: auto;
   height: auto;
   background-color: transparent;
-  -webkit-box-shadow: 0 3px 7px 0.22px rgba(0, 0, 0, 0.22);
-          box-shadow: 0 3px 7px 0.22px rgba(0, 0, 0, 0.22);
+  opacity: 1;
+  -webkit-transition: bottom 0.3s cubic-bezier(0.4, 0.1, 0.45, 1);
+  transition: bottom 0.3s cubic-bezier(0.4, 0.1, 0.45, 1);
+}
+
+.main > .video-player.hide {
+  bottom: -160px;
+}
+
+.main > .video-player.hide > #iframe_youtube {
+  opacity: 0;
 }
 
 .main > .video-player > .row {
@@ -1196,6 +1206,8 @@ a {
 }
 
 .main > .video-player > .row > .close {
+  pointer-events: all;
+  cursor: pointer;
   padding: 6px 10px;
   border-radius: 4px;
   font-family: Roboto;
@@ -1203,6 +1215,19 @@ a {
   font-weight: 500;
   background-color: rgba(255, 255, 255, 0.22);
   color: black;
+}
+
+.main > .video-player > .row > .close:hover {
+  background-color: rgba(255, 255, 255, 0.356);
+}
+
+.main > .video-player > #iframe_youtube {
+  pointer-events: all;
+  -webkit-box-shadow: 0 3px 7px 0.22px rgba(0, 0, 0, 0.22);
+          box-shadow: 0 3px 7px 0.22px rgba(0, 0, 0, 0.22);
+  opacity: 1;
+  -webkit-transition: opacity .2s linear 0s;
+  transition: opacity .2s linear 0s;
 }
 
 .main > .download-domain {

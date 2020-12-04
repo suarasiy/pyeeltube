@@ -1,4 +1,6 @@
 let app = "APP_VIDEO"
+let text_search_video = ""
+let text_search_thumbnail = ""
 
 
 function listening() {
@@ -7,6 +9,11 @@ function listening() {
         if (event.keyCode === 13) {
             event.preventDefault();
             document.querySelector("#btn_search").click();
+        }
+        if (app === "APP_VIDEO") {
+            text_search_video = search.value;
+        } else if (app === "APP_THUMBNAIL") {
+            text_search_thumbnail = search.value;
         }
     }
 }
@@ -27,6 +34,7 @@ function app_thumbnail_searchThumbnail() {
 
 // function search //
 function set_search(app_name) {
+    var search = document.querySelector("#search");
     if (app_name == "APP_VIDEO") {
         // console.log("app video search")
         app_video_searchVideos();
@@ -64,7 +72,9 @@ function page_videos() {
     var panel_thumbnails = document.querySelector("#panel_thumbnails");
     var btn_video = document.querySelector("#btn_menu_video");
     var btn_thumbnail = document.querySelector("#btn_menu_thumbnail");
-    if (panel_thumbnails != undefined & btn_video != undefined & btn_thumbnail != undefined) {
+    var search = document.querySelector("#search");
+    var video_player = document.querySelector("#video_player");
+    if (panel_thumbnails != undefined & btn_video != undefined & btn_thumbnail != undefined & search != undefined) {
         btn_video.classList.add("active");
         btn_thumbnail.classList.remove("active");
 
@@ -72,6 +82,11 @@ function page_videos() {
         panel_videos.removeAttribute("disabled");
         panel_thumbnails.setAttribute("disabled", true);
         panel_thumbnails.classList.add("disabled");
+
+        video_player.classList.remove("hide");
+
+        search.value = text_search_video;
+        search.focus();
     }
     toggle(this)
     app_thread("APP_VIDEO");
@@ -83,7 +98,9 @@ function page_thumbnails() {
     var panel_videos = document.querySelector("#panel_videos");
     var btn_video = document.querySelector("#btn_menu_video");
     var btn_thumbnail = document.querySelector("#btn_menu_thumbnail")
-    if (panel_videos != undefined & btn_video != undefined & btn_thumbnail != undefined) {
+    var search = document.querySelector("#search");
+    var video_player = document.querySelector("#video_player");
+    if (panel_videos != undefined & btn_video != undefined & btn_thumbnail != undefined & search != undefined) {
         btn_video.classList.remove("active");
         btn_thumbnail.classList.add("active");
 
@@ -91,6 +108,11 @@ function page_thumbnails() {
         panel_thumbnails.removeAttribute("disabled");
         panel_videos.setAttribute("disabled", true);
         panel_videos.classList.add("disabled");
+
+        video_player.classList.add("hide");
+
+        search.value = text_search_thumbnail;
+        search.focus();
     }
     toggle(this)
     app_thread("APP_THUMBNAIL");
@@ -105,6 +127,13 @@ function toggle(btn) {
     cover = document.querySelector("#menu-cover");
     panel.classList.toggle("active");
     cover.classList.toggle("hidden");
+}
+
+function toggle_video() {
+    var video_player = document.querySelector("#video_player");
+    if (video_player != undefined) {
+        video_player.classList.toggle("hide");
+    }
 }
 
 function panel_init() {
@@ -739,12 +768,12 @@ panel_init();
 // }
 
 // function set directory in python
-function setDirectory() {
-    eel.setDirectory()
-}
+// function setDirectory() {
+//     eel.setDirectory()
+// }
 
-eel.expose(getSelectedIndex)
-function getSelectedIndex() {
+eel.expose(app1_getSelectedIndex)
+function app1_getSelectedIndex() {
     var checkboxes = document.querySelectorAll("input[name='img']:checked");
     const btn_download = document.querySelector("#btn_download");
     let index = [];
@@ -764,10 +793,10 @@ function getSelectedIndex() {
     return index
 }
 
-eel.expose(is_pathed)
-function is_pathed(path) {
-    _pathed = path
-}
+// eel.expose(is_pathed)
+// function is_pathed(path) {
+//     _pathed = path
+// }
 
 eel.expose(app1_makeObj);
 function app1_makeObj(imgurl) {
@@ -782,7 +811,7 @@ function app1_makeObj(imgurl) {
     _checkbox.setAttribute("data-idx", index);
     _checkbox.addEventListener("click", function(e) {
         eel.is_pathed();
-        getSelectedIndex();
+        app1_getSelectedIndex();
         //console.log(getSelectedIndex());
     })
     panel.appendChild(_checkbox);
@@ -803,12 +832,12 @@ function app1_clearObj() {
     index = -1
     var panel = document.querySelector("#mgcheck");
     panel.textContent = "";
-    getSelectedIndex();
+    app1_getSelectedIndex();
 }
 
 function sendList() {
-    list = getSelectedIndex();
-    eel.core_downloadThumbnails(list);
+    list = app1_getSelectedIndex();
+    eel.app1_core_downloadThumbnails(list);
     //eel.getUrlFromIndex(list);
     //eel.createTk();
 }
@@ -828,7 +857,7 @@ function btnDownload(status) {
 
 eel.expose(download)
 function download(url) {
-    var index = getSelectedIndex();
+    var index = app1_getSelectedIndex();
     var frame = document.querySelector("#frame");
     index.forEach(function(i) {
         // console.log(i);
@@ -883,7 +912,7 @@ function clearChecked() {
     checkedList.forEach(function(e) {
         e.checked = false;
     })
-    getSelectedIndex();
+    app1_getSelectedIndex();
 }
 
 function openDir() {

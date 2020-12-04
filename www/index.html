@@ -190,7 +190,7 @@
                     </div>
                     <div class="pan">
                         <span class="progress-download"></span>
-                        <button class="number" id="btn_download" onclick="sendList();">
+                        <button class="number disabled" id="btn_download" onclick="sendList();" disabled>
                             (0) Download
                         </button>
                     </div>
@@ -198,10 +198,10 @@
             </div>
         </div>
         <span class="pathbar" id="pathbar" onclick="openDir();">📁 Save path: </span>
-        <div class="video-player">
-            <!-- <div class="row">
-                <button class="close">close</button>
-            </div> -->
+        <div class="video-player" id="video_player">
+            <div class="row">
+                <button class="close" id="toggle_video" onclick="toggle_video()">toggle</button>
+            </div>
             <iframe id="iframe_youtube" src="https://www.youtube.com/embed/Nq-YGrZpdsg?controls=0" frameborder="0" width="284" height="160" allowfullscreen></iframe>
         </div>
 

@@ -825,6 +825,10 @@ def setDirectory():
             path = filedialog.askdirectory()
     is_pathed()
     eel.navbar_control(True)
+
+    # app1
+    eel.app1_getSelectedIndex()
+
     print("Path set to :", path)
     del root
 
@@ -873,7 +877,7 @@ def app1_initTitle(title):
             15
         )
     )
-    app1_getUrlThumbnails(ds)
+    app1_getUrlThumbnails(ds_1)
 
 @eel.expose
 def app1_makeObj(title):
@@ -882,8 +886,8 @@ def app1_makeObj(title):
 @eel.expose
 def app1_getUrlFromIndex(idx):
     idx = [(int(x)) for x in idx]
-    global ds
-    data = ds["search_result"]
+    global ds_1
+    data = ds_1["search_result"]
     for i in idx:
         url = data[i]["thumbnails"][4]
         eel.download(url)
@@ -928,8 +932,8 @@ def app1_getFileSize(url):
 @eel.expose
 def app1_core_downloadThumbnails(_list):
     global path
-    global ds
-    data = ds["search_result"]
+    global ds_1
+    data = ds_1["search_result"]
     _list = ([int(_list) for _list in _list])
     amount = len(_list);
     pathsave = path.replace("/", "\\")
@@ -937,7 +941,7 @@ def app1_core_downloadThumbnails(_list):
     eel.btnDownload(True)
     try:
         for idx in _list:
-            title = app1_pattern_filename(data[idx]["title"])
+            title = cleansing(data[idx]["title"])
             url_thumbnails = data[idx]["thumbnails"][4]
             size = app1_getFileSize(url_thumbnails)
             thumbname = url_thumbnails.rsplit("/", 1)[1]

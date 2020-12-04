@@ -965,6 +965,7 @@ a {
     }
 
     > .video-player {
+        pointer-events: none;
         z-index: 1;
         position: fixed;
 
@@ -976,12 +977,24 @@ a {
         width: auto; // 290px
         height: auto;
         background-color: transparent;
-        box-shadow: 0 3px 7px .22px rgba(0, 0, 0, 0.22);
+        opacity: 1;
+        // box-shadow: 0 3px 7px .22px rgba(0, 0, 0, 0.22);
+
+        transition: bottom .3s cubic-bezier(.4, .1, .45, 1);
+
+        &.hide {
+            bottom: -160px;
+            > #iframe_youtube {
+                opacity: 0;
+            }
+        }
         > .row {
             justify-content: flex-end;
             width: unset;
             margin: 5px;
             > .close {
+                pointer-events: all;
+                cursor: pointer;
                 padding: 6px 10px;
                 border-radius: 4px;
                 font-family: Roboto;
@@ -989,7 +1002,18 @@ a {
                 font-weight: 500;
                 background-color: rgba(255, 255, 255, 0.22);
                 color: black;
+
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.356);
+                }
             }
+        }
+
+        > #iframe_youtube {
+            pointer-events: all;
+            box-shadow: 0 3px 7px 0.22px rgba(0, 0, 0, 0.22);
+            opacity: 1;
+            transition: opacity .2s linear 0s;
         }
     }
 
