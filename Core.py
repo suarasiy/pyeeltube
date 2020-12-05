@@ -100,15 +100,20 @@ class Core:
                 print("Initializing, please wait...")
                 self.video = YouTube(url, on_progress_callback=self.on_progress)
                 self.result = self.video.streams
-                audio_size = self.get_audio_default().filesize
                 print("Initializing done.")
-                print("Fetching result...")
-                for data in self.quality():
-                    if data != False:
-                        print(data)
-                        eel.object_resolution(data.itag, data.type, row_idx, data.resolution, data.fps, data.itag, round(((data.filesize + audio_size) / math.pow(1*10, 6)), 2))
-                        eel.disable_res_button()
-                eel.object_resolution(self.get_audio_default().itag, self.get_audio_default().type, row_idx, self.get_audio_default().subtype, self.get_audio_default().abr.replace("kbps", ""), self.get_audio_default().itag, round(audio_size / math.pow(1*10, 6), 2))
+                if len(self.result) > 0:
+                    audio_size = self.get_audio_default().filesize
+                    print("Fetching result...")
+                    for data in self.quality():
+                        if data != False:
+                            print(data)
+                            eel.object_resolution(data.itag, data.type, row_idx, data.resolution, data.fps, data.itag, round(((data.filesize + audio_size) / math.pow(1*10, 6)), 2))
+                            eel.disable_res_button()
+                    eel.object_resolution(self.get_audio_default().itag, self.get_audio_default().type, row_idx, self.get_audio_default().subtype, self.get_audio_default().abr.replace("kbps", ""), self.get_audio_default().itag, round(audio_size / math.pow(1*10, 6), 2))
+                    eel.btn_finish_fetch(row_idx)
+                else:
+                    eel.btn_fetch_normal(row_idx)
+                    print(f"{Fore.RED}There are no result for a moments. Please try again later...{Fore.RESET}")
                 eel.navbar_control(True)
                 eel.progress_search_fill_animation("none");
             except pytube.exceptions.RegexMatchError as ex:
@@ -744,13 +749,16 @@ def init_video(url, row_idx):
     core.Video(url, row_idx)
     
     # get_filesizes(master[row_idx]["self"])
-    get_filesizes(core.each_quality_size())
+    # get_filesizes(core.each_quality_size())
 
     # --- update key 'filesizes' in master dictionary --- #
-    master[row_idx]["filesize"] = core.each_quality_size()
+    if len(core.result) > 0:
+        master[row_idx]["filesize"] = core.each_quality_size()
+    else:
+        print("No result found. Calculating filesize canceled.")
     # --------------------------------------------------- #
 
-    eel.btn_finish_fetch(row_idx)
+    # eel.btn_finish_fetch(row_idx)
     eel.enable_res_button()
     print(master)
 # ---------------- #

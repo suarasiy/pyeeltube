@@ -8,7 +8,7 @@
 }
 
 ::-webkit-scrollbar {
-    width: 5px;
+    width: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -17,6 +17,7 @@
 
 ::-webkit-scrollbar-thumb {
     background-color: rgb(233, 113, 113);
+    box-shadow: 0 0 5px 1px rgba(255, 85, 108, 0.65);
     &:hover {
         background-color: rgb(194, 47, 47);
     }
@@ -429,9 +430,10 @@ a {
                 width: 0%;
                 height: 100%;
                 background-color: rgb(107, 164, 255);
-                left: 0;
-                transform: translateX(-50%);
-
+                left: -10px;
+                // transform: translateX(-50%);
+                
+                box-shadow: 0 0 10px 5px rgba(85, 179, 255, .65);
                 transition: width .4s cubic-bezier(.22, 1, .58, 1);
                 
                 &.progress-search-fill-search {
@@ -718,6 +720,7 @@ a {
                                         width: 15px;
                                         height: 2px;
                                         background-color: rgb(59, 115, 248);
+                                        box-shadow: 0 0 5px 1px rgba(110, 190, 255, 0.65);
                                         bottom: 0;
                                         left: -20%;
                                         animation: fetch_loading;

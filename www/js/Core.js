@@ -525,6 +525,18 @@ function clearObj() {
     panel.textContent = "";
 }
 
+eel.expose(btn_fetch_normal)
+function btn_fetch_normal(parent_idx) {
+    var parent = document.querySelectorAll('[data-row-idx]')[parent_idx-1]
+    var btn_fetch = parent.querySelector(".res.fetch.loading")
+    var top = btn_fetch.getElementsByTagName('SPAN')[0]
+    if (btn_fetch != undefined & top != undefined) {
+        btn_fetch.removeAttribute("disabled")
+        btn_fetch.setAttribute("class", "fetch res")
+        top.innerText = "FETCH"
+    }
+}
+
 function btn_please_wait(parent_idx) {
     var parent = document.querySelectorAll('[data-row-idx]')[parent_idx-1]
     var btn_fetch = parent.querySelector(".res.fetch")
