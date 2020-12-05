@@ -12,6 +12,3 @@
 
 ## Running program
 You can start the program with `python Core.py` and it will started on port `localhost:8000`.
-
-### About
-This is my first program which I published. Pardon if I have bad code and please be kind to me. Best Regards.
