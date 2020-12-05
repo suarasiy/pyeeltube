@@ -1,5 +1,5 @@
 # pyeeltube
-**pyeeltube** is YouTube videos downloader and thumbnails downloader. This apps is building with `html`, `css`, `js`, and `python`.
+**pyeeltube** is YouTube videos downloader and thumbnails downloader. This program is building with `html`, `css`, `js`, and `python`.
 
 ## Core dependencies
 - [eel](https://github.com/samuelhwilliams/Eel)
