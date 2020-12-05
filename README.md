@@ -10,4 +10,4 @@
 - tested on `python version 3.8.6`.
 
 # Running program
-You can start the program with `python Core.py` and application started on port `localhost:8000`.
+You can start the program with `python Core.py` and it will started on port `localhost:8000`.
