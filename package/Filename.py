@@ -8,7 +8,14 @@ def cleansing(filename):
     filename = filename.replace(">", "")
     filename = filename.replace("|", "")
     filename = filename.replace('"', "")
+    filename = filename.replace("?", "")
     return filename
+
+def cleansing_all(filename):
+    filename = cleansing(filename)
+    filename = filename.replace(".", "")
+    return filename
+    
 
 def rcleansing(filename):
     path = filename.rsplit("\\", 1)[0]

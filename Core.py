@@ -304,6 +304,11 @@ class Core:
             # command_merge = f'ffmpeg.exe -i "{pathfile_video}" -i "{pathfile_audio}" -c copy -c:a aac "{os.path.join(path, output_name)}"'
             command_merge = f'ffmpeg.exe -i "{pathfile_audio}" -vn -b:a 128K "{os.path.join(path, output_name)}"'
             # ------------------------------------------------------- #
+            
+            print("debug: ==")
+            print(f"output name : {output_name}")
+            print(f"pathfile : {pathfile_audio}")
+            print(f"command : {command_merge}")
 
             # --- Execute command merge based ffmpeg.exe --- #
             self.run_command(command_merge)
@@ -354,7 +359,7 @@ class Core:
 
         def history_video():
             # --- joining path and title with static extension --- #
-            video_path = os.path.join(path, cleansing(self.video.title) + ".mp4")
+            video_path = os.path.join(path, cleansing_all(self.video.title) + ".mp4")
             audio_path = os.path.join(path, "audio.mp4")
             # audio_path = os.path.join(path, cleansing(self.video.title) + ".mp4")
             # ---------------------------------------------------- #
@@ -366,7 +371,7 @@ class Core:
             # ------------------------------------------------------------ #
 
             # --- declare dummy History object --- #
-            _history = History(self.video.title, video_path, audio_path)
+            _history = History(cleansing_all(self.video.title), video_path, audio_path)
             # ------------------------------------ #
 
             # --- assignment history to global history based dictionary datatype --- #
@@ -375,8 +380,8 @@ class Core:
         
         def history_audio():
             # --- joining path and title with static extension --- #
-            video_path = os.path.join(path, cleansing(self.video.title) + ".mp4")
-            audio_path = os.path.join(path, cleansing(self.video.title) + ".mp4")
+            video_path = os.path.join(path, cleansing_all(self.video.title) + ".mp4")
+            audio_path = os.path.join(path, cleansing_all(self.video.title) + ".mp4")
             # ---------------------------------------------------- #
 
             # --- merging video audio and fixing video codec by ffmpeg --- #
@@ -386,7 +391,7 @@ class Core:
             # ------------------------------------------------------------ #
 
             # --- declare dummy History object --- #
-            _history = History(self.video.title, video_path, audio_path)
+            _history = History(cleansing_all(self.video.title), video_path, audio_path)
             # ------------------------------------ #
 
             # --- assignment history to global history based dictionary datatype --- #
@@ -417,7 +422,7 @@ class Core:
             # ---------------------------------------- #
 
             # --- fetching video path, audio path from history dictionary --- #
-            datapath = [self.history[cleansing(self.video.title)][x] for x in self.history[cleansing(self.video.title)]]
+            datapath = [self.history[cleansing_all(self.video.title)][x] for x in self.history[cleansing_all(self.video.title)]]
             # --------------------------------------------------------------- #
 
             # --- removing datafile(s) if exist. (default=True) --- #
