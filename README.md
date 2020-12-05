@@ -5,6 +5,7 @@
 - [eel](https://github.com/samuelhwilliams/Eel)
 - [pytube](https://github.com/nficano/pytube)
 - [youtube-search-python](https://github.com/alexmercerind/youtube-search-python)
+- [colorama](https://github.com/tartley/colorama)
 
 ## Python version
 - tested on `python version 3.8.6`.
