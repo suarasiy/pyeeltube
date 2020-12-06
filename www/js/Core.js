@@ -4,6 +4,9 @@ let text_search_thumbnail = ""
 let VIDEO_RESULT = 1
 let THUMBNAIL_RESULT = 1
 
+let index = 0
+let _pathed = false
+
 eel.expose(length_video_result)
 function length_video_result(total) {
     // VIDEO_RESULT = ""
@@ -199,9 +202,6 @@ function modal_close() {
 
 
 
-let index = 0
-let _pathed = false
-
 // preventing refresh caused pyeel
 eel.refresh();
 
@@ -248,6 +248,7 @@ function setDirectory() {
 eel.expose(is_pathed)
 function is_pathed(path) {
     _pathed = path
+    app1_getSelectedIndex();
 }
 
 function get() {
@@ -809,7 +810,6 @@ let app1_index = -1
 // let _pathed = false
 
 // preventing refresh caused pyeel
-eel.refresh();
 
 // function listening() {
 //     var search = document.querySelector("#search");
@@ -852,7 +852,7 @@ function app1_getSelectedIndex() {
         index.push(item.getAttribute("data-idx"));
         //console.log(item.getAttribute("data-idx"))
     })
-    if (index.length <= 0 && (_pathed === false || _pathed === true)) {
+    if (index.length <= 0 || _pathed === false) {
         btn_download.classList.add("disabled");
         btn_download.disabled = true
     } else if (index.length > 0 && _pathed === true) {
@@ -882,7 +882,7 @@ function app1_makeObj(imgurl) {
     _checkbox.setAttribute("data-idx", index);
     _checkbox.addEventListener("click", function(e) {
         eel.is_pathed();
-        app1_getSelectedIndex();
+        // app1_getSelectedIndex();
         //console.log(getSelectedIndex());
     })
     panel.appendChild(_checkbox);
@@ -960,21 +960,6 @@ function progressbar() {
     download.style.width = "0px";
     download.style.opacity = 0;
     download.style.backgroundColor = "rgb(255, 255, 255, 0.22)"
-}
-
-eel.expose(updateProgressbar)
-function updateProgressbar(amountDownload) {
-    var download = document.querySelector("#btn_download");
-    var download_style = getComputedStyle(download);
-    var progressbar = document.querySelector(".progress-download");
-    var progressbar_style = getComputedStyle(progressbar);
-    
-    var maxwidth = parseFloat(download_style.getPropertyValue("width").replace("px", ""));
-    var curwidth = parseFloat(progressbar_style.getPropertyValue("width").replace("px", ""));
-    var setwidth = parseFloat(maxwidth / amountDownload);
-    progressbar.style.backgroundColor = "rgb(0, 0, 0, 0.22)"
-    progressbar.style.opacity = 1;
-    progressbar.style.width = curwidth + setwidth + "px";
 }
 
 eel.expose(clearChecked)

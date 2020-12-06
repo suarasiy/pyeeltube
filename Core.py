@@ -576,11 +576,13 @@ def search( _title, _offset, _mode, _count):
 
 # --- init data --- #
 def fetch_search(ctx):
+    # no = 1
     ctx = ctx.result()
     data = json.loads(ctx)
-    for _data in data["search_result"]:
-        _title = _data["title"]
-        print("[x]", _title)
+    # for _data in data["search_result"]:
+    #     _title = _data["title"]
+    #     print(f"[{no}]", _title)
+    #     no += 1
     return data
 # ----------------- #
 
@@ -621,7 +623,13 @@ def get_result(source):
             # _imgurl = image_code_status(_imgurl)
             _link = idx["link"]
             eel.makeObj(_id, _title, _channel, _viewer, _imgurl, _link, _duration)
-        print(datasource);
+        # print(datasource);
+        print(f"{box.style(5,30,47)}Result:{box.end()}")
+        [
+            print(
+                f"[{Fore.BLUE}{idx+1}{Fore.RESET}] {Fore.GREEN}{id}{Fore.RESET} : [{Fore.YELLOW}{datasource[id]['duration']}{Fore.RESET}] {datasource[id]['title']}"
+                ) for idx, id in enumerate(datasource)
+            ]
         eel.search_get_first_item()
         eel.enable_res_button()
     else:
@@ -816,16 +824,15 @@ def refresh():
     ds_1 = ""
     path = ""
     print(f"{Fore.GREEN}(Listening){Fore.RESET} to {Fore.BLUE}Python{Fore.RESET}")
-    print(master)
+    print(f"{box.style(1,34,40)}data master:{box.end()}", master)
 # ------------------------------ #
 
 # --- eel directory dialog --- #
 @eel.expose
 def is_pathed():
     global path
-    print("catch : ", path)
-    if len(path) > 0:
-        print("set to true")
+    # print("catch : ", path)
+    if os.path.isdir(path):
         eel.is_pathed(True)
     else:
         eel.is_pathed(False)
@@ -859,15 +866,39 @@ def setDirectory():
 
 
 # --- @app2 --- #
+
+def app1_getFileSize(url):
+    data = requests.head(url, allow_redirects=True)
+    header = data.headers
+    size = header["Content-Length"]
+    size = round(float(size)/1024, 1)
+    return size
+
+
 def app1_getThumbnails(ctx):
     ctx = ctx.result()
     data = json.loads(ctx)
+    filesize = []
     index = 0
-    print("\nSearching...")
+    print("Calculating filesize...")
+    for _data in data["search_result"]:
+        url = _data["thumbnails"][4]
+        filesize.append(app1_getFileSize(url))
+        time.sleep(.25)
+    for idx, value in enumerate(filesize):
+        if value == 1.1:
+            filesize[idx] = "no response"
+    def cleansing_filesize(value):
+        if value == "no response":
+            return f"({Fore.RED}no response{Fore.RESET})"
+        else:
+            return f"({Fore.GREEN}{value}Kb{Fore.RESET})"
+    print(f"{box.style(5,30,47)}Result:{box.end()}")
     for _data in data["search_result"]:
         index = index + 1
         title = _data["title"]
-        print(f"[{Fore.BLUE}{index}{Fore.RESET}] {title}")
+        url = _data["thumbnails"][4]
+        print(f"[{Fore.BLUE}{index}{Fore.RESET}] : {cleansing_filesize(filesize[index-1])} {Fore.YELLOW}{url}{Fore.RESET}")
     eel.text_search_focus()
     print("==Done result==")
     print()
@@ -950,13 +981,6 @@ def app1_is_pathed():
         eel.is_pathed(True)
     else:
         eel.is_pathed(False)
-
-def app1_getFileSize(url):
-    data = requests.head(url, allow_redirects=True)
-    header = data.headers
-    size = header["Content-Length"]
-    size = round(float(size)/1024, 1)
-    return size
 
 @eel.expose
 def app1_core_downloadThumbnails(_list):
