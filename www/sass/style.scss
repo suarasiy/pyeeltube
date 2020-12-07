@@ -1048,11 +1048,18 @@ a {
         transition: bottom .3s cubic-bezier(.4, .1, .45, 1);
 
         &.hide {
-            bottom: -160px;
-            > #iframe_youtube {
+            // bottom: -160px;
+            // &.l {
+            //     bottom: -205px;
+            // }
+            // &.m {
+            //     bottom: -160px;
+            // }
+            #iframe_youtube {
                 opacity: 0;
             }
         }
+
         > .row {
             justify-content: flex-end;
             width: unset;
@@ -1069,6 +1076,13 @@ a {
                 color: black;
                 margin: 0 7px 0 0;
 
+                &.active {
+                    background-color: rgba(24, 170, 255, 0.22);
+                    &:hover {
+                        background-color: rgba(24, 170, 255, 0.356);
+                    }
+                }
+
                 &:last-child {
                     margin: 0;
                 }
@@ -1083,10 +1097,20 @@ a {
             pointer-events: all;
             box-shadow: 0 3px 7px 0.22px rgba(0, 0, 0, 0.22);
             opacity: 1;
-            transition: opacity .2s linear 0s;
             border: 1px;
             border-style: solid;
             border-color: rgb(206, 206, 206);
+            transition: opacity .2s linear 0s, width .3s cubic-bezier(.34, 1.05, .45, 1.15), height .3s cubic-bezier(.37, 1.13, .6, 1.18);
+
+            &.size-l {
+                width: 362px;
+                height: 205px;
+            }
+            
+            &.size-m {
+                width: 282px;
+                height: 160px;
+            }
         }
     }
 

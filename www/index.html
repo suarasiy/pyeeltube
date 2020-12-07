@@ -204,12 +204,15 @@
             </div>
         </div>
         <span class="pathbar" id="pathbar" onclick="openDir();">📁 Save path: </span>
-        <div class="video-player" id="video_player">
+        <div class="video-player" id="video_player" video-status="show">
             <div class="row">
-                <button class="menu" id="toggle_video" onclick="toggle_video()">auto play</button>
-                <button class="menu" id="toggle_video" onclick="toggle_video()">toggle</button>
+                <!-- <button class="menu active" id="toggle_video" onclick="change_autoplay(this)">auto play</button> -->
+                <button class="menu active" id="toggle_l" youtube-option-size="L" onclick="toggle_video_size(this)">1</button>
+                <button class="menu" id="toggle_m" youtube-option-size="M" onclick="toggle_video_size(this)">2</button>
+                <button class="menu" id="toggle_video" onclick="toggle_video()">(ctrl + q) toggle</button>
             </div>
-            <iframe id="iframe_youtube" src="https://www.youtube.com/embed/_oq9UAV028U?enablejsapi=1&controls=0&rel=0&autoplay=1&loop=1" frameborder="0" width="282" height="160" allowfullscreen></iframe>
+            <!-- default size: width: "282", height: "160" -->
+            <iframe id="iframe_youtube" src="https://www.youtube.com/embed/_oq9UAV028U?enablejsapi=1&controls=1&rel=0&autoplay=1&loop=1" frameborder="0" width="362" height="205" allowfullscreen></iframe>
         </div>
 
         <div class="download-domain">
