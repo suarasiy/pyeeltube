@@ -7,6 +7,12 @@ let THUMBNAIL_RESULT = 1
 let index = 0
 let _pathed = false
 
+// var tag = document.createElement('script');
+// tag.id = 'iframe-demo';
+// tag.src = 'https://www.youtube.com/iframe_api';
+// var firstScriptTag = document.getElementsByTagName('script')[0];
+// firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
 eel.expose(length_video_result)
 function length_video_result(total) {
     // VIDEO_RESULT = ""
@@ -57,6 +63,12 @@ function app_thumbnail_searchThumbnail() {
     eel.app1_makeObj(title)
 }
 
+function volume_iplayer() {
+    var iframe_youtube = document.querySelector("#iframe_youtube");
+    if (iframe_youtube != undefined) {
+        iframe_youtube.setVolume(50);
+    }
+}
 
 // function search //
 function set_search(app_name) {
@@ -74,7 +86,7 @@ eel.expose(get_app)
 function get_app(data) {
     // app = eel.get_app()
     app = data;
-    console.log(app)
+    // console.log(app)
 }
 
 function app_thread(app) {
@@ -297,7 +309,7 @@ function makeObj(_id, _title, _channel, _viewer, _imgurl, _video_url, _duration)
     title.setAttribute("class", "title");
     title.setAttribute("title-idx", index);
     title.addEventListener("click", function() {
-        console.log(_id);
+        // console.log(_id);
         frame_youtube(_id);
         background_dynamic(_imgurl);
         ui_change_status(title.getAttribute("title-idx"));
@@ -383,7 +395,7 @@ function object_resolution(data_itag, data_type, parent_idx, resolution, frame, 
 
     let information = res.parentNode.parentNode;
     res.addEventListener("click", function(e) {
-        console.log(itag);
+        // console.log(itag);
         eel.init_check(data_itag, parent_idx, res.getAttribute("data-resolution"), information.getAttribute("id"));
     })
 
@@ -559,10 +571,58 @@ function btn_finish_fetch(parent_idx) {
 }
 
 function frame_youtube(id) {
-    var iframe = document.querySelector("#iframe_youtube");
-    if (iframe != undefined) {
-        iframe.setAttribute("src", `https://www.youtube.com/embed/${id}?controls=0&rel=0`);
+    changeVideo(id);
+    // var iframe = document.querySelector("#iframe_youtube");
+    // if (iframe != undefined) {
+    //     iframe.setAttribute("src", `https://www.youtube.com/embed/${id}?enablejsapi=1&controls=0&rel=0`);
+    // }
+    // onYouTubeIframeAPIReady(id);
+}
+
+var player;
+function onYouTubeIframeAPIReady(id) {
+    player = new YT.Player('iframe_youtube', {
+        playerVars: { "autoplay": 1, "loop" : 1 },
+        events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+        }
+    });
+}
+
+function onPlayerReady(event) {
+    event.target.setVolume(40)
+    document.getElementById('iframe_youtube').style.borderColor = 'rgb(46, 185, 250)';
+}
+
+function changeBorderColor(playerStatus) {
+    var color;
+    if (playerStatus == -1) {
+        color = "rgb(206, 206, 206)"; // unstarted = gray
+    } else if (playerStatus == 0) {
+        color = "rgb(183, 227, 23)"; // ended = yellow
+    } else if (playerStatus == 1) {
+        color = "rgb(135, 100, 255)"; // playing = green
+    } else if (playerStatus == 2) {
+        color = "rgb(255, 23, 62)"; // paused = red
+    } else if (playerStatus == 3) {
+        color = "rgb(49, 232, 186)"; // buffering = purple
+    } else if (playerStatus == 5) {
+        color = "#FF6DOO"; // video cued = orange
     }
+    if (color) {
+        document.getElementById('iframe_youtube').style.borderColor = color;
+    }
+}
+
+function onPlayerStateChange(event) {
+	changeBorderColor(event.data);
+}
+
+function changeVideo(id) {
+    player.loadVideoById({
+        videoId: id
+    })
 }
 
 function ui_change_status(row_idx) {
@@ -859,7 +919,7 @@ function app1_getSelectedIndex() {
         btn_download.classList.remove("disabled");
         btn_download.disabled = false
     }
-    console.log("current : " + _pathed)
+    // console.log("current : " + _pathed)
     btn_download.innerHTML = `(${index.length}) Download`;
     return index
 }

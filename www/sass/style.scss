@@ -1057,7 +1057,7 @@ a {
             justify-content: flex-end;
             width: unset;
             margin: 5px;
-            > .close {
+            > .menu {
                 pointer-events: all;
                 cursor: pointer;
                 padding: 6px 10px;
@@ -1067,6 +1067,11 @@ a {
                 font-weight: 500;
                 background-color: rgba(255, 255, 255, 0.22);
                 color: black;
+                margin: 0 7px 0 0;
+
+                &:last-child {
+                    margin: 0;
+                }
 
                 &:hover {
                     background-color: rgba(255, 255, 255, 0.356);
@@ -1079,6 +1084,9 @@ a {
             box-shadow: 0 3px 7px 0.22px rgba(0, 0, 0, 0.22);
             opacity: 1;
             transition: opacity .2s linear 0s;
+            border: 1px;
+            border-style: solid;
+            border-color: rgb(206, 206, 206);
         }
     }
 

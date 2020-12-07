@@ -645,7 +645,9 @@ def get_result(source):
 # --- get datasource videos --- #
 def init_search(title):
     global ds
+    global datasource
     print("Searching videos. Please wait...")
+    datasource = {}
     eel.navbar_control(False)
     eel.progress_search_fill_animation("search")
     ds = fetch_search(

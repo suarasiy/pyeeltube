@@ -1272,7 +1272,7 @@ a {
   margin: 5px;
 }
 
-.main > .video-player > .row > .close {
+.main > .video-player > .row > .menu {
   pointer-events: all;
   cursor: pointer;
   padding: 6px 10px;
@@ -1282,9 +1282,14 @@ a {
   font-weight: 500;
   background-color: rgba(255, 255, 255, 0.22);
   color: black;
+  margin: 0 7px 0 0;
 }
 
-.main > .video-player > .row > .close:hover {
+.main > .video-player > .row > .menu:last-child {
+  margin: 0;
+}
+
+.main > .video-player > .row > .menu:hover {
   background-color: rgba(255, 255, 255, 0.356);
 }
 
@@ -1295,6 +1300,9 @@ a {
   opacity: 1;
   -webkit-transition: opacity .2s linear 0s;
   transition: opacity .2s linear 0s;
+  border: 1px;
+  border-style: solid;
+  border-color: #cecece;
 }
 
 .main > .download-domain {
@@ -1815,3 +1823,4 @@ a {
     width: 0%;
   }
 }
+/*# sourceMappingURL=style.css.map */

@@ -206,9 +206,10 @@
         <span class="pathbar" id="pathbar" onclick="openDir();">📁 Save path: </span>
         <div class="video-player" id="video_player">
             <div class="row">
-                <button class="close" id="toggle_video" onclick="toggle_video()">toggle</button>
+                <button class="menu" id="toggle_video" onclick="toggle_video()">auto play</button>
+                <button class="menu" id="toggle_video" onclick="toggle_video()">toggle</button>
             </div>
-            <iframe id="iframe_youtube" src="https://www.youtube.com/embed/Nq-YGrZpdsg?controls=0" frameborder="0" width="284" height="160" allowfullscreen></iframe>
+            <iframe id="iframe_youtube" src="https://www.youtube.com/embed/_oq9UAV028U?enablejsapi=1&controls=0&rel=0&autoplay=1&loop=1" frameborder="0" width="282" height="160" allowfullscreen></iframe>
         </div>
 
         <div class="download-domain">
@@ -289,6 +290,7 @@
 
     <!-- SCRIPT -->
     <script src="eel.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script src="js/Core.js"></script>
     <!------------>
     
