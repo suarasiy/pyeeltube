@@ -1,2 +1,2 @@
 # exclude sass file
-!www/sass/
+www/sass/*
