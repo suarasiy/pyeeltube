@@ -1414,6 +1414,15 @@ a {
   margin-bottom: 26px;
 }
 
+.main > .download-domain > .modal .group-modal#com {
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.main > .download-domain > .modal .group-modal#com:hover {
+  border: 2px dashed #7a7ada;
+}
+
 .main > .download-domain > .modal .group-modal.nested {
   margin: 8px 0px;
 }

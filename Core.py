@@ -310,10 +310,10 @@ class Core:
             command_merge = f'ffmpeg.exe -i "{pathfile_audio}" -vn -b:a 128K "{os.path.join(path, output_name)}"'
             # ------------------------------------------------------- #
             
-            print("debug: ==")
-            print(f"output name : {output_name}")
-            print(f"pathfile : {pathfile_audio}")
-            print(f"command : {command_merge}")
+            print("== :info: ==")
+            print(f"{Fore.BLUE}source :{Fore.RESET} {pathfile_audio}")
+            print(f"{Fore.GREEN}target :{Fore.RESET} {output_name}")
+            # print(f"command : {command_merge}")
 
             # --- Execute command merge based ffmpeg.exe --- #
             self.run_command(command_merge)
@@ -332,7 +332,7 @@ class Core:
             # --- get time process begin --- #
             start = time.time()
             # --------------------------------- #
-            print("Please wait, merging process being run...")
+            print(f"{box.style(0, 36, 40)}Please wait, optimizing file output...{box.end()}")
 
             # --- execute command shell based {command} --- #
             subprocess.call(
@@ -348,7 +348,7 @@ class Core:
             # ------------------------------ #
 
             # --- calculate elapsed time process --- #
-            print("Merge and rewrite done. Elapsed : %.2fsec." % (end-start))
+            print("File optimized. Elapsed : %.2fsec." % (end-start))
             # -------------------------------------- #
         
         # --- raise Exception error --- #
@@ -778,7 +778,6 @@ def modal_core_download(itag, row_idx, res):
     global path
     core = master[row_idx]["self"]
     core.path = path
-    
     def core_by_itag(itag):
         obj = core.result.get_by_itag(itag)
         print("by core itag :", obj)
@@ -825,7 +824,7 @@ def refresh():
     ds = ""
     ds_1 = ""
     path = ""
-    print(f"{Fore.GREEN}(Listening){Fore.RESET} to {Fore.BLUE}Python{Fore.RESET}")
+    print(f"{Fore.GREEN}(Listening){Fore.RESET} to {Fore.BLUE}Python{Fore.RESET} at {Fore.GREEN}localhost:{port}{Fore.RESET}")
     print(f"{box.style(1,34,40)}data master:{box.end()}", master)
 # ------------------------------ #
 
@@ -1020,5 +1019,10 @@ def app1_core_downloadThumbnails(_list):
 # ------------- #
 
 
+try:
+    port = int(input("Select port (default 8000): "))
+except Exception as ex:
+    port = 8000
+
 eel.init("www")
-eel.start("index.html")
+eel.start("index.html", port=port)

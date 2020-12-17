@@ -9,6 +9,7 @@ def cleansing(filename):
     filename = filename.replace("|", "")
     filename = filename.replace('"', "")
     filename = filename.replace("?", "")
+    filename = filename.replace("'", "")
     return filename
 
 def cleansing_all(filename):

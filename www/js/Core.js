@@ -335,6 +335,7 @@ function search_get_first_item() {
 
 function setDirectory() {
     eel.setDirectory()
+    modal_button_download(true);
 }
 
 eel.expose(is_pathed)
@@ -550,6 +551,7 @@ function get_download_info(data_itag, data_rowidx, data_imgurl, data_title, data
         path_save.innerText = data_pathsave;
         
         modal_button_download(is_ready);
+        com_status(true);
         
         download_domain.style.display = "block";
 
@@ -837,17 +839,29 @@ function modal_animation_ready() {
     }
 }
 // -------------------------------------------------------------- //
+
+function com_status(status) {
+    var com_folder = document.querySelector("#com");
+    if (status === true) {
+        com_folder.setAttribute("onclick", "setDirectory()");
+    } else if (status === false) {
+        com_folder.setAttribute("onclick", "");
+    }
+}
 eel.expose(modal_button_download)
 function modal_button_download(status) {
     var download_domain = document.querySelector(".download-domain");
     var modal = download_domain.querySelector(".modal");
     var btn_download = modal.querySelector("#download_domain");
+    var com_folder = document.querySelector("#com");
     if (status === true) {
         btn_download.classList.remove("btn-disabled");
         btn_download.removeAttribute("disabled");
+        com_folder.setAttribute("onclick", "setDirectory()");
     } else if (status === false) {
         btn_download.classList.add("btn-disabled");
         btn_download.setAttribute("disabled", true);
+        com_folder.setAttribute("onclick", "");
     }
 }
 
@@ -911,7 +925,7 @@ function dialogSwap(status, path) {
     var body = document.getElementById("_");
     var behind = document.getElementById("__");
     var pathbar = document.querySelector("#pathbar");
-    if (status === true) {
+    if (status === true) {    
         body.classList.add("disabled");
         behind.classList.remove("disabled");
         pathbar.innerHTML = `📁 Save path: ${path}`
@@ -922,6 +936,8 @@ function dialogSwap(status, path) {
         pathbar.innerHTML = `📁 Save path: ${path}`
         is_pathed();
     }
+    var path_save = document.querySelector("#path_save");
+    path_save.innerText = path
 }
 // -------------------------------------------------- //
 
@@ -1098,24 +1114,6 @@ function download(url) {
         // console.log(i);
         frame.src = url;
     })
-}
-
-eel.expose(dialogSwap)
-function dialogSwap(status, path) {
-    var body = document.getElementById("_");
-    var behind = document.getElementById("__");
-    var pathbar = document.querySelector("#pathbar");
-    if (status === true) {
-        body.classList.add("disabled");
-        behind.classList.remove("disabled");
-        pathbar.innerHTML = `📁 Save path: ${path}`
-        is_pathed();
-    } else {
-        body.classList.remove("disabled");
-        behind.classList.add("disabled");
-        pathbar.innerHTML = `📁 Save path: ${path}`
-        is_pathed();
-    }
 }
 
 eel.expose(progressbar)
