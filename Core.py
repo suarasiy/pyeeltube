@@ -1,6 +1,8 @@
 # youtube downloader
 import os
 import eel
+import pyperclip
+import re
 from collections import namedtuple
 import pytube
 from pytube.extract import mime_type_codec
@@ -10,6 +12,7 @@ import package.Temporary as Temp
 from package.History import History
 from pytube import YouTube
 from package.Filename import *
+from package.Url import *
 import subprocess
 import time
 import json
@@ -687,6 +690,7 @@ def init_check_get_info(itag, row_idx, source, result, filesize, id):
     print("2 :", data_fps)
     print("3 :", data_filesize)
     print("4 :", data_extension)
+    print('surpress : ', datasource)
     print(datasource[id]["duration"].replace(".", ":"))
     if source.type == "audio":
         eel.get_download_info(itag, row_idx, datasource[id]["thumbnails"], data_title, "null", datasource[id]["duration"].replace(".", ":"), data_abr, data_filesize, data_extension, temp.system_gettemp(), path.replace("/", "\\"), is_path_available())
@@ -751,12 +755,25 @@ def init_check(data_itag, row_idx, res, id):
 def get_filesizes(source):
     print(source)
 
+video_single_result = {}
+
 # --- core eel --- #
 @eel.expose
 def init_video(url, row_idx):
+    global video_single_result
     core = Core()
     master[row_idx] = {"self" : core, "url" : url}
     core.Video(url, row_idx)
+    print("MASTER : ", master)
+    video_single_result[1] = {
+        "id" : url.rsplit("/", 1)[1],
+        "title" : core.video.title,
+        "channel" : "-",
+        "views" : core.video.views,
+        "thumbnail" : core.video.thumbnail_url,
+        "duration" : time.strftime("%M:%S", time.gmtime(core.video.length)),
+        "link" : url
+    }
     
     # get_filesizes(master[row_idx]["self"])
     # get_filesizes(core.each_quality_size())
@@ -775,8 +792,9 @@ def init_video(url, row_idx):
 
 @eel.expose
 def modal_core_download(itag, row_idx, res):
+    global master
     global path
-    core = master[row_idx]["self"]
+    core = master[int(row_idx)]["self"]
     core.path = path
     def core_by_itag(itag):
         obj = core.result.get_by_itag(itag)
@@ -865,6 +883,90 @@ def setDirectory():
 
 # ---------------------------- #
 
+# --- video from url --- #
+@eel.expose
+def is_url_youtube():
+    try:
+        url = pyperclip.paste()
+        status = False
+        if url != "":
+            status = re.match(
+                "^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$",
+                url
+            )
+        if status == "": status = None
+        if type(status) == type(True): status = None
+        print("get url ", url)
+        if status != None:
+            print(url)
+    
+            clean_url = url_cleansing(url)
+            print("CLEAN :", clean_url)
+
+            eel.set_link_url(url)
+            eel.url_get_status(True)
+            print("TRUE DETECT")
+            return clean_url
+        else:
+            eel.set_link_url(False)
+            eel.url_get_status(False)
+            print("FALSE DETECT")
+            return False
+    except Exception as ex:
+        eel.url_get_status(False)
+        return False
+
+@eel.expose
+def fetch_from_url():
+    global datasource
+    global video_single_result
+    eel.clearObj()
+
+    url = is_url_youtube()
+    
+    id = url.rsplit("/", 1)[1]
+    title = "Loading title..."
+    channel = "Loading channel..."
+    views = "0"
+    thumbnails = "image/lina.jpg"
+    duration = "00.00"
+    link = url
+    eel.makeObj(
+        id,
+        title,
+        channel,
+        views,
+        thumbnails,
+        link,
+        duration
+        )
+    if url != False:
+        init_video(
+            url,
+            1
+        )
+        data = video_single_result[1]
+        datasource[data["id"]] = {
+            "id" : data["id"],
+            "title" : data["title"],
+            "channel" : data["channel"],
+            "views" : data["views"],
+            "thumbnails" : data["thumbnail"],
+            "link" : data["link"],
+            "duration" : data["duration"]
+        }
+        eel.object_update(
+            data["id"],
+            data["title"],
+            data["channel"],
+            data["views"],
+            data["thumbnail"],
+            data["link"],
+            data["duration"]
+        )
+
+        # eel.modal_url_info(url)
+    print("finish url")
 
 # --- @app2 --- #
 
@@ -1025,4 +1127,4 @@ except Exception as ex:
     port = 8000
 
 eel.init("www")
-eel.start("index.html", port=port)
+eel.start("index.html", port=port, size=(1096,720))

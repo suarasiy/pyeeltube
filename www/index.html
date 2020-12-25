@@ -39,7 +39,7 @@
             <div class="input">
                 <div class="btn">
                     <img src="icon/127_urldownload.png" alt="" srcset="" draggable="false">
-                    <input type="button" id="btn_urldownload">
+                    <input type="button" id="btn_urldownload" onclick="modal_url_info()">
                 </div>
                 <input type="text" name="search" id="search" placeholder="Search ..." autocomplete="off" spellcheck="false" autofocus>
                 <div class="btn">
@@ -216,7 +216,7 @@
         </div>
 
         <div class="download-domain">
-            <div class="modal">
+            <div class="modal" id="modal-1">
                 <div class="cover">
                     <img src="image/lina.jpg" id="thumbnails" alt="">
                     <span class="duration">03:28</span>
@@ -280,6 +280,34 @@
                             <span class="text">download</span>
                         </button>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="url-domain">
+            <div class="modal" id="modal-2">
+                <div class="group-modal medium">
+                    <div class="do-column">
+                        <span class="title">Fetching url...</span>
+                        <input type="text" name="url" id="modal_url" spellcheck="false" autocomplete="off" value="https://youtu.be/d28jdsad81" disabled>
+                    </div>
+                </div>
+                <div class="action">
+                    <hr>
+                    <div class="row">
+                        <button class="btn" id="close_domain_url" onclick="modal_url_close()">
+                            <span class="text">close</span>
+                        </button>
+                        <button class="btn btn-music" id="close_domain_url" onclick="modal_url_info()">
+                            <span class="text">refresh</span>
+                        </button>
+                        <button class="btn btn-main" id="get_domain_url" onclick="set_url()">
+                            <span class="text">get</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="progress">
+                    <div class="progress-fill"></div>
                 </div>
             </div>
         </div>

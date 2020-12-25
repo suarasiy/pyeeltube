@@ -1319,7 +1319,7 @@ a {
   height: 160px;
 }
 
-.main > .download-domain {
+.main > .download-domain, .main > .url-domain {
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -1337,7 +1337,7 @@ a {
   transition: opacity .2s linear 0s;
 }
 
-.main > .download-domain > .modal {
+.main > .download-domain > .modal, .main > .url-domain > .modal {
   position: relative;
   top: 50%;
   left: 50%;
@@ -1357,13 +1357,13 @@ a {
   transition: transform 0.35s cubic-bezier(0.11, 1, 0.19, 1), opacity 0.2s linear, -webkit-transform 0.35s cubic-bezier(0.11, 1, 0.19, 1);
 }
 
-.main > .download-domain > .modal .cover {
+.main > .download-domain > .modal .cover, .main > .url-domain > .modal .cover {
   position: relative;
   width: 100%;
   height: 210px;
 }
 
-.main > .download-domain > .modal .cover > img {
+.main > .download-domain > .modal .cover > img, .main > .url-domain > .modal .cover > img {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
@@ -1372,7 +1372,7 @@ a {
      object-position: center center;
 }
 
-.main > .download-domain > .modal .cover > .duration {
+.main > .download-domain > .modal .cover > .duration, .main > .url-domain > .modal .cover > .duration {
   position: absolute;
   right: 4px;
   bottom: 4px;
@@ -1387,7 +1387,7 @@ a {
   background-color: rgba(0, 0, 0, 0.507);
 }
 
-.main > .download-domain > .modal .title {
+.main > .download-domain > .modal .title, .main > .url-domain > .modal .title {
   display: inline-block;
   font-family: "Segoe UI";
   font-size: 17px;
@@ -1398,36 +1398,36 @@ a {
   font-weight: 500;
 }
 
-.main > .download-domain > .modal .group-modal {
+.main > .download-domain > .modal .group-modal, .main > .url-domain > .modal .group-modal {
   margin: 13px 15px;
 }
 
-.main > .download-domain > .modal .group-modal.medium {
+.main > .download-domain > .modal .group-modal.medium, .main > .url-domain > .modal .group-modal.medium {
   margin: 18px 15px 13px;
 }
 
-.main > .download-domain > .modal .group-modal.high {
+.main > .download-domain > .modal .group-modal.high, .main > .url-domain > .modal .group-modal.high {
   margin: 32px 15px 13px;
 }
 
-.main > .download-domain > .modal .group-modal:nth-last-child(2) {
+.main > .download-domain > .modal .group-modal:nth-last-child(2), .main > .url-domain > .modal .group-modal:nth-last-child(2) {
   margin-bottom: 26px;
 }
 
-.main > .download-domain > .modal .group-modal#com {
+.main > .download-domain > .modal .group-modal#com, .main > .url-domain > .modal .group-modal#com {
   cursor: pointer;
   border: 2px solid transparent;
 }
 
-.main > .download-domain > .modal .group-modal#com:hover {
+.main > .download-domain > .modal .group-modal#com:hover, .main > .url-domain > .modal .group-modal#com:hover {
   border: 2px dashed #7a7ada;
 }
 
-.main > .download-domain > .modal .group-modal.nested {
+.main > .download-domain > .modal .group-modal.nested, .main > .url-domain > .modal .group-modal.nested {
   margin: 8px 0px;
 }
 
-.main > .download-domain > .modal .row > .info {
+.main > .download-domain > .modal .row > .info, .main > .url-domain > .modal .row > .info {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
@@ -1444,27 +1444,27 @@ a {
   margin: 3px;
 }
 
-.main > .download-domain > .modal .row > .info:first-child {
+.main > .download-domain > .modal .row > .info:first-child, .main > .url-domain > .modal .row > .info:first-child {
   margin: 3px 3px 3px 0;
 }
 
-.main > .download-domain > .modal .row > .info.resolution {
+.main > .download-domain > .modal .row > .info.resolution, .main > .url-domain > .modal .row > .info.resolution {
   border: 2px solid #e2717a;
 }
 
-.main > .download-domain > .modal .row > .info.fps {
+.main > .download-domain > .modal .row > .info.fps, .main > .url-domain > .modal .row > .info.fps {
   border: 2px solid #e27fd2;
 }
 
-.main > .download-domain > .modal .row > .info.filesize {
+.main > .download-domain > .modal .row > .info.filesize, .main > .url-domain > .modal .row > .info.filesize {
   border: 2px solid #6fdf8b;
 }
 
-.main > .download-domain > .modal .row > .info.extension {
+.main > .download-domain > .modal .row > .info.extension, .main > .url-domain > .modal .row > .info.extension {
   border: 2px solid #6fa0df;
 }
 
-.main > .download-domain > .modal .row > .do-col > .groupname, .main > .download-domain > .modal .row > .do-column > .groupname {
+.main > .download-domain > .modal .row > .do-col > .groupname, .main > .download-domain > .modal .row > .do-column > .groupname, .main > .url-domain > .modal .row > .do-col > .groupname, .main > .url-domain > .modal .row > .do-column > .groupname {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
@@ -1474,7 +1474,7 @@ a {
   font-family: Verdana;
 }
 
-.main > .download-domain > .modal .row > .do-col .row .icon, .main > .download-domain > .modal .row > .do-column .row .icon {
+.main > .download-domain > .modal .row > .do-col .row .icon, .main > .download-domain > .modal .row > .do-column .row .icon, .main > .url-domain > .modal .row > .do-col .row .icon, .main > .url-domain > .modal .row > .do-column .row .icon {
   width: 28px;
   height: 28px;
   -o-object-fit: contain;
@@ -1484,7 +1484,7 @@ a {
   margin: 3px;
 }
 
-.main > .download-domain > .modal .row > .do-col .row .infotext, .main > .download-domain > .modal .row > .do-column .row .infotext {
+.main > .download-domain > .modal .row > .do-col .row .infotext, .main > .download-domain > .modal .row > .do-column .row .infotext, .main > .url-domain > .modal .row > .do-col .row .infotext, .main > .url-domain > .modal .row > .do-column .row .infotext {
   font-size: 14px;
   font-weight: 400;
   color: black;
@@ -1498,11 +1498,11 @@ a {
   margin: 3px 3px 3px 6px;
 }
 
-.main > .download-domain > .modal .row > .do-col .row .infotext.mono, .main > .download-domain > .modal .row > .do-column .row .infotext.mono {
+.main > .download-domain > .modal .row > .do-col .row .infotext.mono, .main > .download-domain > .modal .row > .do-column .row .infotext.mono, .main > .url-domain > .modal .row > .do-col .row .infotext.mono, .main > .url-domain > .modal .row > .do-column .row .infotext.mono {
   font-family: monospace;
 }
 
-.main > .download-domain > .modal .row > .do-col .row .progressbar, .main > .download-domain > .modal .row > .do-column .row .progressbar {
+.main > .download-domain > .modal .row > .do-col .row .progressbar, .main > .download-domain > .modal .row > .do-column .row .progressbar, .main > .url-domain > .modal .row > .do-col .row .progressbar, .main > .url-domain > .modal .row > .do-column .row .progressbar {
   position: relative;
   height: 4px;
   background-color: #d6d6d6;
@@ -1510,7 +1510,7 @@ a {
   overflow: hidden;
 }
 
-.main > .download-domain > .modal .row > .do-col .row .progressbar > .fill, .main > .download-domain > .modal .row > .do-column .row .progressbar > .fill {
+.main > .download-domain > .modal .row > .do-col .row .progressbar > .fill, .main > .download-domain > .modal .row > .do-column .row .progressbar > .fill, .main > .url-domain > .modal .row > .do-col .row .progressbar > .fill, .main > .url-domain > .modal .row > .do-column .row .progressbar > .fill {
   position: absolute;
   top: 50%;
   left: 0;
@@ -1523,7 +1523,7 @@ a {
   transition: width 0.4s cubic-bezier(0.22, 1, 0.58, 1);
 }
 
-.main > .download-domain > .modal .row > .do-col .row .progressbar > .fill.ready, .main > .download-domain > .modal .row > .do-column .row .progressbar > .fill.ready {
+.main > .download-domain > .modal .row > .do-col .row .progressbar > .fill.ready, .main > .download-domain > .modal .row > .do-column .row .progressbar > .fill.ready, .main > .url-domain > .modal .row > .do-col .row .progressbar > .fill.ready, .main > .url-domain > .modal .row > .do-column .row .progressbar > .fill.ready {
   -webkit-animation: progressbar_ready;
           animation: progressbar_ready;
   -webkit-animation-duration: 4s;
@@ -1536,7 +1536,7 @@ a {
           animation-timing-function: linear;
 }
 
-.main > .download-domain > .modal .row > .do-col .row .progressbar > .fill.merging, .main > .download-domain > .modal .row > .do-column .row .progressbar > .fill.merging {
+.main > .download-domain > .modal .row > .do-col .row .progressbar > .fill.merging, .main > .download-domain > .modal .row > .do-column .row .progressbar > .fill.merging, .main > .url-domain > .modal .row > .do-col .row .progressbar > .fill.merging, .main > .url-domain > .modal .row > .do-column .row .progressbar > .fill.merging {
   -webkit-animation: progressbar_merging;
           animation: progressbar_merging;
   -webkit-animation-duration: 2s;
@@ -1549,7 +1549,7 @@ a {
           animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-.main > .download-domain > .modal .row > .do-col .row .progressbar > .fill.loading, .main > .download-domain > .modal .row > .do-column .row .progressbar > .fill.loading {
+.main > .download-domain > .modal .row > .do-col .row .progressbar > .fill.loading, .main > .download-domain > .modal .row > .do-column .row .progressbar > .fill.loading, .main > .url-domain > .modal .row > .do-col .row .progressbar > .fill.loading, .main > .url-domain > .modal .row > .do-column .row .progressbar > .fill.loading {
   -webkit-animation: progressbar_loading;
           animation: progressbar_loading;
   -webkit-animation-duration: 2s;
@@ -1562,7 +1562,7 @@ a {
           animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-.main > .download-domain > .modal > .action > hr {
+.main > .download-domain > .modal > .action > hr, .main > .url-domain > .modal > .action > hr {
   margin: 5px 3px;
   border-top: 1px solid #dddddd;
   border-left: none;
@@ -1570,13 +1570,13 @@ a {
   border-bottom: none;
 }
 
-.main > .download-domain > .modal > .action > .row {
+.main > .download-domain > .modal > .action > .row, .main > .url-domain > .modal > .action > .row {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
 }
 
-.main > .download-domain > .modal > .action > .row > .btn {
+.main > .download-domain > .modal > .action > .row > .btn, .main > .url-domain > .modal > .action > .row > .btn {
   cursor: pointer;
   width: -webkit-fit-content;
   width: -moz-fit-content;
@@ -1587,52 +1587,52 @@ a {
   background-color: #d8d8d8;
 }
 
-.main > .download-domain > .modal > .action > .row > .btn:hover {
+.main > .download-domain > .modal > .action > .row > .btn:hover, .main > .url-domain > .modal > .action > .row > .btn:hover {
   -webkit-filter: brightness(0.95);
           filter: brightness(0.95);
 }
 
-.main > .download-domain > .modal > .action > .row > .btn.btn-main {
+.main > .download-domain > .modal > .action > .row > .btn.btn-main, .main > .url-domain > .modal > .action > .row > .btn.btn-main {
   background-color: #f64b4b;
 }
 
-.main > .download-domain > .modal > .action > .row > .btn.btn-main > .text {
+.main > .download-domain > .modal > .action > .row > .btn.btn-main > .text, .main > .url-domain > .modal > .action > .row > .btn.btn-main > .text {
   color: white;
 }
 
-.main > .download-domain > .modal > .action > .row > .btn.btn-main.btn-disabled {
+.main > .download-domain > .modal > .action > .row > .btn.btn-main.btn-disabled, .main > .url-domain > .modal > .action > .row > .btn.btn-main.btn-disabled {
   background-color: #ebaaaa;
 }
 
-.main > .download-domain > .modal > .action > .row > .btn.btn-main.btn-disabled > .text {
+.main > .download-domain > .modal > .action > .row > .btn.btn-main.btn-disabled > .text, .main > .url-domain > .modal > .action > .row > .btn.btn-main.btn-disabled > .text {
   color: #a07e7e;
 }
 
-.main > .download-domain > .modal > .action > .row > .btn.btn-music {
+.main > .download-domain > .modal > .action > .row > .btn.btn-music, .main > .url-domain > .modal > .action > .row > .btn.btn-music {
   background-color: #8854e7;
 }
 
-.main > .download-domain > .modal > .action > .row > .btn.btn-music > .text {
+.main > .download-domain > .modal > .action > .row > .btn.btn-music > .text, .main > .url-domain > .modal > .action > .row > .btn.btn-music > .text {
   color: white;
 }
 
-.main > .download-domain > .modal > .action > .row > .btn.btn-music.btn-disabled {
+.main > .download-domain > .modal > .action > .row > .btn.btn-music.btn-disabled, .main > .url-domain > .modal > .action > .row > .btn.btn-music.btn-disabled {
   background-color: #c3aeeb;
 }
 
-.main > .download-domain > .modal > .action > .row > .btn.btn-music.btn-disabled > .text {
+.main > .download-domain > .modal > .action > .row > .btn.btn-music.btn-disabled > .text, .main > .url-domain > .modal > .action > .row > .btn.btn-music.btn-disabled > .text {
   color: #7b6f91;
 }
 
-.main > .download-domain > .modal > .action > .row > .btn.btn-disabled {
+.main > .download-domain > .modal > .action > .row > .btn.btn-disabled, .main > .url-domain > .modal > .action > .row > .btn.btn-disabled {
   background-color: #fcfcfc;
 }
 
-.main > .download-domain > .modal > .action > .row > .btn.btn-disabled > .text {
+.main > .download-domain > .modal > .action > .row > .btn.btn-disabled > .text, .main > .url-domain > .modal > .action > .row > .btn.btn-disabled > .text {
   color: #acacac;
 }
 
-.main > .download-domain > .modal > .action > .row > .btn > .text {
+.main > .download-domain > .modal > .action > .row > .btn > .text, .main > .url-domain > .modal > .action > .row > .btn > .text {
   color: #252525;
   font-weight: 800;
   font-size: 15px;
@@ -1640,6 +1640,53 @@ a {
   width: -moz-fit-content;
   width: fit-content;
   text-transform: uppercase;
+}
+
+.main > .url-domain {
+  display: block;
+  opacity: 1;
+}
+
+.main > .url-domain > .modal {
+  position: relative;
+  display: block;
+  -webkit-transform: translate(-50%, -50%) scale(1);
+          transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+.main > .url-domain > .modal .title {
+  font-size: 18px;
+}
+
+.main > .url-domain > .modal input[type="text"] {
+  margin: 12px 0 2px;
+  border: 1px solid #a7a7a7;
+  padding: 8px 12px;
+  border-radius: 3px;
+  font-size: 15px;
+  font-family: "Roboto";
+}
+
+.main > .url-domain > .modal > .progress {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: gainsboro;
+}
+
+.main > .url-domain > .modal > .progress > .progress-fill {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: 50%;
+  height: 100%;
+  background-color: #f84242;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 
 .behind {
