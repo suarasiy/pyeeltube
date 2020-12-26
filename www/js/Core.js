@@ -292,6 +292,7 @@ function modal_close() {
     }
 }
 
+eel.expose(modal_url_close)
 function modal_url_close() {
     var modal = document.querySelector("#modal-2");
     var url_domain = document.querySelector(".url-domain");
@@ -348,7 +349,7 @@ function search_get_first_item() {
 
 function setDirectory() {
     eel.setDirectory()
-    modal_button_download(true);
+    // modal_button_download(true);
 }
 
 eel.expose(is_pathed)
@@ -523,7 +524,7 @@ function object_update(
             span_video_viewer_icon.setAttribute("alt", "");
             span_video_viewer_icon.setAttribute("draggable", false);
             span_video_viewer.appendChild(span_video_viewer_icon);
-            span_video_viewer.innerHTML += "Views : " + _viewer;
+            span_video_viewer.innerHTML += "Views : " + number_with_comma(_viewer);
             channel.innerText = _channel;
             btn_fetch.style.display = "none";
             console.log("URL FETCHED DONE!")
@@ -662,7 +663,6 @@ eel.expose(url_get_status)
 function url_get_status(status) {
     const url_domain = document.querySelector(".url-domain");
     const btn_get = url_domain.querySelector("#get_domain_url");
-    console.log("STATUS : " + status);
     if ( status === true ) {
         btn_get.classList.remove("btn-disabled");
         btn_get.removeAttribute("disabled");
@@ -675,6 +675,40 @@ function url_get_status(status) {
 function set_url() {
     eel.fetch_from_url();
 }
+
+eel.expose(url_progress_status)
+function url_progress_status(status) {
+    const url_domain = document.querySelector(".url-domain");
+    const btn_get = url_domain.querySelector("#get_domain_url");
+    const progress = url_domain.querySelector(".progress-fill");
+    const btn_close = url_domain.querySelector("#close_domain_url");
+    const btn_refresh = url_domain.querySelector("#refresh_domain_url");
+    if ( status === true ) {
+        progress.classList.add("progress-search-search");
+
+        btn_get.classList.add("btn-disabled");
+        btn_get.setAttribute("disabled", true);
+        
+        btn_close.classList.add("btn-disabled");
+        btn_close.setAttribute("disabled", true);
+
+        btn_refresh.classList.add("btn-disabled");
+        btn_refresh.setAttribute("disabled", true);
+    } else if ( status === false ) {
+        progress.classList.remove("progress-search-search");
+
+        btn_get.classList.remove("btn-disabled");
+        btn_get.removeAttribute("disabled");
+        
+        btn_close.classList.remove("btn-disabled");
+        btn_close.removeAttribute("disabled");
+
+        btn_refresh.classList.remove("btn-disabled");
+        btn_refresh.removeAttribute("disabled");
+    }
+}
+
+url_get_status(false);
 
 function modal_url_info() {
     eel.is_url_youtube();
@@ -779,9 +813,8 @@ function change_autoplay(btn) {
     console.log('status autoplay ' + +player_autoplay);
 }
 
+eel.expose(frame_youtube)
 function frame_youtube(id) {
-    let url = "";
-
     var iframe = document.querySelector("#iframe_youtube");
     if (iframe != undefined) {
         
@@ -868,6 +901,7 @@ function ui_change_status(row_idx) {
     }
 }
 
+eel.expose(background_dynamic)
 function background_dynamic(imageurl) {
     var body = document.getElementsByTagName("BODY")[0];
     var blur = document.getElementById("blur-domain");

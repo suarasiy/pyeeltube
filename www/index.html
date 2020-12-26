@@ -28,7 +28,7 @@
                 </button>
                 <button class="menu-btn">
                     <img src="icon/127_nofill_python.png" alt="" draggable="false">
-                    <span>About</span>
+                    <span>About (coming soon)</span>
                 </button>
             </div>
         </div>
@@ -63,7 +63,8 @@
                 <span class="title">Result not found!</span>
             </div>
             <div class="panel column" id="panel_videos">
-                <div class="content">
+                <!-- EXAMPLE PANEL 1 -->
+                <!-- <div class="content">
                     <span class="index">1</span>
                     <div class="thumbnails">
                         <img src="image/yana.jpg" id="video_img" alt="" draggable="false">
@@ -89,9 +90,10 @@
                             </button>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 
-                <div class="content on-download">
+                <!-- EXAMPLE PANEL 2 -->
+                <!-- <div class="content on-download">
                     <span class="index">1</span>
                     <div class="thumbnails">
                         <img src="image/yana.jpg" id="video_img" alt="" draggable="false">
@@ -168,11 +170,12 @@
                             </button>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="panel disabled" id="panel_thumbnails">
                 <div id="mgcheck">
-                    <input type="checkbox" name="img" id="cb1" data-idx="0">
+                    <!-- EXAMPLE OF IMAGE COLLECTIONS -->
+                    <!-- <input type="checkbox" name="img" id="cb1" data-idx="0">
                     <label for="cb1">
                         <img src="https://s1.zerochan.net/Sylvia.Lyyneheym.600.2877190.jpg" alt="" class="content">
                     </label>
@@ -187,7 +190,7 @@
                     <input type="checkbox" name="img" id="cb4" data-idx="3">
                     <label for="cb4">
                         <img src="https://i.pinimg.com/originals/d2/68/7f/d2687f09f2257d499dfa6eca4dc4907f.jpg" alt="" class="content">
-                    </label>
+                    </label> -->
                 </div>
                 <div class="pan-menu">
                     <div class="pan">
@@ -212,23 +215,23 @@
                 <button class="menu" id="toggle_video" onclick="toggle_video()">(ctrl + q) toggle</button>
             </div>
             <!-- default size: width: "282", height: "160" -->
-            <iframe id="iframe_youtube" src="https://www.youtube.com/embed/_oq9UAV028U?enablejsapi=1&controls=1&rel=0&autoplay=1&loop=1" frameborder="0" width="362" height="205" allowfullscreen></iframe>
+            <iframe id="iframe_youtube" src="https://www.youtube.com/embed/MimzMjO3NMU?enablejsapi=1&controls=1&rel=0&autoplay=1&loop=1" frameborder="0" width="362" height="205" allowfullscreen></iframe>
         </div>
 
         <div class="download-domain">
             <div class="modal" id="modal-1">
                 <div class="cover">
                     <img src="image/lina.jpg" id="thumbnails" alt="">
-                    <span class="duration">03:28</span>
+                    <span class="duration">00:00</span>
                 </div>
                 <div class="group-modal">
-                    <span class="title">【男性が歌う】 夜に駆けるメドレー／YOASOBI</span>
+                    <span class="title">This is the title of video</span>
                     <div class="group-modal nested">
                         <div class="row">
-                            <span class="info resolution">720p</span>
-                            <span class="info filesize">8.83Mb</span>
-                            <span class="info fps">30fps</span>
-                            <span class="info extension">.mp4</span>
+                            <span class="info resolution">[resolution]p</span>
+                            <span class="info filesize">[size]Mb</span>
+                            <span class="info fps">[fps]fps</span>
+                            <span class="info extension">[.extension]</span>
                         </div>
                     </div>
                 </div>
@@ -288,7 +291,7 @@
             <div class="modal" id="modal-2">
                 <div class="group-modal medium">
                     <div class="do-column">
-                        <span class="title">Fetching url...</span>
+                        <span class="title">Copy YouTube link and refresh</span>
                         <input type="text" name="url" id="modal_url" spellcheck="false" autocomplete="off" value="https://youtu.be/d28jdsad81" disabled>
                     </div>
                 </div>
@@ -298,7 +301,7 @@
                         <button class="btn" id="close_domain_url" onclick="modal_url_close()">
                             <span class="text">close</span>
                         </button>
-                        <button class="btn btn-music" id="close_domain_url" onclick="modal_url_info()">
+                        <button class="btn btn-music" id="refresh_domain_url" onclick="modal_url_info()">
                             <span class="text">refresh</span>
                         </button>
                         <button class="btn btn-main" id="get_domain_url" onclick="set_url()">

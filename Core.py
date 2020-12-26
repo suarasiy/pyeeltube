@@ -581,7 +581,8 @@ def search( _title, _offset, _mode, _count):
 def fetch_search(ctx):
     # no = 1
     ctx = ctx.result()
-    data = json.loads(ctx)
+    data = None
+    if ctx != None: data = json.loads(ctx)
     # for _data in data["search_result"]:
     #     _title = _data["title"]
     #     print(f"[{no}]", _title)
@@ -601,9 +602,11 @@ def image_code_status(url):
 # --- make object --- #
 def get_result(source):
     global datasource
-    data = source["search_result"]
-    eel.clearObj()
-    eel.length_video_result(len(data))
+    data = ""
+    if source != None:
+        data = source["search_result"]
+        eel.clearObj()
+        eel.length_video_result(len(data))
     if len(data) > 0:
         # eel.popup_result("hide")
         eel.text_search_result("hide")
@@ -636,6 +639,7 @@ def get_result(source):
         eel.search_get_first_item()
         eel.enable_res_button()
     else:
+        print("Not found")
         # eel.popup_result("show")
         eel.text_search_result("show")
         print(f"{Fore.RED}Result not found{Fore.RESET}")
@@ -768,7 +772,7 @@ def init_video(url, row_idx):
     video_single_result[1] = {
         "id" : url.rsplit("/", 1)[1],
         "title" : core.video.title,
-        "channel" : "-",
+        "channel" : core.video.author,
         "views" : core.video.views,
         "thumbnail" : core.video.thumbnail_url,
         "duration" : time.strftime("%M:%S", time.gmtime(core.video.length)),
@@ -875,6 +879,8 @@ def setDirectory():
     is_pathed()
     eel.navbar_control(True)
 
+    eel.modal_button_download(True)
+
     # app1
     eel.app1_getSelectedIndex()
 
@@ -896,17 +902,16 @@ def is_url_youtube():
             )
         if status == "": status = None
         if type(status) == type(True): status = None
-        print("get url ", url)
         if status != None:
-            print(url)
-    
             clean_url = url_cleansing(url)
-            print("Shortened :", clean_url)
+            print(f"url is ready : {Fore.GREEN}{clean_url}{Fore.RESET}")
 
             eel.set_link_url(url)
             eel.url_get_status(True)
             return clean_url
         else:
+            print(f"url is invalid : {Fore.RED}{url}{Fore.RESET}")
+
             eel.set_link_url(False)
             eel.url_get_status(False)
             return False
@@ -921,6 +926,8 @@ def fetch_from_url():
     eel.clearObj()
 
     url = is_url_youtube()
+
+    eel.url_progress_status(True)
     
     id = url.rsplit("/", 1)[1]
     title = "Loading title..."
@@ -962,9 +969,14 @@ def fetch_from_url():
             data["link"],
             data["duration"]
         )
+        eel.frame_youtube(data["id"])
+        eel.background_dynamic(data["thumbnail"])
 
         # eel.modal_url_info(url)
     print("finish url")
+    eel.url_progress_status(False)
+    eel.modal_url_close()
+
 
 # --- @app2 --- #
 
