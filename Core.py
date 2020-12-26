@@ -368,7 +368,7 @@ class Core:
             # ------------------------------ #
 
             # --- calculate elapsed time process --- #
-            print(f"$ File optimized. Elapsed : f{box.style(6,32,40)}%.2fsec.{box.end()}" % (end-start))
+            print(f"{Fore.GREEN}$ File optimized. Elapsed : {Fore.RESET} {box.style(6,32,40)}%.2fsec.{box.end()}" % (end-start))
             # -------------------------------------- #
         
         # --- raise Exception error --- #
@@ -534,6 +534,8 @@ class Core:
                 eel.modal_update_status("Ready")
                 eel.modal_animation_ready()
                 print(f"{box.style(6,34,40)}Download completed.{box.end()}")
+
+                print(f"{Fore.GREEN}Ready...{Fore.RESET}")
             
             # --- regardless resolution is not initialized when tried to download --- #
             else:
@@ -783,7 +785,7 @@ def init_check(data_itag, row_idx, res, id):
 
     # --- final check information --- #
     print(f"Object-memory : {box.style(7,30,45)}{master[row_idx]['self']}{box.end()}")
-    print(f"{Fore.GREEN}Ready...{Fore.RESET}")
+    print(f"\n{Fore.GREEN}Ready...{Fore.RESET}")
     # ------------------------------- #
 
     # return print(f"Object-memory : {box.style(7,30,45)}{master[row_idx]['self']}{box.end()}")
@@ -925,7 +927,7 @@ def setDirectory():
     # app1
     eel.app1_getSelectedIndex()
 
-    print("Path set to :", path)
+    print(f"Path set to : {box.style(7,30,45)}{path}{box.end()}")
     del root
 
 # ---------------------------- #
@@ -1020,7 +1022,7 @@ def fetch_from_url():
         # eel.modal_url_info(url)
     
     # print(f"{Fore.GREEN}$ URL Fetching done.{Fore.RESET}")
-    print(f"{Fore.GREEN}Ready...{Fore.RESET}")
+    print(f"\n{Fore.GREEN}Ready...{Fore.RESET}")
 
     eel.url_progress_status(False)
     eel.modal_url_close()

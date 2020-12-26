@@ -19,5 +19,7 @@ You can download the executable app from the [release](https://github.com/suaras
 ## Running program
 You can test the program with `python Core.py` and select your port. Default port is `localhost:8000`.
 
+For get better output console-log, please use `windows terminal`.
+
 ### Other
 Sorry for sphagetti code, I'm new.
