@@ -901,16 +901,14 @@ def is_url_youtube():
             print(url)
     
             clean_url = url_cleansing(url)
-            print("CLEAN :", clean_url)
+            print("Shortened :", clean_url)
 
             eel.set_link_url(url)
             eel.url_get_status(True)
-            print("TRUE DETECT")
             return clean_url
         else:
             eel.set_link_url(False)
             eel.url_get_status(False)
-            print("FALSE DETECT")
             return False
     except Exception as ex:
         eel.url_get_status(False)
