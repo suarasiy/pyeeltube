@@ -73,7 +73,7 @@ class Core:
 
     # --- get progress (core) download --- #
     def on_progress(self, chunk, file_handler, bytes_remaining):
-        global file_size
+        # global file_size
         size = self.file_size
 
         # --- get progress value (float) --- #
@@ -94,24 +94,41 @@ class Core:
     # ------------------------------------ #
 
     # -- set video information --- #
-    @eel.expose
-    def Video(self, url, row_idx):
-        global video
-        global result
+    def Video(self, url, row_idx, feedback):
+        # global video
+        # global result
         def core():
             try:
                 print("Initializing, please wait...")
                 self.video = YouTube(url, on_progress_callback=self.on_progress)
                 self.result = self.video.streams
-                print("Initializing done.")
+                print(f"{Fore.GREEN}$ Initializing done.{Fore.RESET}")
                 if len(self.result) > 0:
                     audio_size = self.get_audio_default().filesize
-                    print("Fetching result...")
+                    
+                    # --- give feedback progress & determine fetch via URL or SearchMode --- #
+                    if feedback.lower() == "panel":
+                        eel.progress_search_fill_animation("fetch_feedback")
+                        print("Fetching Video...")
+                    elif feedback.lower() == "url":
+                        print("Fetching URL...")
+                        eel.url_progress_feedback()
+                    # ---------------------------------------------------------------------- #
+
                     for data in self.quality():
                         if data != False:
-                            print(data)
+                            # --- get streams.result information --- #
+                            # print(data)
+                            # -------------------------------------- #
+                            
                             eel.object_resolution(data.itag, data.type, row_idx, data.resolution, data.fps, data.itag, round(((data.filesize + audio_size) / math.pow(1*10, 6)), 2))
                             eel.disable_res_button()
+                    
+                    if feedback.lower() == "panel":
+                        print(f"{box.style(5,32,40)}$ Video Fetching done.{box.end()}")
+                    elif feedback.lower() == "url":
+                        print(f"{box.style(5,32,40)}$ URL Fetching done.{box.end()}")
+                    
                     eel.object_resolution(self.get_audio_default().itag, self.get_audio_default().type, row_idx, self.get_audio_default().subtype, self.get_audio_default().abr.replace("kbps", ""), self.get_audio_default().itag, round(audio_size / math.pow(1*10, 6), 2))
                     eel.btn_finish_fetch(row_idx)
                 else:
@@ -134,14 +151,14 @@ class Core:
 
     # --- get info video.streams --- #
     def str_getInfo(self):
-        global result
+        # global result
         ([(print(i, sep="\n")) for i in self.result])
     # ------------------------------ #
 
     # --- get audio only (default: 128kbps) standard quality and best choice for merging --- #
     def get_audio_default(self):
-        global file_size
-        global result
+        # global file_size
+        # global result
         
         audio = self.result.get_audio_only(subtype="mp4")
         if audio != None:
@@ -153,8 +170,8 @@ class Core:
 
     # --- get the best audio quality object (160kbps) audio/webm opus --- #
     def get_audio(self):
-        global file_size
-        global result
+        # global file_size
+        # global result
         # --- priority get (160kbps) opus audio/webm --- #
         audio1 = [i for i in self.result.filter(
             adaptive=True,
@@ -351,7 +368,7 @@ class Core:
             # ------------------------------ #
 
             # --- calculate elapsed time process --- #
-            print("File optimized. Elapsed : %.2fsec." % (end-start))
+            print(f"$ File optimized. Elapsed : f{box.style(6,32,40)}%.2fsec.{box.end()}" % (end-start))
             # -------------------------------------- #
         
         # --- raise Exception error --- #
@@ -362,8 +379,8 @@ class Core:
 
     # --- add filename, pathvideo, pathaudio to dictionary --- #
     def add_to_history(self, path, model):
-        global video
-        global history
+        # global video
+        # global history
 
         def history_video():
             # --- joining path and title with static extension --- #
@@ -417,11 +434,11 @@ class Core:
     def delete_after_download(self):
         try:
             # --- global initialized --- #
-            global history
-            global video
+            # global history
+            # global video
             # -------------------------- #
 
-            print("Prepare for cleaning temprorary file(s).")
+            print(f"Prepare for {Fore.BLUE}cleaning temprorary{Fore.RESET} file(s).")
 
             # --- adding delay on running the code --- #
             eel.modal_update_status("Cleaning temporary...")
@@ -448,7 +465,7 @@ class Core:
     # --- (semi-core) fetching video quality and prototype --- #
     @eel.expose
     def quality(self):
-        global result
+        # global result
         source = self.fps_cleansing(self.result)
         return source
     # -------------------------------------------------------- #
@@ -474,9 +491,9 @@ class Core:
     def core_download(self, quality):
         try:
             # --- global initialized --- #
-            global history
-            global file_size
-            global result
+            # global history
+            # global file_size
+            # global result
             # -------------------------- #
             self.file_size = 0
 
@@ -516,7 +533,7 @@ class Core:
                 
                 eel.modal_update_status("Ready")
                 eel.modal_animation_ready()
-                print("Download completed.")
+                print(f"{box.style(6,34,40)}Download completed.{box.end()}")
             
             # --- regardless resolution is not initialized when tried to download --- #
             else:
@@ -636,6 +653,9 @@ def get_result(source):
                 f"[{Fore.BLUE}{idx+1}{Fore.RESET}] {Fore.GREEN}{id}{Fore.RESET} : [{Fore.YELLOW}{datasource[id]['duration']}{Fore.RESET}] {datasource[id]['title']}"
                 ) for idx, id in enumerate(datasource)
             ]
+        
+        print(f"{Fore.GREEN}Ready...{Fore.RESET}")
+
         eel.search_get_first_item()
         eel.enable_res_button()
     else:
@@ -666,6 +686,7 @@ def init_search(title):
         )
     )
     get_result(ds)
+    eel.hide_welcome()
 # ----------------------------- #
 
 # --- search videos --- #
@@ -689,13 +710,19 @@ def init_check_get_info(itag, row_idx, source, result, filesize, id):
     data_fps = source.fps
     data_filesize = filesize
     data_extension = source.type
-    print("0 :", itag)
-    print("1 :", data_resolution)
-    print("2 :", data_fps)
-    print("3 :", data_filesize)
-    print("4 :", data_extension)
-    print('surpress : ', datasource)
-    print(datasource[id]["duration"].replace(".", ":"))
+    data_duration = datasource[id]["duration"].replace(".", ":")
+    
+    # --- get information of selected resolution --- #
+    print(f"itag : {Fore.BLUE}{itag}{Fore.RESET}")
+    print(f"resolution : {Fore.GREEN}{data_resolution}{Fore.RESET}")
+    print(f"fps init : {Fore.BLUE}{data_fps}{Fore.RESET}")
+    print(f"filesize : {Fore.GREEN}{data_filesize}Mb{Fore.RESET}")
+    print(f"type : {Fore.BLUE}{data_extension}{Fore.RESET}")
+    print(f"duration : {Fore.GREEN}{data_duration}{Fore.RESET}")
+    # print('surpress : ', datasource)
+    # print(datasource[id]["duration"].replace(".", ":"))
+    # ---------------------------------------------- #
+    
     if source.type == "audio":
         eel.get_download_info(itag, row_idx, datasource[id]["thumbnails"], data_title, "null", datasource[id]["duration"].replace(".", ":"), data_abr, data_filesize, data_extension, temp.system_gettemp(), path.replace("/", "\\"), is_path_available())
     elif source.type == "video":
@@ -705,7 +732,10 @@ def init_check_get_info(itag, row_idx, source, result, filesize, id):
 # --- check master dictionary --- #
 @eel.expose
 def init_check(data_itag, row_idx, res, id):
-    print(master[row_idx])
+    # --- recognize selected memory object --- #
+    # print(master[row_idx])
+    # ---------------------------------------- #
+
     core = master[row_idx]["self"]
     core_filesize = master[row_idx]["filesize"]
     core_result = core.video.title
@@ -751,9 +781,12 @@ def init_check(data_itag, row_idx, res, id):
     init_by_itag(data_itag)
     # -------------------- #
 
-    # ----------------------- #
+    # --- final check information --- #
+    print(f"Object-memory : {box.style(7,30,45)}{master[row_idx]['self']}{box.end()}")
+    print(f"{Fore.GREEN}Ready...{Fore.RESET}")
+    # ------------------------------- #
 
-    return print(master[row_idx]["self"])
+    # return print(f"Object-memory : {box.style(7,30,45)}{master[row_idx]['self']}{box.end()}")
 # ------------------------------- #
 
 def get_filesizes(source):
@@ -763,12 +796,16 @@ video_single_result = {}
 
 # --- core eel --- #
 @eel.expose
-def init_video(url, row_idx):
+def init_video(url, row_idx, feedback):
     global video_single_result
     core = Core()
     master[row_idx] = {"self" : core, "url" : url}
-    core.Video(url, row_idx)
-    print("MASTER : ", master)
+    core.Video(url, row_idx, feedback)
+    
+    # --- dict of master object memory --- #
+    # print("MASTER : ", master)
+    # ------------------------------------ #
+    
     video_single_result[1] = {
         "id" : url.rsplit("/", 1)[1],
         "title" : core.video.title,
@@ -791,7 +828,7 @@ def init_video(url, row_idx):
 
     # eel.btn_finish_fetch(row_idx)
     eel.enable_res_button()
-    print(master)
+    # print(master)
 # ---------------- #
 
 @eel.expose
@@ -802,7 +839,11 @@ def modal_core_download(itag, row_idx, res):
     core.path = path
     def core_by_itag(itag):
         obj = core.result.get_by_itag(itag)
-        print("by core itag :", obj)
+        
+        # --- get itag selected --- #
+        # print("by core itag :", obj)
+        # ------------------------- #
+
         if obj != None:
             eel.modal_button_close(False)
             eel.modal_button_download(False)
@@ -847,7 +888,7 @@ def refresh():
     ds_1 = ""
     path = ""
     print(f"{Fore.GREEN}(Listening){Fore.RESET} to {Fore.BLUE}Python{Fore.RESET} at {Fore.GREEN}localhost:{port}{Fore.RESET}")
-    print(f"{box.style(1,34,40)}data master:{box.end()}", master)
+    print(f"{box.style(1,34,40)}data master:{box.end()} {master} <- memory")
 # ------------------------------ #
 
 # --- eel directory dialog --- #
@@ -948,8 +989,12 @@ def fetch_from_url():
     if url != False:
         init_video(
             url,
-            1
+            1,
+            "url"
         )
+        # --- RESET DATASOURCE --- #
+        datasource = {}
+        # ------------------------ #
         data = video_single_result[1]
         datasource[data["id"]] = {
             "id" : data["id"],
@@ -973,9 +1018,13 @@ def fetch_from_url():
         eel.background_dynamic(data["thumbnail"])
 
         # eel.modal_url_info(url)
-    print("finish url")
+    
+    # print(f"{Fore.GREEN}$ URL Fetching done.{Fore.RESET}")
+    print(f"{Fore.GREEN}Ready...{Fore.RESET}")
+
     eel.url_progress_status(False)
     eel.modal_url_close()
+    eel.hide_welcome()
 
 
 # --- @app2 --- #
@@ -1029,6 +1078,10 @@ def app1_getUrlThumbnails(source):
             eel.app1_makeObj(url)
     else:
         eel.text_search_result("show")
+    
+    eel.navbar_control(True)
+    eel.progress_search_fill_animation("none")
+    eel.text_search_focus()
 
 def app1_is_downloadable(url):
     head = requests.head(url, allow_redirects=True)
@@ -1042,6 +1095,9 @@ def app1_is_downloadable(url):
 
 def app1_initTitle(title):
     global ds_1
+    print("Searching thumbnails. Please wait...")
+    eel.navbar_control(False)
+    eel.progress_search_fill_animation("search")
     ds_1 = app1_getThumbnails(
         search(
             title, 
@@ -1051,6 +1107,7 @@ def app1_initTitle(title):
         )
     )
     app1_getUrlThumbnails(ds_1)
+    eel.hide_welcome()
 
 @eel.expose
 def app1_makeObj(title):

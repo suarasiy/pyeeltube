@@ -1,6 +1,10 @@
 // © suara
 // https://twitter.com/msdn_network
 
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap");
+
 * {
     box-sizing: border-box;
     text-rendering: optimizeLegibility;
@@ -325,7 +329,7 @@ a {
     
                 font-family: "Open Sans";
                 font-size: 14.25px;
-                font-weight: 500;
+                font-weight: 600;
                 transition: box-shadow .155s ease-out 0s;
                 &:hover {
                     box-shadow: 0 3px 6px .12px rgba(0, 0, 0, 0.35);
@@ -410,6 +414,45 @@ a {
                 //     text-decoration: underline;
                 //     color: rgb(45, 29, 116);
                 // }
+
+                > mark {
+                    cursor: pointer;
+                    position: relative;
+                    display: inline-block;
+                    background-color: transparent;
+                    border: 1px solid red;
+                    color: red;
+                    padding: 4px 5px;
+                    border-radius: 3px;
+                    
+                    transition: color .4s cubic-bezier(.65, 1, .35, 1) 0s, border .4s cubic-bezier(.65, 1, .35, 1) 0s;
+                    
+                    &::before {
+                        position: absolute;
+                        content: '';
+                        width: 12px;
+                        height: 3px;
+                        top: 2px;
+                        left: 15%;
+                        background-color: red;
+                        border-radius: 5px;
+                        transform: translateX(-50%);
+                        transition: left .4s cubic-bezier(.65, 1, .35, 1) 0s, background-color .4s cubic-bezier(.65, 1, .35, 1) 0s, width .4s cubic-bezier(.65, 1, .35, 1) 0s;
+                    }
+
+                    &:hover {
+                        border: 1px solid rgb(107, 164, 255);
+                        color: rgb(107, 164, 255);
+                        
+                        transition: color .4s cubic-bezier(.65, 1, .35, 1) 0s, border .4s cubic-bezier(.65, 1, .35, 1) 0s;
+                        &::before {
+                            background-color: rgb(107, 164, 255);
+                            width: 22px;
+                            left: 78%;
+                            transition: left .4s cubic-bezier(.65, 1, .35, 1) 0s, background-color .4s cubic-bezier(.65, 1, .35, 1) 0s, width .3s cubic-bezier(.65, 1, .35, 1) 0s;
+                        }
+                    }
+                }
             }
             &.show {
                 // display: flex;
@@ -452,6 +495,11 @@ a {
                     animation-delay: 0s;
                     animation-iteration-count: infinite;
                     animation-timing-function: cubic-bezier(.7, 0, .3, 1);
+                }
+
+                &.fetch-feedback {
+                    background-color: rgb(74, 212, 88);
+                    box-shadow: 0 0 10px 5px rgba(74, 212, 88, 0.65);
                 }
             }
         }
@@ -566,7 +614,7 @@ a {
                             color: white;
                             font-weight: 500;
                             font-size: 15px;
-                            font-family: Roboto;
+                            font-family: "Roboto";
                             border-radius: 0 0 5px 5px;
                             padding: 5px 7px;
                         }
@@ -597,7 +645,7 @@ a {
                             bottom: 3px;
                             font-size: 12px;
                             color: white;
-                            font-family: Roboto;
+                            font-family: "Roboto";
                             font-weight: 500;
                             background-color: rgba(0, 0, 0, 0.645);
                             width: fit-content;
@@ -650,7 +698,7 @@ a {
                         .channel {
                             cursor: pointer;
     
-                            font-family: Roboto;
+                            font-family: "Roboto";
                             font-size: 15px;
                             color: rgb(86, 65, 179);
                             text-decoration: underline;
@@ -664,7 +712,7 @@ a {
                         }
                         .label {
                             font-family: "Segoe UI";
-                            font-weight: 400;
+                            font-weight: 500;
                             color: black;
                             font-size: 14px;
                             margin: 5px 1px;
@@ -763,13 +811,13 @@ a {
                             .top {
                                 color: white;
                                 font-size: 16px;
-                                font-family: Ubuntu;
+                                font-family: "Ubuntu";
                                 font-weight: 400;
                             }
                             
                             .fps {
                                 font-size: 13px;
-                                font-family: Ubuntu;
+                                font-family: "Ubuntu";
                                 color: white;
                                 background-color: rgba(255, 255, 255, 0.308);
                                 box-shadow: 0 3px 6px .21px rgba(0, 0, 0, 0.025);
@@ -1071,7 +1119,7 @@ a {
                 cursor: pointer;
                 padding: 6px 10px;
                 border-radius: 4px;
-                font-family: Roboto;
+                font-family: "Roboto";
                 font-size: 13px;
                 font-weight: 500;
                 background-color: rgba(255, 255, 255, 0.22);
@@ -1169,7 +1217,7 @@ a {
                     color: white;
                     width: fit-content;
                     font-size: 12px;
-                    font-family: Roboto;
+                    font-family: "Roboto";
                     border-radius: 3px;
                     padding: 4px 7px;
                     background-color: rgba(0, 0, 0, 0.507);
@@ -1226,7 +1274,7 @@ a {
                     padding: 4px 6px;
                     border-radius: 4px;
                     border: 2px solid rgb(221, 221, 221);
-                    font-family: Ubuntu;
+                    font-family: "Ubuntu";
                     margin: 3px;
                     &:first-child {
                         margin: 3px 3px 3px 0;
@@ -1256,7 +1304,7 @@ a {
                         font-size: 14px;
                         font-weight: 300;
                         color: rgb(155, 155, 155);
-                        font-family: Verdana;
+                        font-family: "Verdana";
                     }
                     
                     .row {
@@ -1446,6 +1494,11 @@ a {
                         animation-delay: 0s;
                         animation-iteration-count: infinite;
                         animation-timing-function: cubic-bezier(.65, 0, .35, 1);
+                    }
+
+                    &.fetch-feedback {
+                        background-color: rgb(74, 212, 88);
+                        box-shadow: 0 0 10px 5px rgba(74, 212, 88, 0.65);
                     }
                 }
             }

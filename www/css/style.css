@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap");
 * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -413,7 +416,7 @@ a {
   border: 1px solid transparent;
   font-family: "Open Sans";
   font-size: 14.25px;
-  font-weight: 500;
+  font-weight: 600;
   -webkit-transition: -webkit-box-shadow .155s ease-out 0s;
   transition: -webkit-box-shadow .155s ease-out 0s;
   transition: box-shadow .155s ease-out 0s;
@@ -517,6 +520,49 @@ a {
   transition: opacity .2s linear 0s;
 }
 
+.main > .eagle > .content-result .title > mark {
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  background-color: transparent;
+  border: 1px solid red;
+  color: red;
+  padding: 4px 5px;
+  border-radius: 3px;
+  -webkit-transition: color 0.4s cubic-bezier(0.65, 1, 0.35, 1) 0s, border 0.4s cubic-bezier(0.65, 1, 0.35, 1) 0s;
+  transition: color 0.4s cubic-bezier(0.65, 1, 0.35, 1) 0s, border 0.4s cubic-bezier(0.65, 1, 0.35, 1) 0s;
+}
+
+.main > .eagle > .content-result .title > mark::before {
+  position: absolute;
+  content: '';
+  width: 12px;
+  height: 3px;
+  top: 2px;
+  left: 15%;
+  background-color: red;
+  border-radius: 5px;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  -webkit-transition: left 0.4s cubic-bezier(0.65, 1, 0.35, 1) 0s, background-color 0.4s cubic-bezier(0.65, 1, 0.35, 1) 0s, width 0.4s cubic-bezier(0.65, 1, 0.35, 1) 0s;
+  transition: left 0.4s cubic-bezier(0.65, 1, 0.35, 1) 0s, background-color 0.4s cubic-bezier(0.65, 1, 0.35, 1) 0s, width 0.4s cubic-bezier(0.65, 1, 0.35, 1) 0s;
+}
+
+.main > .eagle > .content-result .title > mark:hover {
+  border: 1px solid #6ba4ff;
+  color: #6ba4ff;
+  -webkit-transition: color 0.4s cubic-bezier(0.65, 1, 0.35, 1) 0s, border 0.4s cubic-bezier(0.65, 1, 0.35, 1) 0s;
+  transition: color 0.4s cubic-bezier(0.65, 1, 0.35, 1) 0s, border 0.4s cubic-bezier(0.65, 1, 0.35, 1) 0s;
+}
+
+.main > .eagle > .content-result .title > mark:hover::before {
+  background-color: #6ba4ff;
+  width: 22px;
+  left: 78%;
+  -webkit-transition: left 0.4s cubic-bezier(0.65, 1, 0.35, 1) 0s, background-color 0.4s cubic-bezier(0.65, 1, 0.35, 1) 0s, width 0.3s cubic-bezier(0.65, 1, 0.35, 1) 0s;
+  transition: left 0.4s cubic-bezier(0.65, 1, 0.35, 1) 0s, background-color 0.4s cubic-bezier(0.65, 1, 0.35, 1) 0s, width 0.3s cubic-bezier(0.65, 1, 0.35, 1) 0s;
+}
+
 .main > .eagle > .content-result.show {
   height: 49px;
 }
@@ -571,6 +617,12 @@ a {
           animation-iteration-count: infinite;
   -webkit-animation-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
           animation-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+.main > .eagle .progress-search > .progress-search-fill.fetch-feedback {
+  background-color: #4ad458;
+  -webkit-box-shadow: 0 0 10px 5px rgba(74, 212, 88, 0.65);
+          box-shadow: 0 0 10px 5px rgba(74, 212, 88, 0.65);
 }
 
 .main > .eagle > .panel {
@@ -700,7 +752,7 @@ a {
   color: white;
   font-weight: 500;
   font-size: 15px;
-  font-family: Roboto;
+  font-family: "Roboto";
   border-radius: 0 0 5px 5px;
   padding: 5px 7px;
 }
@@ -725,7 +777,7 @@ a {
   bottom: 3px;
   font-size: 12px;
   color: white;
-  font-family: Roboto;
+  font-family: "Roboto";
   font-weight: 500;
   background-color: rgba(0, 0, 0, 0.645);
   width: -webkit-fit-content;
@@ -801,7 +853,7 @@ a {
 
 .main > .eagle > .panel.column > .content > .information .channel {
   cursor: pointer;
-  font-family: Roboto;
+  font-family: "Roboto";
   font-size: 15px;
   color: #5641b3;
   text-decoration: underline;
@@ -818,7 +870,7 @@ a {
 
 .main > .eagle > .panel.column > .content > .information .label {
   font-family: "Segoe UI";
-  font-weight: 400;
+  font-weight: 500;
   color: black;
   font-size: 14px;
   margin: 5px 1px;
@@ -945,13 +997,13 @@ a {
 .main > .eagle > .panel.column > .content > .information .res .top {
   color: white;
   font-size: 16px;
-  font-family: Ubuntu;
+  font-family: "Ubuntu";
   font-weight: 400;
 }
 
 .main > .eagle > .panel.column > .content > .information .res .fps {
   font-size: 13px;
-  font-family: Ubuntu;
+  font-family: "Ubuntu";
   color: white;
   background-color: rgba(255, 255, 255, 0.308);
   -webkit-box-shadow: 0 3px 6px 0.21px rgba(0, 0, 0, 0.025);
@@ -1273,7 +1325,7 @@ a {
   cursor: pointer;
   padding: 6px 10px;
   border-radius: 4px;
-  font-family: Roboto;
+  font-family: "Roboto";
   font-size: 13px;
   font-weight: 500;
   background-color: rgba(255, 255, 255, 0.22);
@@ -1381,7 +1433,7 @@ a {
   width: -moz-fit-content;
   width: fit-content;
   font-size: 12px;
-  font-family: Roboto;
+  font-family: "Roboto";
   border-radius: 3px;
   padding: 4px 7px;
   background-color: rgba(0, 0, 0, 0.507);
@@ -1440,7 +1492,7 @@ a {
   padding: 4px 6px;
   border-radius: 4px;
   border: 2px solid #dddddd;
-  font-family: Ubuntu;
+  font-family: "Ubuntu";
   margin: 3px;
 }
 
@@ -1471,7 +1523,7 @@ a {
   font-size: 14px;
   font-weight: 300;
   color: #9b9b9b;
-  font-family: Verdana;
+  font-family: "Verdana";
 }
 
 .main > .download-domain > .modal .row > .do-col .row .icon, .main > .download-domain > .modal .row > .do-column .row .icon, .main > .url-domain > .modal .row > .do-col .row .icon, .main > .url-domain > .modal .row > .do-column .row .icon {
@@ -1701,6 +1753,12 @@ a {
           animation-iteration-count: infinite;
   -webkit-animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
           animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.main > .url-domain > .modal > .progress > .progress-fill.fetch-feedback {
+  background-color: #4ad458;
+  -webkit-box-shadow: 0 0 10px 5px rgba(74, 212, 88, 0.65);
+          box-shadow: 0 0 10px 5px rgba(74, 212, 88, 0.65);
 }
 
 .behind {

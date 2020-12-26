@@ -322,9 +322,12 @@ function progress_search_fill_animation(model) {
         } else if (model.toLowerCase() == "fetch") {
             progress_search.classList.remove("progress-search-fill-search");
             progress_search.classList.add("progress-search-fill-fetch");
+        } else if (model.toLowerCase() == "fetch_feedback") {
+            progress_search.classList.add("fetch-feedback");
         } else if (model.toLowerCase() == "none") {
             progress_search.classList.remove("progress-search-fill-fetch");
             progress_search.classList.remove("progress-search-fill-search");
+            progress_search.classList.remove("fetch-feedback");
         }
     }
 }
@@ -461,7 +464,7 @@ function makeObj(_id, _title, _channel, _viewer, _imgurl, _video_url, _duration)
         navbar_control(false);
         progress_search_fill_animation("fetch");
         disable_res_button();
-        eel.init_video(_video_url, row_wrap.getAttribute("data-row-idx"));
+        eel.init_video(_video_url, row_wrap.getAttribute("data-row-idx"), "panel");
     })
     row_wrap.appendChild(btn_fetch);
     
@@ -695,6 +698,7 @@ function url_progress_status(status) {
         btn_refresh.classList.add("btn-disabled");
         btn_refresh.setAttribute("disabled", true);
     } else if ( status === false ) {
+        progress.classList.remove("fetch-feedback");
         progress.classList.remove("progress-search-search");
 
         btn_get.classList.remove("btn-disabled");
@@ -706,6 +710,13 @@ function url_progress_status(status) {
         btn_refresh.classList.remove("btn-disabled");
         btn_refresh.removeAttribute("disabled");
     }
+}
+
+eel.expose(url_progress_feedback)
+function url_progress_feedback() {
+    const url_domain = document.querySelector(".url-domain");
+    const progress = url_domain.querySelector(".progress-fill");
+    progress.classList.add("fetch-feedback");
 }
 
 url_get_status(false);
@@ -765,6 +776,14 @@ function text_search_result(bool) {
         } else if (bool === "hide") {
             result.classList.remove("show");
         }
+    }
+}
+
+eel.expose(hide_welcome)
+function hide_welcome() {
+    const top_welcome = document.querySelector("#top-welcome-message");
+    if ( top_welcome != undefined ) {
+        top_welcome.classList.remove("show");
     }
 }
 
