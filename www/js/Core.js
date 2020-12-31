@@ -114,10 +114,12 @@ function page_videos() {
     var panel_thumbnails = document.querySelector("#panel_thumbnails");
     var btn_video = document.querySelector("#btn_menu_video");
     var btn_thumbnail = document.querySelector("#btn_menu_thumbnail");
+    const btn_about = document.querySelector("#btn_menu_about");
     var search = document.querySelector("#search");
     var video_player = document.querySelector("#video_player");
     if (panel_thumbnails != undefined & btn_video != undefined & btn_thumbnail != undefined & search != undefined) {
         btn_video.classList.add("active");
+        btn_about.classList.remove("active");
         btn_thumbnail.classList.remove("active");
 
         panel_videos.classList.remove("disabled");
@@ -148,11 +150,13 @@ function page_thumbnails() {
     var panel_videos = document.querySelector("#panel_videos");
     var btn_video = document.querySelector("#btn_menu_video");
     var btn_thumbnail = document.querySelector("#btn_menu_thumbnail")
+    const btn_menu_about = document.querySelector("#btn_menu_about");
     var search = document.querySelector("#search");
     var video_player = document.querySelector("#video_player");
     var iframe_youtube = document.querySelector("#iframe_youtube");
     if (panel_videos != undefined & btn_video != undefined & btn_thumbnail != undefined & search != undefined & iframe_youtube != undefined) {
         btn_video.classList.remove("active");
+        btn_menu_about.classList.remove("active");
         btn_thumbnail.classList.add("active");
 
         panel_thumbnails.classList.remove("disabled");
@@ -180,6 +184,21 @@ function page_thumbnails() {
     toggle(this)
     app_thread("APP_THUMBNAIL");
     init_search_box(app);
+}
+
+function page_about() {
+    const panel_about = document.querySelector("#panel_about");
+    const panel_videos = document.querySelector("#panel_videos");
+    const panel_thumbnails = document.querySelector("#panel_thumbnails");
+    const btn_videos = document.querySelector("#btn_menu_video");
+    const btn_thumbnails = document.querySelector("#btn_menu_thumbnail");
+    const btn_about = document.querySelector("#btn_menu_about");
+    if ( panel_about != undefined && panel_videos != undefined && panel_thumbnails != undefined ) {
+        btn_videos.classList.remove("active");
+        btn_thumbnails.classList.remove("active");
+        btn_about.classList.add("active");
+
+    }
 }
 
 function document_hotkey() {
