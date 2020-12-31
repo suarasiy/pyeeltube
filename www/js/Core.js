@@ -164,7 +164,9 @@ function page_thumbnails() {
         youtube_height = "-" + youtube_height;
         video_player.setAttribute("video-status", "hide");
         video_player.style.bottom = youtube_height;
-        video_player.classList.toggle("hide");
+        if ( !video_player.classList.contains("hide") ) {
+            video_player.classList.toggle("hide");
+        }
 
         if (THUMBNAIL_RESULT > 0) {
             text_search_result("hide");
@@ -210,6 +212,13 @@ function document_hotkey() {
         }
         if (event.ctrlKey && event.key === "h") {
             event.preventDefault();
+        }
+        if (event.keyCode === 27) {
+            event.preventDefault();
+            const download_domain = document.querySelector(".download-domain");
+            const modal = download_domain.querySelector("#modal-1");
+
+            console.log("escaped!");
         }
     }
 }
@@ -280,14 +289,17 @@ function number_with_comma(num) {
 }
 
 function modal_close() {
-    var modal = document.querySelector("#modal-1");
     var download_domain = document.querySelector(".download-domain");
+    var modal = download_domain.querySelector("#modal-1");
     if (modal != undefined & download_domain != undefined) {
-        modal.style.transform = "translate(-50%, -50%) scale(.65)";
-        modal.style.opacity = 0;
-        download_domain.style.opacity = 0;
+        // modal.style.transform = "translate(-50%, -50%) scale(.65)";
+        // modal.style.opacity = 0;
+        // download_domain.style.opacity = 0;
+        modal.classList.add("hide");
+        download_domain.classList.add("hide");
         setTimeout(function() {
-            download_domain.style.display = "none";
+            // download_domain.style.display = "none";
+            download_domain.classList.add("hide-block");
         }, 305)
     }
 }
@@ -630,13 +642,19 @@ function get_download_info(data_itag, data_rowidx, data_imgurl, data_title, data
         modal_button_download(is_ready);
         com_status(true);
         
-        download_domain.style.display = "block";
+        // download_domain.style.display = "block";
+        // download_domain.classList.remove("hide");
+        download_domain.classList.remove("hide-block");
 
-        modal.style.display = "block";
+        // modal.style.display = "block";
+        // modal.classList.remove("hide");
+        modal.classList.remove("hide-block");
         setTimeout(function() {
-            download_domain.style.opacity = 1;
-            modal.style.transform = "translate(-50%, -50%) scale(1)";
-            modal.style.opacity = 1;
+            // download_domain.style.opacity = 1;
+            download_domain.classList.remove("hide");
+            // modal.style.transform = "translate(-50%, -50%) scale(1)";
+            // modal.style.opacity = 1;
+            modal.classList.remove("hide");
         }, 105)
     }
 }

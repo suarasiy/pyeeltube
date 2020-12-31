@@ -115,14 +115,23 @@ class Core:
                         eel.url_progress_feedback()
                     # ---------------------------------------------------------------------- #
 
-                    for data in self.quality():
-                        if data != False:
-                            # --- get streams.result information --- #
-                            # print(data)
-                            # -------------------------------------- #
-                            
-                            eel.object_resolution(data.itag, data.type, row_idx, data.resolution, data.fps, data.itag, round(((data.filesize + audio_size) / math.pow(1*10, 6)), 2))
-                            eel.disable_res_button()
+                    obj_count = 0
+                    def get_obj():
+                        for data in self.quality():
+                            if data != False:
+                                # --- get streams.result information --- #
+                                # print(data)
+                                # -------------------------------------- #
+                                
+                                eel.object_resolution(data.itag, data.type, row_idx, data.resolution, data.fps, data.itag, round(((data.filesize + audio_size) / math.pow(1*10, 6)), 2))
+                                eel.disable_res_button()
+                    try:
+                        get_obj()
+                    except Exception as ex:
+                        print("Connection problem. Tryinga again...")
+                        obj_count = obj_count + 1
+                        if obj_count <= 3:
+                            get_obj()
                     
                     if feedback.lower() == "panel":
                         print(f"{box.style(5,32,40)}$ Video Fetching done.{box.end()}")
@@ -311,6 +320,11 @@ class Core:
             # command_merge = f'ffmpeg.exe -i "{pathfile_video}" -i "{pathfile_audio}" -c copy -c:a aac "{os.path.join(path, output_name)}"'
             command_merge = f'ffmpeg.exe -i "{pathfile_video}" -i "{pathfile_audio}" -c copy -c:a mp3 "{os.path.join(path, output_name)}"'
             # ------------------------------------------------------- #
+
+            print("== :info: ==")
+            print(f"{Fore.BLUE}vid_source :{Fore.RESET} {pathfile_video}")
+            print(f"{Fore.BLUE}aud_source :{Fore.RESET} {pathfile_audio}")
+            print(f"{Fore.GREEN}target :{Fore.RESET} {output_name}")
 
             # --- Execute command merge based ffmpeg.exe --- #
             self.run_command(command_merge)
@@ -533,8 +547,8 @@ class Core:
                 
                 eel.modal_update_status("Ready")
                 eel.modal_animation_ready()
+                
                 print(f"{box.style(6,34,40)}Download completed.{box.end()}")
-
                 print(f"{Fore.GREEN}Ready...{Fore.RESET}")
             
             # --- regardless resolution is not initialized when tried to download --- #
@@ -571,7 +585,9 @@ class Core:
             eel.modal_update_status("Ready")
             eel.modal_animation_ready()
 
-            print("Download success.")
+            print(f"{box.style(6,34,40)}Download completed.{box.end()}")
+            print(f"{Fore.GREEN}Ready...{Fore.RESET}")
+
         except ValueError as ex:
             print(ex)
     # --------------------------- #
@@ -799,44 +815,55 @@ video_single_result = {}
 # --- core eel --- #
 @eel.expose
 def init_video(url, row_idx, feedback):
-    global video_single_result
-    core = Core()
-    master[row_idx] = {"self" : core, "url" : url}
-    core.Video(url, row_idx, feedback)
-    
-    # --- dict of master object memory --- #
-    # print("MASTER : ", master)
-    # ------------------------------------ #
-    
-    video_single_result[1] = {
-        "id" : url.rsplit("/", 1)[1],
-        "title" : core.video.title,
-        "channel" : core.video.author,
-        "views" : core.video.views,
-        "thumbnail" : core.video.thumbnail_url,
-        "duration" : time.strftime("%M:%S", time.gmtime(core.video.length)),
-        "link" : url
-    }
-    
-    # get_filesizes(master[row_idx]["self"])
-    # get_filesizes(core.each_quality_size())
+    count = 0
+    try:
+        global video_single_result
+        row_idx = int(row_idx)
+        core = Core()
+        master[row_idx] = {"self" : core, "url" : url}
+        core.Video(url, row_idx, feedback)
+        
+        # --- dict of master object memory --- #
+        # print("MASTER : ", master)
+        # ------------------------------------ #
+        
+        video_single_result[1] = {
+            "id" : url.rsplit("/", 1)[1],
+            "title" : core.video.title,
+            "channel" : core.video.author,
+            "views" : core.video.views,
+            "thumbnail" : core.video.thumbnail_url,
+            "duration" : time.strftime("%M:%S", time.gmtime(core.video.length)),
+            "link" : url
+        }
+        
+        # get_filesizes(master[row_idx]["self"])
+        # get_filesizes(core.each_quality_size())
 
-    # --- update key 'filesizes' in master dictionary --- #
-    if len(core.result) > 0:
-        master[row_idx]["filesize"] = core.each_quality_size()
-    else:
-        print("No result found. Calculating filesize canceled.")
-    # --------------------------------------------------- #
+        # --- update key 'filesizes' in master dictionary --- #
+        if len(core.result) > 0:
+            master[row_idx]["filesize"] = core.each_quality_size()
+        else:
+            print("No result found. Calculating filesize canceled.")
+            print(f"\n{Fore.GREEN}Ready...{Fore.RESET}")
+        # --------------------------------------------------- #
 
-    # eel.btn_finish_fetch(row_idx)
-    eel.enable_res_button()
-    # print(master)
+        # eel.btn_finish_fetch(row_idx)
+        eel.enable_res_button()
+        # print(master)
+    except HTTPError as ex:
+        print(f"Error 404. Try no.{count}...")
+        count = count + 1
+        if count <= 2:
+            init_video(url, row_idx, feedback)
+
 # ---------------- #
 
 @eel.expose
 def modal_core_download(itag, row_idx, res):
     global master
     global path
+    print(master)
     core = master[int(row_idx)]["self"]
     core.path = path
     def core_by_itag(itag):
@@ -1183,6 +1210,8 @@ def app1_core_downloadThumbnails(_list):
         eel.btnDownload(False)
         eel.clearChecked()
         eel.progressbar()
+
+        print(f"\n{Fore.GREEN}Ready...{Fore.RESET}")
         
     except Exception as ex:
         print(f"{box.style(0,37,41)}Error catched.{box.end()}")
@@ -1195,5 +1224,11 @@ try:
 except Exception as ex:
     port = 8000
 
-eel.init("www")
-eel.start("index.html", port=port, size=(1096,720))
+mode = input("Select mode (default | edge): ")
+
+if mode.lower() == "edge":
+    eel.init("www")
+    eel.start("index.html", port=port, size=(1096,720), mode="edge")
+else:
+    eel.init("www")
+    eel.start("index.html", port=port, size=(1096,720))

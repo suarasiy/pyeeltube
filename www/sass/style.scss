@@ -1174,17 +1174,25 @@ a {
         z-index: 999;
         background-color: rgba(0, 0, 0, 0.315);
         // opacity: 1;
-        display: none;
-        opacity: 0;
+        display: block;
+        opacity: 1;
 
         transition: opacity .2s linear 0s;
+
+        &.hide {
+            opacity: 0;
+        }
+
+        &.hide-block {
+            display: none;
+        }
         
         > .modal {
             position: relative;
             top: 50%;
             left: 50%;
             // transform: translate(-50%, -50%) scale(1);
-            transform: translate(-50%, -50%) scale(0);
+            transform: translate(-50%, -50%) scale(1);
             width: 450px;
             // height: 650px;
             background-color: white;
@@ -1193,11 +1201,20 @@ a {
             border-radius: 8px;
             overflow: hidden;
             // opacity: 1;
-            display: none;
-            opacity: 0;
+            display: block;
+            opacity: 1;
 
             transition: transform .35s cubic-bezier(.11, 1, .19, 1), opacity .2s linear;
             
+            &.hide {
+                transform: translate(-50%, -50%) scale(.65);
+                opacity: 0;
+            }
+
+            &.hide-block {
+                display: none;
+            }
+
             .cover {
                 position: relative;
                 width: 100%;
