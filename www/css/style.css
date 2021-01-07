@@ -54,6 +54,16 @@ a {
   text-decoration: none;
 }
 
+mark {
+  font-family: consolas;
+  font-weight: 600;
+  padding: 2px 4px;
+  color: #4e4e4e;
+  background-color: rgba(255, 255, 255, 0.363);
+  border-radius: 4px;
+  border: 1px solid #cacaca;
+}
+
 .btn {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -374,6 +384,7 @@ a {
 }
 
 .main > .form > h1 {
+  padding: 5px 12px;
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
@@ -381,6 +392,8 @@ a {
   font-size: 21px;
   font-weight: 500;
   color: #0b1620;
+  background-color: rgba(253, 253, 253, 0.75);
+  border-radius: 4px;
 }
 
 .main > .form > .input {
@@ -396,6 +409,17 @@ a {
       -ms-flex-pack: center;
           justify-content: center;
   width: 100%;
+  height: 65px;
+  -webkit-transition: opacity 0.1s linear 0s, height 0.3s cubic-bezier(0.34, 0.99, 0.47, 1), padding 0.2s linear 0s;
+  transition: opacity 0.1s linear 0s, height 0.3s cubic-bezier(0.34, 0.99, 0.47, 1), padding 0.2s linear 0s;
+}
+
+.main > .form > .input.disabled {
+  padding: 0px 8px;
+  opacity: 0;
+  height: 0px;
+  -webkit-transition: opacity 0.1s linear 0s, height 0.3s cubic-bezier(0.34, 0.99, 0.47, 1), padding 0.2s linear 0s;
+  transition: opacity 0.1s linear 0s, height 0.3s cubic-bezier(0.34, 0.99, 0.47, 1), padding 0.2s linear 0s;
 }
 
 .main > .form > .input *[disabled="true"] {
@@ -1229,6 +1253,10 @@ a {
           user-select: none;
 }
 
+.main > .eagle > .panel > #mgcheck.f-w {
+  width: 100%;
+}
+
 .main > .eagle > .panel > #mgcheck > input[type="checkbox"] {
   display: none;
 }
@@ -1266,6 +1294,91 @@ a {
   -webkit-transition: padding 0.15s cubic-bezier(0.45, 1.2, 0.45, 1.26), border 0.15s ease;
   transition: padding 0.15s cubic-bezier(0.45, 1.2, 0.45, 1.26), border 0.15s ease;
   border: 2px solid transparent;
+}
+
+.main > .eagle > .panel > #mgcheck > .cover {
+  position: relative;
+  z-index: 0;
+}
+
+.main > .eagle > .panel > #mgcheck > .cover > img {
+  width: 100%;
+  height: 145px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center center;
+     object-position: center center;
+}
+
+.main > .eagle > .panel > #mgcheck > .profile {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.main > .eagle > .panel > #mgcheck > .profile > .row > img {
+  display: block;
+  width: 120px;
+  height: 120px;
+  margin: -50px 15px 10px 20px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center center;
+     object-position: center center;
+  border-radius: 50%;
+  border: 4px solid white;
+}
+
+.main > .eagle > .panel > #mgcheck > .profile > .row .name {
+  padding: 5px 7px;
+  display: inline-block;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  font-family: "Open Sans";
+  font-size: 22px;
+  font-weight: 700;
+  color: #141414;
+}
+
+.main > .eagle > .panel > #mgcheck > .profile > .row .name:hover {
+  color: #69a2fd;
+}
+
+.main > .eagle > .panel > #mgcheck > .profile > .row .id {
+  display: inline-block;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  font-family: "Roboto";
+  font-size: 15px;
+  font-weight: 500;
+  color: black;
+  padding: 6px 10px;
+  background-color: rgba(255, 255, 255, 0.212);
+  border-radius: 6px;
+}
+
+.main > .eagle > .panel > #mgcheck .description {
+  margin: 5px 35px;
+  padding: 5px;
+}
+
+.main > .eagle > .panel > #mgcheck .description > span {
+  font-family: "Ubuntu";
+  font-size: 15px;
+  color: black;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+.main > .eagle > .panel > #mgcheck > .row {
+  border: 1px solid red;
+  display: inline-block;
+  width: 100%;
 }
 
 .main > .pathbar {

@@ -1068,6 +1068,11 @@ def app1_getFileSize(url):
 
 def app1_getThumbnails(ctx):
     ctx = ctx.result()
+
+    if ctx == None:
+        eel.text_search_result("show")
+        return {"search_result" : []}
+
     data = json.loads(ctx)
     filesize = []
     index = 0
@@ -1106,6 +1111,7 @@ def app1_getUrlThumbnails(source):
             url = idx["thumbnails"][4]
             eel.app1_makeObj(url)
     else:
+        print(f"{Fore.RED}Result not found{Fore.RESET}")
         eel.text_search_result("show")
     
     eel.navbar_control(True)
