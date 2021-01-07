@@ -833,7 +833,7 @@ def init_video(url, row_idx, feedback):
             "channel" : core.video.author,
             "views" : core.video.views,
             "thumbnail" : core.video.thumbnail_url,
-            "duration" : time.strftime("%M:%S", time.gmtime(core.video.length)),
+            "duration" : time.strftime("%H:%M:%S", time.gmtime(core.video.length)),
             "link" : url
         }
         
@@ -917,7 +917,7 @@ def refresh():
     ds_1 = ""
     path = ""
     print(f"{Fore.GREEN}(Listening){Fore.RESET} to {Fore.BLUE}Python{Fore.RESET} at {Fore.GREEN}localhost:{port}{Fore.RESET}")
-    print(f"{box.style(1,34,40)}data master:{box.end()} {master} <- memory")
+    # print(f"{box.style(1,34,40)}data master:{box.end()} {master} <- memory")
 # ------------------------------ #
 
 # --- eel directory dialog --- #
@@ -1226,11 +1226,11 @@ def app1_core_downloadThumbnails(_list):
 
 
 try:
-    port = int(input("Select port (default 8000): "))
+    port = int(input("Select port (default:= 8000): "))
 except Exception as ex:
     port = 8000
 
-mode = input("Select mode (default | edge): ")
+mode = input("Select mode (default:= desktop | edge): ")
 
 if mode.lower() == "edge":
     eel.init("www")

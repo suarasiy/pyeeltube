@@ -8,6 +8,16 @@
   outline: none;
 }
 
+::-moz-selection {
+  background-color: rgba(255, 255, 255, 0.144);
+  color: #0f8373;
+}
+
+::selection {
+  background-color: rgba(255, 255, 255, 0.144);
+  color: #0f8373;
+}
+
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -65,6 +75,10 @@ mark {
 }
 
 .btn {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -160,6 +174,10 @@ mark {
 }
 
 .main > #menu-apps {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   position: fixed;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -255,6 +273,7 @@ mark {
 }
 
 .main > #menu > .menu-list {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -269,8 +288,9 @@ mark {
       -ms-flex-pack: start;
           justify-content: flex-start;
   width: 100%;
-  height: auto;
+  height: 100%;
   margin: 13px 0 0;
+  padding: 0 0 15px 0;
 }
 
 .main > #menu > .menu-list > .menu-btn {
@@ -336,6 +356,30 @@ mark {
   font-weight: 400;
 }
 
+.main > #menu > .menu-list > .bottom {
+  position: absolute;
+  bottom: 10px;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  color: #0b1620;
+  font-family: "Roboto";
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.main > #menu > .menu-list > .bottom mark a {
+  color: #6ba4ff;
+}
+
+.main > #menu > .menu-list > .bottom mark a:active {
+  color: #69a2fd;
+}
+
+.main > #menu > .menu-list > .bottom mark a:hover {
+  color: #6fa0df;
+}
+
 .main > #menu-cover {
   position: fixed;
   z-index: 9;
@@ -384,6 +428,10 @@ mark {
 }
 
 .main > .form > h1 {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   padding: 5px 12px;
   width: -webkit-fit-content;
   width: -moz-fit-content;
@@ -453,6 +501,10 @@ mark {
 }
 
 .main > .form > .input input[type=button] {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   position: relative;
   cursor: pointer;
   margin: 5px;
@@ -841,6 +893,11 @@ mark {
 }
 
 .main > .eagle > .panel.column > .content > .information .block {
+  cursor: text;
+  -webkit-user-select: text;
+     -moz-user-select: text;
+      -ms-user-select: text;
+          user-select: text;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -868,6 +925,10 @@ mark {
 }
 
 .main > .eagle > .panel.column > .content > .information .block > img {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   width: 15px;
   height: 15px;
   -o-object-fit: cover;
@@ -1363,6 +1424,10 @@ mark {
 }
 
 .main > .eagle > .panel > #mgcheck .description {
+  -webkit-user-select: text;
+     -moz-user-select: text;
+      -ms-user-select: text;
+          user-select: text;
   margin: 5px 35px;
   padding: 5px;
 }
@@ -1434,6 +1499,10 @@ mark {
 }
 
 .main > .video-player > .row > .menu {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   pointer-events: all;
   cursor: pointer;
   padding: 6px 10px;
@@ -1657,6 +1726,10 @@ mark {
   font-family: "Verdana";
 }
 
+.main > .download-domain > .modal .row > .do-col .row, .main > .download-domain > .modal .row > .do-column .row, .main > .url-domain > .modal .row > .do-col .row, .main > .url-domain > .modal .row > .do-column .row {
+  position: relative;
+}
+
 .main > .download-domain > .modal .row > .do-col .row .icon, .main > .download-domain > .modal .row > .do-column .row .icon, .main > .url-domain > .modal .row > .do-col .row .icon, .main > .url-domain > .modal .row > .do-column .row .icon {
   width: 28px;
   height: 28px;
@@ -1743,6 +1816,37 @@ mark {
           animation-iteration-count: infinite;
   -webkit-animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
           animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.main > .download-domain > .modal .row > .do-col .row .do-column, .main > .download-domain > .modal .row > .do-column .row .do-column, .main > .url-domain > .modal .row > .do-col .row .do-column, .main > .url-domain > .modal .row > .do-column .row .do-column {
+  position: relative;
+}
+
+.main > .download-domain > .modal .row > .do-col .row .do-column .percentage, .main > .download-domain > .modal .row > .do-column .row .do-column .percentage, .main > .url-domain > .modal .row > .do-col .row .do-column .percentage, .main > .url-domain > .modal .row > .do-column .row .do-column .percentage {
+  position: absolute;
+  left: 0%;
+  bottom: -3px;
+  font-family: "Roboto";
+  font-size: 11px;
+  color: white;
+  position: absolute;
+  z-index: 1;
+  padding: 2px 5px;
+  border-radius: 30px;
+  background-color: #69a2fd;
+  opacity: 0;
+  -webkit-transform: translateX(-50%) scale(0);
+          transform: translateX(-50%) scale(0);
+  -webkit-transition: left 0.4s cubic-bezier(0.65, 1, 0.35, 1) 0s, -webkit-transform 0.3s cubic-bezier(0.11, 1, 0.19, 1) 0s;
+  transition: left 0.4s cubic-bezier(0.65, 1, 0.35, 1) 0s, -webkit-transform 0.3s cubic-bezier(0.11, 1, 0.19, 1) 0s;
+  transition: left 0.4s cubic-bezier(0.65, 1, 0.35, 1) 0s, transform 0.3s cubic-bezier(0.11, 1, 0.19, 1) 0s;
+  transition: left 0.4s cubic-bezier(0.65, 1, 0.35, 1) 0s, transform 0.3s cubic-bezier(0.11, 1, 0.19, 1) 0s, -webkit-transform 0.3s cubic-bezier(0.11, 1, 0.19, 1) 0s;
+}
+
+.main > .download-domain > .modal .row > .do-col .row .do-column .percentage.show, .main > .download-domain > .modal .row > .do-column .row .do-column .percentage.show, .main > .url-domain > .modal .row > .do-col .row .do-column .percentage.show, .main > .url-domain > .modal .row > .do-column .row .do-column .percentage.show {
+  opacity: 1;
+  -webkit-transform: translateX(-50%) scale(1);
+          transform: translateX(-50%) scale(1);
 }
 
 .main > .download-domain > .modal > .action > hr, .main > .url-domain > .modal > .action > hr {

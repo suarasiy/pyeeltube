@@ -1059,9 +1059,12 @@ function modal_update_progress(value) {
     var download_domain = document.querySelector(".download-domain");
     var modal = download_domain.querySelector(".modal");
     var progress = modal.querySelector("#action_progress");
+    const progress_percent = document.querySelector("#progress_percent");
 
     if (download_domain != undefined & modal != undefined & progress != undefined) {
         progress.style.width = `${value}%`;
+        progress_percent.style.left = `${value}%`;
+        progress_percent.innerText = `${value}%`;
         // console.log(value);
     }
 }
@@ -1071,9 +1074,12 @@ eel.expose(modal_animation_download)
 function modal_animation_download() {
     var download_domain = document.querySelector(".download-domain");
     var modal = download_domain.querySelector(".modal");
+    const progress_percent = document.querySelector("#progress_percent");
 
     if (download_domain != undefined) {
         var progress = modal.querySelector("#action_progress");
+
+        progress_percent.classList.add("show");
 
         progress.classList.remove("ready");
         progress.classList.remove("merging");
@@ -1086,9 +1092,12 @@ eel.expose(modal_animation_merging)
 function modal_animation_merging() {
     var download_domain = document.querySelector(".download-domain");
     var modal = download_domain.querySelector(".modal");
+    const progress_percent = document.querySelector("#progress_percent");
 
     if (download_domain != undefined) {
         var progress = modal.querySelector("#action_progress");
+
+        progress_percent.classList.remove("show");
 
         progress.classList.remove("ready");
         progress.classList.add("merging");
@@ -1101,9 +1110,12 @@ eel.expose(modal_animation_loading)
 function modal_animation_loading() {
     var download_domain = document.querySelector(".download-domain");
     var modal = download_domain.querySelector(".modal");
+    const progress_percent = document.querySelector("#progress_percent");
 
     if (download_domain != undefined) {
         var progress = modal.querySelector("#action_progress");
+
+        progress_percent.classList.remove("show");
 
         progress.classList.remove("ready");
         progress.classList.remove("merging");
@@ -1116,9 +1128,17 @@ eel.expose(modal_animation_ready)
 function modal_animation_ready() {
     var download_domain = document.querySelector(".download-domain");
     var modal = download_domain.querySelector(".modal");
+    const progress_percent = document.querySelector("#progress_percent");
 
     if (download_domain != undefined) {
         var progress = modal.querySelector("#action_progress");
+
+        progress_percent.classList.remove("show");
+        
+        progress.style.width = "0px";
+        progress_percent.innerText = "0%";
+        progress_percent.style.left = "0px";
+
 
         progress.classList.add("ready");
         progress.classList.remove("merging");

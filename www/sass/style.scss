@@ -11,6 +11,11 @@
     outline: none;
 }
 
+::selection {
+    background-color: rgba(255, 255, 255, 0.144);
+    color: rgb(15, 131, 115);
+}
+
 ::-webkit-scrollbar {
     width: 6px;
 }
@@ -69,6 +74,7 @@ mark {
 }
 
 .btn {
+    user-select: none;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -136,6 +142,7 @@ mark {
     }
 
     > #menu-apps {
+        user-select: none;
         position: fixed;
         display: flex;
         
@@ -209,14 +216,15 @@ mark {
         }
 
         > .menu-list {
+            position: relative;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             justify-content: flex-start;
             width: 100%;
-            height: auto;
+            height: 100%;
             margin: 13px 0 0;
-            //border: 1px solid blue;
+            padding: 0 0 15px 0;
             > .menu-btn {
                 cursor: pointer;
                 position: relative;
@@ -269,6 +277,26 @@ mark {
                     font-weight: 400;
                 }
             }
+            > .bottom {
+                position: absolute;
+                bottom: 10px;
+                align-self: center;
+                color: rgb(11, 22, 32);
+                font-family: "Roboto";
+                font-weight: 500;
+                font-size: 14px;
+                mark {
+                    a {
+                        color: rgb(107, 164, 255);
+                        &:active {
+                            color: rgb(105, 162, 253);
+                        }
+                        &:hover {
+                            color: rgb(111, 160, 223);
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -308,6 +336,7 @@ mark {
         flex-direction: column;
         align-items: center;
         > h1 {
+            user-select: none;
             padding: 5px 12px;
             width: fit-content;
             font-family: "Ubuntu";
@@ -357,6 +386,7 @@ mark {
                 }
             }
             input[type=button] {
+                user-select: none;
                 position: relative;
                 cursor: pointer;
                 margin: 5px;
@@ -696,6 +726,8 @@ mark {
                             }
                         }
                         .block {
+                            cursor: text;
+                            user-select: text;
                             display: flex;
                             flex-direction: row;
                             align-items: center;
@@ -710,6 +742,7 @@ mark {
                             width: fit-content;
                             margin: 3px 7px 3px 0;
                             > img {
+                                user-select: none;
                                 width: 15px;
                                 height: 15px;
                                 object-fit: cover;
@@ -1143,6 +1176,7 @@ mark {
                 }
                 
                 .description {
+                    user-select: text;
                     margin: 5px 35px;
                     padding: 5px;
                     > span {
@@ -1215,6 +1249,7 @@ mark {
             width: unset;
             margin: 5px;
             > .menu {
+                user-select: none;
                 pointer-events: all;
                 cursor: pointer;
                 padding: 6px 10px;
@@ -1425,6 +1460,7 @@ mark {
                     }
                     
                     .row {
+                        position: relative;
                         .icon {
                             width: 28px;
                             height: 28px;
@@ -1486,6 +1522,31 @@ mark {
                                     animation-delay: 0s;
                                     animation-iteration-count: infinite;
                                     animation-timing-function: cubic-bezier(.65, 0, .35, 1);
+                                }
+                            }
+
+                        }
+
+                        .do-column {
+                            position: relative;
+                            .percentage {
+                                position: absolute;
+                                left: 0%;
+                                bottom: -3px;
+                                font-family: "Roboto";
+                                font-size: 11px;
+                                color: rgb(255, 255, 255);
+                                position: absolute;
+                                z-index: 1;
+                                padding: 2px 5px;
+                                border-radius: 30px;
+                                background-color: rgb(105, 162, 253);
+                                opacity: 0;
+                                transform: translateX(-50%) scale(0);
+                                transition: left .4s cubic-bezier(.65, 1, .35, 1) 0s, transform .3s cubic-bezier(.11, 1, .19, 1) 0s;
+                                &.show {
+                                    opacity: 1;
+                                    transform: translateX(-50%) scale(1);
                                 }
                             }
                         }
