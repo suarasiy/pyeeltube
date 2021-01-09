@@ -80,7 +80,6 @@ function volume_iplayer() {
 
 // function search //
 function set_search(app_name) {
-    var search = document.querySelector("#search");
     if (app_name == "APP_VIDEO") {
         // console.log("app video search")
         app_video_searchVideos();
@@ -124,7 +123,7 @@ function page_videos() {
     const video_player = document.querySelector("#video_player");
     const div_search = document.querySelector(".input");
     const top_welcome = document.querySelector("#top-welcome-message");
-    if (panel_thumbnails != undefined & btn_video != undefined & btn_thumbnail != undefined & search != undefined) {
+    if (panel_thumbnails != undefined && btn_video != undefined && btn_thumbnail != undefined && search != undefined) {
         btn_video.classList.add("active");
         btn_about.classList.remove("active");
         btn_thumbnail.classList.remove("active");
@@ -164,22 +163,22 @@ function page_videos() {
     }
     toggle(this);
     app_thread("APP_VIDEO");
-    init_search_box(app);
+    init_search_box();
 }
 
 function page_thumbnails() {
-    const panel_thumbnails = document.querySelector("#panel_thumbnails")
+    const panel_thumbnails = document.querySelector("#panel_thumbnails");
     const panel_videos = document.querySelector("#panel_videos");
     const panel_about = document.querySelector("#panel_about");
     const btn_video = document.querySelector("#btn_menu_video");
-    const btn_thumbnail = document.querySelector("#btn_menu_thumbnail")
+    const btn_thumbnail = document.querySelector("#btn_menu_thumbnail");
     const btn_menu_about = document.querySelector("#btn_menu_about");
     const search = document.querySelector("#search");
     const video_player = document.querySelector("#video_player");
     const iframe_youtube = document.querySelector("#iframe_youtube");
     const div_search = document.querySelector(".input");
     const top_welcome = document.querySelector("#top-welcome-message");
-    if (panel_videos != undefined & btn_video != undefined & btn_thumbnail != undefined & search != undefined & iframe_youtube != undefined) {
+    if (panel_videos != undefined && btn_video != undefined && btn_thumbnail != undefined && search != undefined && iframe_youtube != undefined) {
         btn_video.classList.remove("active");
         btn_menu_about.classList.remove("active");
         btn_thumbnail.classList.add("active");
@@ -224,7 +223,7 @@ function page_thumbnails() {
     }
     toggle(this);
     app_thread("APP_THUMBNAIL");
-    init_search_box(app);
+    init_search_box();
 }
 
 function page_about() {
@@ -273,7 +272,7 @@ function page_about() {
     }
     toggle(this);
     app_thread("APP_ABOUT");
-    init_search_box(app);
+    init_search_box();
 }
 
 function document_hotkey() {
@@ -310,7 +309,7 @@ function document_hotkey() {
         if (event.keyCode === 27) {
             event.preventDefault();
             const download_domain = document.querySelector(".download-domain");
-            const modal = download_domain.querySelector("#modal-1");
+            // const modal = download_domain.querySelector("#modal-1");
 
             console.log("escaped!");
         }
@@ -322,8 +321,8 @@ document_hotkey();
 init_search_box();
 
 function toggle(btn) {
-    panel = document.querySelector("#menu");
-    cover = document.querySelector("#menu-cover");
+    const panel = document.querySelector("#menu");
+    const cover = document.querySelector("#menu-cover");
     panel.classList.toggle("active");
     cover.classList.toggle("hidden");
 }
@@ -331,7 +330,7 @@ function toggle(btn) {
 function toggle_video() {
     var video_player = document.querySelector("#video_player");
     var iframe_youtube = document.querySelector("#iframe_youtube");
-    if (video_player != undefined & iframe_youtube != undefined) {
+    if (video_player != undefined && iframe_youtube != undefined) {
         var video_status = video_player.getAttribute("video-status");
         var y = getComputedStyle(iframe_youtube).getPropertyValue("height");
         if (video_status == "show") {
@@ -349,8 +348,10 @@ function toggle_video() {
 function toggle_video_size(btn) {
     var iframe_youtube = document.querySelector("#iframe_youtube");
     var video_player = document.querySelector("#video_player");
+    let size;
+    let status_visible;
     size = btn.getAttribute("youtube-option-size");
-    if (iframe_youtube != undefined & video_player != undefined) {
+    if (iframe_youtube != undefined && video_player != undefined) {
         status_visible = video_player.getAttribute("video-status");
         if (status_visible != "hide") {
             if (size == "M") {
@@ -370,9 +371,9 @@ function toggle_video_size(btn) {
 }
 
 function panel_init() {
-    panel = document.querySelector("#menu");
-    panel_style = getComputedStyle(panel);
-    left = panel_style.getPropertyValue("width").replace("px", "");
+    const panel = document.querySelector("#menu");
+    let panel_style = getComputedStyle(panel);
+    let left = panel_style.getPropertyValue("width").replace("px", "");
     panel.style.left = -Math.abs(left) + "px";
 }
 
@@ -385,7 +386,7 @@ function number_with_comma(num) {
 function modal_close() {
     var download_domain = document.querySelector(".download-domain");
     var modal = download_domain.querySelector("#modal-1");
-    if (modal != undefined & download_domain != undefined) {
+    if (modal != undefined && download_domain != undefined) {
         // modal.style.transform = "translate(-50%, -50%) scale(.65)";
         // modal.style.opacity = 0;
         // download_domain.style.opacity = 0;
@@ -402,7 +403,7 @@ eel.expose(modal_url_close)
 function modal_url_close() {
     var modal = document.querySelector("#modal-2");
     var url_domain = document.querySelector(".url-domain");
-    if (modal != undefined & url_domain != undefined) {
+    if (modal != undefined && url_domain != undefined) {
         modal.style.transform = "translate(-50%, -50%) scale(.65)";
         modal.style.opacity = 0;
         url_domain.style.opacity = 0;
@@ -473,7 +474,7 @@ function get() {
 
 eel.expose(makeObj);
 function makeObj(_id, _title, _channel, _viewer, _imgurl, _video_url, _duration) {
-    index = index + 1
+    index = index + 1;
     
     var panel = document.querySelector("#panel_videos");
     
@@ -481,7 +482,7 @@ function makeObj(_id, _title, _channel, _viewer, _imgurl, _video_url, _duration)
     content.setAttribute("class", "content");
     
     var span = document.createElement("span");
-    span.setAttribute("class", "index")
+    span.setAttribute("class", "index");
     span.setAttribute("index-idx", index);
     span.innerText = index;
     panel.appendChild(content);
@@ -517,7 +518,7 @@ function makeObj(_id, _title, _channel, _viewer, _imgurl, _video_url, _duration)
         frame_youtube(_id);
         background_dynamic(_imgurl);
         ui_change_status(title.getAttribute("title-idx"));
-    })
+    });
     information.appendChild(title);
 
     var row_block = document.createElement("DIV");
@@ -571,7 +572,7 @@ function makeObj(_id, _title, _channel, _viewer, _imgurl, _video_url, _duration)
         progress_search_fill_animation("fetch");
         disable_res_button();
         eel.init_video(_video_url, row_wrap.getAttribute("data-row-idx"), "panel");
-    })
+    });
     row_wrap.appendChild(btn_fetch);
     
     var span_top = document.createElement("span");
@@ -642,7 +643,6 @@ function object_update(
 
 eel.expose(object_resolution);
 function object_resolution(data_itag, data_type, parent_idx, resolution, frame, itag, data_filesize) {
-    itag = itag;
     var parent = document.querySelectorAll('[data-row-idx]')[parent_idx-1]
     var res = document.createElement("button");
     res.setAttribute("data-res-itag", data_itag);
@@ -704,7 +704,7 @@ function get_download_info(data_itag, data_rowidx, data_imgurl, data_title, data
     modal.setAttribute("modal-row-itag", data_itag);
     var download_domain = document.querySelector(".download-domain");
 
-    if (modal != undefined & info_resolution != undefined & info_fps != undefined & info_filesize != undefined & info_extension != undefined & path_temp != undefined & path_save != undefined) {
+    if (modal != undefined && info_resolution != undefined && info_fps != undefined && info_filesize != undefined && info_extension != undefined && path_temp != undefined && path_save != undefined) {
         info_resolution.innerText = data_resolution;
         info_resolution.setAttribute("data-info-resolution", data_resolution);
         info_fps.innerText = data_fps;
@@ -749,7 +749,7 @@ function get_download_info(data_itag, data_rowidx, data_imgurl, data_title, data
             // modal.style.transform = "translate(-50%, -50%) scale(1)";
             // modal.style.opacity = 1;
             modal.classList.remove("hide");
-        }, 105)
+        }, 105);
     }
 }
 
@@ -846,7 +846,7 @@ eel.expose(disable_res_button)
 function disable_res_button() {
     var res = document.querySelectorAll("[data-resolution]");
     if (res != undefined) {
-        for (i = 0; i < res.length; i ++) {
+        for (let i = 0; i < res.length; i ++) {
             // res[i].setAttribute("class", `${res[i].getAttribute("class")} res-disable`);
             // res[i].classList.toggle("res-disable");
             res[i].classList.add("res-disable");
@@ -859,7 +859,7 @@ eel.expose(enable_res_button)
 function enable_res_button() {
     var res = document.querySelectorAll("[data-resolution]");
     if (res != undefined) {
-        for (i = 0; i < res.length; i ++) {
+        for (let i = 0; i < res.length; i ++) {
             // res[i].classList.toggle("res-disable");
             res[i].classList.remove("res-disable");
             res[i].removeAttribute("disabled");
@@ -912,7 +912,7 @@ function btn_fetch_normal(parent_idx) {
     var parent = document.querySelectorAll('[data-row-idx]')[parent_idx-1]
     var btn_fetch = parent.querySelector(".res.fetch.loading")
     var top = btn_fetch.getElementsByTagName('SPAN')[0]
-    if (btn_fetch != undefined & top != undefined) {
+    if (btn_fetch != undefined && top != undefined) {
         btn_fetch.removeAttribute("disabled")
         btn_fetch.setAttribute("class", "fetch res")
         top.innerText = "FETCH"
@@ -923,7 +923,7 @@ function btn_please_wait(parent_idx) {
     var parent = document.querySelectorAll('[data-row-idx]')[parent_idx-1]
     var btn_fetch = parent.querySelector(".res.fetch")
     var top = btn_fetch.getElementsByTagName('SPAN')[0]
-    if (btn_fetch != undefined & top != undefined) {
+    if (btn_fetch != undefined && top != undefined) {
         btn_fetch.setAttribute("disabled", true)
         btn_fetch.setAttribute("class", "fetch res loading")
         top.innerText = "Please wait..."
@@ -1022,7 +1022,7 @@ function ui_change_status(row_idx) {
     var index = content.querySelector(".index");
     var indexs = document.querySelectorAll("[status-preview=true]");
 
-    for (i = 0; i < indexs.length; i++) {
+    for (let i = 0; i < indexs.length; i++) {
         indexs[i].setAttribute("status-preview", false);
         indexs[i].innerText = indexs[i].getAttribute("index-idx");
     }
@@ -1037,7 +1037,7 @@ eel.expose(background_dynamic)
 function background_dynamic(imageurl) {
     var body = document.getElementsByTagName("BODY")[0];
     var blur = document.getElementById("blur-domain");
-    if (body != undefined & blur != undefined) {
+    if (body != undefined && blur != undefined) {
         body.style.backgroundImage = `url("${imageurl}")`;
         blur.style.backgroundImage = `url("${imageurl}")`;
     }
@@ -1048,7 +1048,7 @@ function modal_update_status(text) {
     var download_domain = document.querySelector(".download-domain");
     var modal = download_domain.querySelector(".modal");
 
-    if (download_domain != undefined & modal != undefined) {
+    if (download_domain != undefined && modal != undefined) {
         var text_status = modal.querySelector("#action_text_status");
         text_status.innerText = text;
     }
@@ -1061,7 +1061,7 @@ function modal_update_progress(value) {
     var progress = modal.querySelector("#action_progress");
     const progress_percent = document.querySelector("#progress_percent");
 
-    if (download_domain != undefined & modal != undefined & progress != undefined) {
+    if (download_domain != undefined && modal != undefined && progress != undefined) {
         progress.style.width = `${value}%`;
         progress_percent.style.left = `${value}%`;
         progress_percent.innerText = `${value}%`;
@@ -1177,7 +1177,7 @@ function modal_button_close(status) {
     var download_domain = document.querySelector(".download-domain");
     var modal = download_domain.querySelector(".modal");
     var btn_close = modal.querySelector("#close_domain");
-    if (download_domain != undefined & modal != undefined & btn_close != undefined) {
+    if (download_domain != undefined && modal != undefined && btn_close != undefined) {
         if (status === true) {
             btn_close.classList.remove("btn-disabled");
             btn_close.removeAttribute("disabled");
@@ -1196,7 +1196,7 @@ function navbar_control(status) {
     var btn_search = form.querySelector("#btn_search");
     var btn_directory = form.querySelector("#btn_directory");
 
-    if (form != undefined & btn_url_download != undefined & btn_search != undefined & btn_directory != undefined & search != undefined) {
+    if (form != undefined && btn_url_download != undefined && btn_search != undefined && btn_directory != undefined && search != undefined) {
         if (status === true) {
             btn_url_download.removeAttribute("disabled");
             search.removeAttribute("disabled");
@@ -1216,8 +1216,9 @@ function modal_core_download() {
     var download_domain = document.querySelector(".download-domain");
     var modal = download_domain.querySelector(".modal");
     var info_resolution = modal.querySelector(".info.resolution");
+    let row_idx, itag, res;
 
-    if (download_domain != undefined & info_resolution != undefined) {
+    if (download_domain != undefined && info_resolution != undefined) {
         row_idx = modal.getAttribute("modal-row-idx");
         itag = modal.getAttribute("modal-row-itag");
         res = info_resolution.getAttribute("data-info-resolution").replace("p", "");
@@ -1266,7 +1267,7 @@ function updateProgressbar(amountDownload) {
     var maxwidth = parseFloat(download_style.getPropertyValue("width").replace("px", ""));
     var curwidth = parseFloat(progressbar_style.getPropertyValue("width").replace("px", ""));
     var setwidth = parseFloat(maxwidth / amountDownload);
-    progressbar.style.backgroundColor = "rgb(0, 0, 0, 0.22)"
+    progressbar.style.backgroundColor = "rgb(0, 0, 0, 0.22)";
     progressbar.style.opacity = 1;
     progressbar.style.width = curwidth + setwidth + "px";
 }
@@ -1394,6 +1395,7 @@ function app1_clearObj() {
 }
 
 function sendList() {
+    let list;
     list = app1_getSelectedIndex();
     eel.app1_core_downloadThumbnails(list);
     //eel.getUrlFromIndex(list);
