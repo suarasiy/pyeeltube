@@ -5,7 +5,7 @@ import pyperclip
 import re
 from collections import namedtuple
 import pytube
-from pytube.extract import mime_type_codec
+# from pytube.extract import mime_type_codec
 from youtubesearchpython import SearchVideos
 from colorama import *
 import package.Temporary as Temp
@@ -27,7 +27,6 @@ import package.Style as box
 from datetime import datetime as dt
 
 os.system("")
-app_thread = ["APP_VIDEO", "APP_THUMBNAIL"]
 app = ""
 path = ""
 
@@ -174,7 +173,7 @@ class Core:
             self.file_size = audio.filesize
             return audio
         else:
-            self.get_audio(self.result)
+            self.get_audio()
     # -------------------------------------------------------------------------------------- #
 
     # --- get the best audio quality object (160kbps) audio/webm opus --- #
@@ -773,26 +772,26 @@ def init_check(data_itag, row_idx, res, id):
     # ------------------------------------- #
     
     # --- getting resolution --- #
-    def get_by_resolution(res):
-        if res.lower() == "2160":
-            print(core.quality().res2160)
-            init_check_get_info(row_idx, core.quality().res2160, core_result, core_filesize["2160"], id)
-        elif res.lower() == "1440":
-            print(core.quality().res1440)
-            init_check_get_info(row_idx, core.quality().res1440, core_result, core_filesize["1440"], id)
-        elif res.lower() == "1080":
-            print(core.quality().res1080)
-            init_check_get_info(row_idx, core.quality().res1080, core_result, core_filesize["1080"], id)
-        elif res.lower() == "720":
-            print(core.quality().res720)
-            init_check_get_info(row_idx, core.quality().res720, core_result, core_filesize["720"], id)
-        elif res.lower() == "480":
-            print(core.quality().res480)
-            init_check_get_info(row_idx, core.quality().res480, core_result, core_filesize["480"], id)
+    # def get_by_resolution(itag, res):
+    #     if res.lower() == "2160":
+    #         print(core.quality().res2160)
+    #         init_check_get_info(itag, row_idx, core.quality().res2160, core_result, core_filesize["2160"], id)
+    #     elif res.lower() == "1440":
+    #         print(core.quality().res1440)
+    #         init_check_get_info(itag, row_idx, core.quality().res1440, core_result, core_filesize["1440"], id)
+    #     elif res.lower() == "1080":
+    #         print(core.quality().res1080)
+    #         init_check_get_info(itag, row_idx, core.quality().res1080, core_result, core_filesize["1080"], id)
+    #     elif res.lower() == "720":
+    #         print(core.quality().res720)
+    #         init_check_get_info(itag, row_idx, core.quality().res720, core_result, core_filesize["720"], id)
+    #     elif res.lower() == "480":
+    #         print(core.quality().res480)
+    #         init_check_get_info(itag, row_idx, core.quality().res480, core_result, core_filesize["480"], id)
         
-        if res.lower() == "ogg":
-            print(core.get_audio())
-            init_check_get_info(row_idx, core.get_audio(), core_result, audio_size, id)
+    #     if res.lower() == "ogg":
+    #         print(core.get_audio())
+    #         init_check_get_info(row_idx, core.get_audio(), core_result, audio_size, id)
     # -------------------------- #
     
     # --- init by itag --- #
@@ -881,25 +880,25 @@ def modal_core_download(itag, row_idx, res):
             elif obj.type == "audio":
                 core.core_download_audio()
 
-    def core_by_res(res):
-        if res.lower() == "2160":
-            print("detected 2160")
-            core.core_download(core.quality().res2160)
-        elif res.lower() == "1440":
-            print("detected 1440")
-            core.core_download(core.quality().res1440)
-        elif res.lower() == "1080":
-            print("detected 1080")
-            core.core_download(core.quality().res1080)
-        elif res.lower() == "720":
-            print("detected 720")
-            core.core_download(core.quality().res720)
-        elif res.lower() == "480":
-            print("detected 480")
-            core.core_download(core.quality().res480)
+    # def core_by_res(res):
+    #     if res.lower() == "2160":
+    #         print("detected 2160")
+    #         core.core_download(core.quality().res2160)
+    #     elif res.lower() == "1440":
+    #         print("detected 1440")
+    #         core.core_download(core.quality().res1440)
+    #     elif res.lower() == "1080":
+    #         print("detected 1080")
+    #         core.core_download(core.quality().res1080)
+    #     elif res.lower() == "720":
+    #         print("detected 720")
+    #         core.core_download(core.quality().res720)
+    #     elif res.lower() == "480":
+    #         print("detected 480")
+    #         core.core_download(core.quality().res480)
         
-        if res.lower() == "ogg":
-            print("currently under developing...")
+    #     if res.lower() == "ogg":
+    #         print("currently under developing...")
 
     core_by_itag(itag)
     eel.modal_button_close(True)
@@ -955,7 +954,7 @@ def setDirectory():
     eel.app1_getSelectedIndex()
 
     print(f"Path set to : {box.style(7,30,45)}{path}{box.end()}")
-    del root
+    root.destroy()
 
 # ---------------------------- #
 
@@ -1069,7 +1068,7 @@ def app1_getFileSize(url):
 def app1_getThumbnails(ctx):
     ctx = ctx.result()
 
-    if ctx == None:
+    if ctx is None:
         eel.text_search_result("show")
         return {"search_result" : []}
 
@@ -1092,7 +1091,7 @@ def app1_getThumbnails(ctx):
     print(f"{box.style(5,30,47)}Result:{box.end()}")
     for _data in data["search_result"]:
         index = index + 1
-        title = _data["title"]
+        # title = _data["title"]
         url = _data["thumbnails"][4]
         print(f"[{Fore.BLUE}{index}{Fore.RESET}] : {cleansing_filesize(filesize[index-1])} {Fore.YELLOW}{url}{Fore.RESET}")
     eel.text_search_focus()
@@ -1175,7 +1174,7 @@ def app1_setDirectory():
     is_pathed()
     eel.getSelectedIndex()
     print("Path set to :", path)
-    del root
+    root.destroy()
 
 @eel.expose
 def app1_is_pathed():
