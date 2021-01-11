@@ -308,10 +308,10 @@ function document_hotkey() {
         }
         if (event.keyCode === 27) {
             event.preventDefault();
-            const download_domain = document.querySelector(".download-domain");
+            // this for "escape to close modal"
+            // const download_domain = document.querySelector(".download-domain");
             // const modal = download_domain.querySelector("#modal-1");
-
-            console.log("escaped!");
+            // console.log("escaped!");
         }
     }
 }
@@ -1312,9 +1312,9 @@ let app1_index = -1
 // listening();
 
 function panel_init() {
-    panel = document.querySelector("#menu");
-    panel_style = getComputedStyle(panel);
-    left = panel_style.getPropertyValue("width").replace("px", "");
+    const panel = document.querySelector("#menu");
+    const panel_style = getComputedStyle(panel);
+    const left = panel_style.getPropertyValue("width").replace("px", "");
     panel.style.left = -Math.abs(left) + "px";
 }
 

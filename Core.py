@@ -756,7 +756,7 @@ def init_check(data_itag, row_idx, res, id):
     core = master[row_idx]["self"]
     core_filesize = master[row_idx]["filesize"]
     core_result = core.video.title
-    audio_size = round(core.get_audio().filesize / math.pow(1*10, 6), 2);
+    # audio_size = round(core.get_audio().filesize / math.pow(1*10, 6), 2);
     
     # --- re-constructing --- #
 
